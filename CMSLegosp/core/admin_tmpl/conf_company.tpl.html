@@ -1,0 +1,86 @@
+
+{*********************************************************************************
+*                                                                                *
+*   shop-script Legosp - legosp.net                                              *
+*   Skype: legoedition                                                           *
+*   Email: legoedition@gmail.com                                                 *
+*   Лицензионное соглашение: https://legosp.net/info/litsenzionnoe_soglashenie/  *
+*   Copyright (c) 2010-2019  All rights reserved.                                *
+*                                                                                *
+*********************************************************************************}
+ 
+ 
+
+{* company configurations template *}
+<div id="icon-options-general" class="icon32"><br /></div><h2>{$smarty.const.ADMIN_SETTINGS}</h2>
+<br class="clear" />
+
+<form action="./{$smarty.const.CONF_ADMIN_FILE}" method="post">
+	<input type="hidden" name="dpt" value="conf">
+	<input type="hidden" name="sub" value="company">
+	<input type="hidden" name="save_company" value="1">
+	<table class="widefat" cellspacing="0">
+		<thead>
+			<tr class="alternate">
+				<th style="width: 300px;"><a><span><strong>{$smarty.const.ADMIN_COMPANY_ABOUT}</strong></span></a></th>
+				<th>{if $configuration_saved eq 1}<strong>{$smarty.const.ADMIN_UPDATE_SUCCESSFUL}</strong>{/if}</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_COMPANY_NAME}:</td>
+				<td><input type="text" size="60" name="company_name" value="{$smarty.const.COMPANY_NAME|escape}" /></td>
+			</tr>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_COMPANY_ADDRESS}:</td>
+				<td><input type="text" size="60" name="company_adress" value="{$smarty.const.COMPANY_ADDRESS|escape}" /></td>
+			</tr>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_COMPANY_PHONE}:</td>
+				<td><input type="text" size="60" name="company_phone" value="{$smarty.const.COMPANY_PHONE|escape}" /></td>
+			</tr>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_COMPANY_DIRECTOR}:</td>
+				<td><input type="text" size="60" name="company_director" value="{$smarty.const.COMPANY_DIRECTOR|escape}" /></td>
+			</tr>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_COMPANY_BUH}:</td>
+				<td><input type="text" size="60" name="company_buh" value="{$smarty.const.COMPANY_BUH|escape}" /></td>
+			</tr>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_COMPANY_RS}:</td>
+				<td><input type="text" size="60" name="company_rs" maxlength="20" value="{$smarty.const.COMPANY_RS|escape}" /></td>
+			</tr>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_COMPANY_INN}:</td>
+				<td><input type="text" size="60" name="company_inn" maxlength="10" value="{$smarty.const.COMPANY_INN|escape}" /></td>
+			</tr>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_COMPANY_KPP}:</td>
+				<td><input type="text" size="60" name="company_kpp" maxlength="9" value="{$smarty.const.COMPANY_KPP|escape}" /></td>
+			</tr>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_COMPANY_BANK}:</td>
+				<td><input type="text" size="60" name="company_bank" value="{$smarty.const.COMPANY_BANK|escape}" /></td>
+			</tr>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_COMPANY_BANK_KOR}:</td>
+				<td><input type="text" size="60" name="company_bank_kor" maxlength="20" value="{$smarty.const.COMPANY_BANK_KOR|escape}" /></td>
+			</tr>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_COMPANY_BANK_BIK}:</td>
+				<td><input type="text" size="60" name="company_bank_bik" maxlength="9" value="{$smarty.const.COMPANY_BANK_BIK|escape}" /></td>
+			</tr>
+			<tr class="alternate">
+				<td>Mail:</td>
+				<td><input type="text" size="60" name="company_mail" maxlength="99" value="{$smarty.const.COMPANY_MAIL|escape}" /></td>
+			</tr>
+			<tr class="alternate">
+				<td>График работы:</td>
+				<td><input type="text" size="60" name="company_work" maxlength="99" value="{$smarty.const.COMPANY_WORK|escape}" /></td>
+			</tr>
+		</tbody>
+	</table>
+
+	<p><input type="submit" name="submit" class="button-primary" value="{$smarty.const.SAVE_BUTTON}" /></p>
+</form>

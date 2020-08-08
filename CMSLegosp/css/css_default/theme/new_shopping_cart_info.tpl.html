@@ -1,0 +1,41 @@
+{*********************************************************************************
+*                                                                                *
+*   shop-script Legosp - legosp.net                                              *
+*   Skype: legoedition                                                           *
+*   Email: legoedition@gmail.com                                                 *
+*   Лицензионное соглашение: https://legosp.net/info/litsenzionnoe_soglashenie/  *
+*   Copyright (c) 2010-2019  All rights reserved.                                *
+*                                                                                *
+*********************************************************************************}
+ 
+<script>
+{literal}
+	$(document).ready(function(){
+		$('.cart_analog_close, #cart_analog').click(function () {$('#cart_analog, .cart_analog').fadeOut(300);});
+	});
+{/literal}
+</script>
+<div id="cart_analog">&nbsp;</div>
+<div class="cart_analog">
+	<a class="btn-cart_close cart_analog_close"><i class="fa fa-times"></i></a>
+	<div class="top-notification clearfix">
+		<h3 class="text-success">Товар добавлен в корзину!</h3>
+		<div class="product-block">
+			<img class="product-image" src="./products_pictures/{$tov_pic}" alt=""/>
+			<div class="product-info">
+				<div class="product-name">{$tov_name}</div>
+				<div id="tov_price" class="product-price">{$tov_price}</div>
+				{*<div class="product-code"><strong>Артикул:</strong> {$tov_code}</div>*}
+			</div>
+		</div>
+	</div>
+	<div class="bottom-notification">
+		<div class="total">
+			Всего в корзине товаров: <strong>{$cart_analog_cart_items}</strong>,<br/> на общую сумму <strong>{$cart_analog_cart_value|replace:'"':'&quot;'}</strong>
+		</div>
+		<div class="cart_button">
+			<a href="./{if $smarty.const.CONF_CHPU}cart/{else}index.php?shopping_cart=yes{/if}" class="btn btn-block">Оформить заказ</a>
+			<a class="btn btn-block btn-default cart_analog_close">Продолжить покупки</a>
+		</div>
+	</div>
+</div>

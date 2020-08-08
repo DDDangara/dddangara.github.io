@@ -1,0 +1,50 @@
+
+
+{*********************************************************************************
+*                                                                                *
+*   shop-script Legosp - legosp.net                                              *
+*   Skype: legoedition                                                           *
+*   Email: legoedition@gmail.com                                                 *
+*   Лицензионное соглашение: https://legosp.net/info/litsenzionnoe_soglashenie/  *
+*   Copyright (c) 2010-2019  All rights reserved.                                *
+*                                                                                *
+*********************************************************************************}
+ 
+ 
+
+{* admin login/pass : template *}
+<div id="icon-plugins" class="icon32"><br /></div><h2>{$smarty.const.ADMIN_LOGIN_PASSWORD}</h2>
+<br class="clear" />
+
+<form action="./{$smarty.const.CONF_ADMIN_FILE}" method="post">
+	<input type="hidden" name="dpt" value="system">
+	<input type="hidden" name="sub" value="login_pass">
+	<input type="hidden" name="save_login_pass" value="1">
+	<table class="widefat" cellspacing="0">
+		<thead>
+			<tr>
+				<th width="370"><a><span><strong>{$smarty.const.ADMIN_CHANGE_LOGINPASSWORD}</strong></span></a></th>
+				<th>{if $configuration_saved eq 1}<strong>{$smarty.const.ADMIN_UPDATE_SUCCESSFUL}</strong>{else}{if $error ne NULL}<font color="red"><strong>{$error}</strong></font>{/if}{/if}</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_CURRENT_LOGIN}:</td>
+				<td><input style="width: 200px;" type="text" name="new_login" value="{$curr_log}"></td>
+			</tr>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_OLD_PASS}:</td>
+				<td><input style="width: 200px;" type="password" name="old_pass" value=""></td>
+			</tr>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_NEW_PASS}:</td>
+				<td><input style="width: 200px;" type="password" name="new_pass" value=""></td>
+			</tr>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_NEW_PASS_CONFIRM}:</td>
+				<td><input style="width: 200px;" type="password" name="new_passconfirm" value=""></td>
+			</tr>
+		</tbody>
+	</table>
+	<p><input type="submit" name="submit" class="button-primary" value="{$smarty.const.SAVE_BUTTON}" /></p>
+</form>

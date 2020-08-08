@@ -1,0 +1,42 @@
+
+{*********************************************************************************
+*                                                                                *
+*   shop-script Legosp - legosp.net                                              *
+*   Skype: legoedition                                                           *
+*   Email: legoedition@gmail.com                                                 *
+*   Лицензионное соглашение: https://legosp.net/info/litsenzionnoe_soglashenie/  *
+*   Copyright (c) 2010-2019  All rights reserved.                                *
+*                                                                                *
+*********************************************************************************}
+ 
+<div>
+	<div class="row">
+  		<div class="image col-sm-3">
+  			{if $product_info.you_save_val_p > 0}<div class="sale">-{$product_info.you_save_val_p}%</div>{/if}
+          			{if $product_info.thumbnail || $p_default[$id]}
+          			<a href="./{$product_info.hurl}"><img src="./products_pictures/{if $p_default[$id]}{$p_default[$id]}-S.jpg{else}{$product_info.thumbnail}{/if}" alt="{$product_info[1]|escape}" class="img-responsive zoom-image-effect"></a>
+          		{else}
+          			<a href="./{$product_info.hurl}"><img src="./css/css_{$smarty.const.CONF_COLOR_SCHEME}/image/no_image-250x250.jpg" alt="{$product_info[1]|escape}" class="img-responsive zoom-image-effect"></a>
+          		{/if}
+  		</div>
+
+  		<div class="name-desc col-sm-6">
+  			<div class="name"><a href="./{$product_info.hurl}">{$product_info.name}</a></div>
+  			<div class="description">{$product_info.brief_description|truncate:130}</div>
+  			<div class="rating-reviews clearfix">
+    					<div class="rating">{section name=i loop=5}{if $smarty.section.i.index < $product_info.customers_rating}<i class="fa fa-star active"></i>{else}<i class="fa fa-star"></i>{/if}{/section}</div>
+    			</div>
+    	</div>
+
+    	<div class="actions col-sm-3">
+    			<div>
+  				<div class="price">
+  				{if $product_info.list_price > 0}<span class="price-old">{$product_info.list_price_letters}</span> <span class="price-new">{$product_info.Price_letters}</span>{else}{$product_info.Price_letters}{/if}
+  				</div>
+  				<div class="add-to-cart"><a  href="./add2cart/{$product_info.productID}" id="tocart_{$product_info.productID}" class="ajaxcart button"><span class="visible-sm"><i class="fa fa-shopping-cart"></i></span> <span class="hidden-sm">{$smarty.const.ADD_TO_CART_STRING}</span></a></div>
+    			</div>
+    	</div>
+  	</div>
+</div>
+
+

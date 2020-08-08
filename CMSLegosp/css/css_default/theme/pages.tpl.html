@@ -1,0 +1,39 @@
+
+{*********************************************************************************
+*                                                                                *
+*   shop-script Legosp - legosp.net                                              *
+*   Skype: legoedition                                                           *
+*   Email: legoedition@gmail.com                                                 *
+*   Лицензионное соглашение: https://legosp.net/info/litsenzionnoe_soglashenie/  *
+*   Copyright (c) 2010-2019  All rights reserved.                                *
+*                                                                                *
+*********************************************************************************}
+ 
+<div class="box">
+	<h1 class="page-title">{$smarty.const.ADMIN_PAGES_TITLE}</h1>
+
+{if $pageslist}
+	{section name=j loop=$pageslist}
+		{if $pageslist[j][5]>0}
+		<div class="blog_post clearfix">
+			{if $pageslist[j][4]}<div class="image"><a href="./{$pageslist[j][6]}"><img src="./products_pictures/{$pageslist[j][4]}" alt=""></a></div>{/if}
+			<h4><a href="./{$pageslist[j][6]}">{$pageslist[j][1]}</a></h4>
+			<div class="post_date"><i class="fa fa-calendar"></i> {$pageslist[j][2]}</div>
+			<div class="post_info">{$pageslist[j][3]}</div>
+		</div>
+		<div class="divider_line"></div>
+		{/if}
+	{/section}
+{elseif $pagetext}
+	<div class="blog_post clearfix">
+		{if $pagetext[4]}<div class="image"><a href="./products_pictures/{$pagetext[4]}" class="thickbox"><img src="./products_pictures/{$pagetext[4]}" alt=""></a></div>{/if}
+		<h4>{$pagetext[0]}</h4>
+		<div class="post_date"><i class="fa fa-calendar"></i> {$pagetext[2]}</div>
+		<div class="post_info">{$pagetext[1]}</div>
+	</div>
+	<div class="divider_line"></div>
+	<div class="text-center"><a href="./{$smarty.const.REDIRECT_PAGES}/"><strong>{$smarty.const.ADMIN_PAGE_ALL}</strong></a></div>
+{/if}
+
+	<p style="text-align: right;">{$catalog_navigator}</p>
+</div>

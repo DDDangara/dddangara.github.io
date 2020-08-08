@@ -1,0 +1,74 @@
+{*********************************************************************************
+*                                                                                *
+*   shop-script Legosp - legosp.net                                              *
+*   Skype: legoedition                                                           *
+*   Email: legoedition@gmail.com                                                 *
+*   Лицензионное соглашение: https://legosp.net/info/litsenzionnoe_soglashenie/  *
+*   Copyright (c) 2010-2019  All rights reserved.                                *
+*                                                                                *
+*********************************************************************************}
+ 
+<div class="box">
+	<h1 class="page-title">{$smarty.const.STRING_CONTACT_INFORMATION}</h1>
+
+	<div class="row">
+		<div class="col-sm-6">
+			<h2>{$smarty.const.ADMIN_INFORMATION}</h2>
+			{$contact_info}
+		</div>
+		<div class="col-sm-6">
+			<h2>Yandex Map</h2>
+			<script type="text/javascript" charset="utf-8" src="//api-maps.yandex.ru/services/constructor/1.0/js/?sid=lpIePQG68cI7JE2Ik-Nn7052ZyHdfJ7b&width=100%&height=200"></script>
+		</div>
+	</div>
+
+<div class="space30"></div>
+{if $send_result==2}
+	<div class="alert alert-success">Ваше сообщение отправлено</div>
+{else}
+<h2>Форма обратной связи</h2>
+
+<form class='wufoo' action="index.php" name="contact_form" id="custinfo_form" method="post">
+
+<div class="row">
+	<div class="col-sm-6">
+		{$smarty.const.CUSTOMER_FIRST_NAME} <em class="red">*</em><br/>
+		<input required type="text" style="width: 100%;" name="send_name" id="first_name" value="{$smarty.post.send_name|escape}" />
+	</div>
+	<div class="col-sm-6">
+		{$smarty.const.CUSTOMER_EMAIL} <em class="red">*</em><br/>
+		<input required type="text" style="width: 100%;" name="send_email" id="email" value="{$smarty.post.send_email|escape}"/>
+	</div>
+</div>
+<br/>
+<div class="row">
+	<div class="col-sm-12">
+		{$smarty.const.STRING_SEND_TEXT}: <em class="red">*</em><br/>
+		<textarea style="width: 100%;" required name="send_text" id="send_text" rows='8' cols='20'>{$smarty.post.send_text|escape}</textarea>
+	</div>
+</div>
+<br/>
+<div class="row">
+	<div class="col-sm-12">
+		{$smarty.const.STRING_SEND_CAPCHA}: <em class="red">*</em><br/>
+		<img id="cap" src="./core/core_captcha.php?bg=F7F7F7" alt="{$smarty.const.STRING_SEND_CAPCHA}" onclick="go_cap()" style="cursor:pointer;" title="Обновить капчу"/>
+		<input maxlength='6' minlength='3' required type="text" name="captcha" id="captcha" />
+
+		<div style="color: #f36909;" id="results"></div>
+
+	</div>
+</div>
+<div class="buttons">
+<div class="right">
+		  <input type="hidden" name="send_mail" value="1" />
+		  <input type="hidden" name="last_name" id="last_name" value="none" />
+		  <input type="hidden" name="phone" id="phone" value="8 (000) 000-00-00" />
+                  <input onclick="if (!$('#custinfo_form').validate()) return false;" class="button" type="submit" value="{$smarty.const.STRING_SEND}"/>
+		  {*<a onclick="return $('#contact_form').validate();" class="button"><span>{$smarty.const.STRING_SEND}</span></a>*}
+</div>
+</div>
+</form>
+{/if}
+
+
+</div>

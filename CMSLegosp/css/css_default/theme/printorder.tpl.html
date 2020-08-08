@@ -1,0 +1,100 @@
+{*********************************************************************************
+*                                                                                *
+*   shop-script Legosp - legosp.net                                              *
+*   Skype: legoedition                                                           *
+*   Email: legoedition@gmail.com                                                 *
+*   Лицензионное соглашение: https://legosp.net/info/litsenzionnoe_soglashenie/  *
+*   Copyright (c) 2010-2019  All rights reserved.                                *
+*                                                                                *
+*********************************************************************************}
+ 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr" >
+
+<head>
+<title>{$smarty.const.STRING_ORDER_ID} {$result[0]}</title>
+<meta http-equiv="Content-Type" content="text/html; charset={$smarty.const.DEFAULT_CHARSET}" />
+
+<style type="text/css">
+{literal}
+html {
+	overflow: -moz-scrollbars-vertical;
+	margin: 0;
+	padding: 0;
+}
+* {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+
+}
+{/literal}
+</style>
+</head>
+<body onload="print(); return false;">
+  <img src="../css/css_{$smarty.const.CONF_COLOR_SCHEME}/image/logo0000.png" alt=""/><br />
+	<hr style="width: 800px; float: left;" />
+	<br />
+	<br />
+<table cellspacing="0" cellpadding="0" width="800px">
+	  <tr>
+	    <td style="width: 150px"><b>{$smarty.const.ORDER_ORDERER}:</b></td>
+	    <td>{$result[1]} {$result[2]}</td>
+	  </tr>
+	  <tr>
+	    <td style="width: 150px"><b>{$smarty.const.ORDER_PHONE}:</b></td>
+	    <td>{$result[6]}</td>
+	  </tr>
+	  <tr>
+	    <td style="width: 150px"><b>{$smarty.const.ORDER_EMAIL}:</b></td>
+	    <td>{$result[3]}</td>
+	  </tr>
+	  <tr style="vertical-align: top;">
+	    <td style="width: 150px"><b>{$smarty.const.ORDER_ADRESS}:</b></td>
+	    <td>{$result[4]},<br />{$result[5]}</td>
+	  </tr>
+	</table>
+	<br />
+	<br />
+	<span style="font-weight: bold;" >{$smarty.const.STRING_ORDER_ID}: {$result[0]}</span>
+	<br />
+	<br />
+{if $result[8]}
+	<b>{$smarty.const.ADMIN_MANAGER_NAME_MAIL}:</b> {$result[8]}
+	<br />
+	<br />
+{/if}
+	<table cellspacing="0" cellpadding="0" width="800px">
+	  <tr style="font-weight: bold;">
+	    <td></td>
+	    <td style="text-align: center; width: 1px;">{$smarty.const.TABLE_PRODUCT_QUANTITY}</td>
+	    <td style="text-align: center; width: 100px;">{$smarty.const.ADMIN_PRODUCT_PRICE}</td>
+	    <td style="text-align: center; width: 100px;">{$smarty.const.TABLE_PRODUCT_SUMM}</td>
+	  </tr>
+         {foreach from=$res item=rez}
+	  <tr>
+	    <td >{$rez[0]}</td>
+	    <td style="text-align: center; width: 1px;">{$rez[2]}</td>
+	    <td style="text-align: right; width: 100px;">{$rez[1]}</td>
+	    <td style="text-align: right; width: 100px;">{$rez[4]}</td>
+	  </tr>
+	{/foreach}
+	  <tr style="font-weight: bold;">
+	    <td>&nbsp;<br />{$smarty.const.TABLE_TOTAL}:</td>
+	    <td></td>
+	    <td></td>
+	    <td style="text-align: right; width: 100px;">&nbsp;<br />{$result[10]}</td>
+	  </tr>
+	</table>
+	<br />
+	<b>{$smarty.const.CUSTOMER_COMMENT}</b>
+	<br />
+	{$result[7]}
+	<br />
+	<br />
+	<hr style="width: 800px; float: left;" />
+	<br />
+	<br />
+    <b><i>{$smarty.const.CONF_SHOP_NAME}<br />{$smarty.const.CONF_SHOP_URL}</i></b>
+
+</body>
+</html>

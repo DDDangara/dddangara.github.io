@@ -1,0 +1,88 @@
+
+{*********************************************************************************
+*                                                                                *
+*   shop-script Legosp - legosp.net                                              *
+*   Skype: legoedition                                                           *
+*   Email: legoedition@gmail.com                                                 *
+*   Лицензионное соглашение: https://legosp.net/info/litsenzionnoe_soglashenie/  *
+*   Copyright (c) 2010-2019  All rights reserved.                                *
+*                                                                                *
+*********************************************************************************}
+ 
+ 
+
+{* order statuses *}
+
+<p>
+    {if $configuration_saved eq 1}
+        {$smarty.const.ADMIN_UPDATE_SUCCESSFUL}
+    {/if}
+
+    {if $prompt ne ""}
+    <div class="error_message">{$prompt}</div>
+{/if}
+
+<form action="admin.php" method=post>
+    <table class="widefat">
+
+        <tr>
+            <td colspan=3 align=center>
+                <h3>{$smarty.const.ORDER_STATUSES}</h3>
+            </td>
+        </tr>
+
+        <tr>
+            <th align=center><strong>Группа статуса<strong></th>
+            <th align=center><strong>{$smarty.const.ORDER_STATUS}<strong></th>
+            <th align=center><strong>{$smarty.const.ADMIN_SORT_ORDER}</strong></th>
+            <th align=center>&nbsp;</th>
+        </tr>
+
+        {section name=i loop=$order_statues}
+            <tr class="alternate">
+                <td>
+                    <input type=text name=update_order_status[{$order_statues[i].statusID}][group_name] value="{$order_statues[i].group_name}">
+                </td>
+                <td>
+                    <input type=text name=update_order_status[{$order_statues[i].statusID}][status_name] value="{$order_statues[i].status_name}">
+                </td>
+                <td>
+                    <input type=text name=update_order_status[{$order_statues[i].statusID}][sort_order] value="{$order_statues[i].sort_order}">
+                </td>
+                <td align=center>
+                    <a href="javascript:confirmDelete('{$smarty.const.QUESTION_DELETE_CONFIRMATION}', 'admin.php?dpt=custord&sub=order_statuses&delete={$order_statues[i].statusID}');">
+                        <img src="./images/backend/delete.png" border=0 alt="{$smarty.const.DELETE_BUTTON}">
+                    </a>
+                </td>
+            </tr>
+        {/section}
+
+        <tr>
+            <td colspan=3 align=center>
+                <h3>{$smarty.const.ADD_BUTTON}</h3>
+            </td>
+        </tr>
+
+        <tr class="alternate">
+            <td>
+                <input type=text name=add_status[group_name] value="">
+            </td>
+            <td>
+                <input type=text name=add_status[status_name] value="">
+            </td>
+            <td>
+                <input type=text name=add_status[sort_order] value="">
+            </td>
+            <td align=center>
+                &nbsp;
+            </td>
+        </tr>
+    </table>
+
+    <p>
+        <input type=submit value="{$smarty.const.SAVE_BUTTON}" name="save">
+        <input type=hidden name=save_successfull value=1>
+        <input type=hidden name=dpt value="custord">
+        <input type=hidden name=sub value="order_statuses">
+
+</form>

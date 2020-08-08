@@ -1,0 +1,472 @@
+
+
+{*********************************************************************************
+*                                                                                *
+*   shop-script Legosp - legosp.net                                              *
+*   Skype: legoedition                                                           *
+*   Email: legoedition@gmail.com                                                 *
+*   Лицензионное соглашение: https://legosp.net/info/litsenzionnoe_soglashenie/  *
+*   Copyright (c) 2010-2019  All rights reserved.                                *
+*                                                                                *
+*********************************************************************************}
+ 
+ 
+
+{* categorie edit *} 
+{literal}
+<script type="text/javascript">
+function checkautores() {
+   if (document.getElementById('enable_autores').checked)
+	{document.getElementById('thumbnail').disabled="disabled"; document.getElementById('big_picture').disabled="disabled";} 
+   else 
+	{document.getElementById('thumbnail').disabled=""; document.getElementById('big_picture').disabled="";}   
+}
+
+function addAccomp()
+{
+	if (document.getElementById("accompSelect").value > 0)
+	{
+	$accomp = document.getElementById('accompany').value;
+	if ($accomp) {document.getElementById('accompany').value = $accomp + ", " + document.getElementById("accompSelect").value;}
+		else {document.getElementById('accompany').value = document.getElementById("accompSelect").value;}
+			
+	}
+}
+
+var tabs = ['tab1','tab2'];
+function hide(){
+for (i in tabs){
+document.getElementById(tabs[i]).style.display='none';
+}
+}
+function show(id){
+hide();
+document.getElementById(id).style.display='block';
+}
+
+function add_file(id, i) {
+ if (document.getElementById(id + '_' + i).innerHTML.search('uploadinputbutton') == -1) {
+ document.getElementById(id + '_' + i).innerHTML = '<input type="file" class="uploadinputbutton" maxsize="" name="' + id + '[]" onchange="return add_file(\'' + id + '\', ' + (i+1) + ');" /> -'+i+'<br /><span id="' + id + '_' + (i+1) + '"><\/span>\n';
+ } 
+ if (document.getElementById('thumb_desc_' + i).innerHTML.search('thumb_desc') == -1) { 
+ document.getElementById('thumb_desc_' + i).innerHTML = '<input type="text" name="thumb_desc[]" id="thumb_desc" style="width: 400px;" /> -'+i+'<br /><span id="' + 'thumb_desc_' + (i+1) + '"><\/span>\n';
+ 
+ }
+} 
+
+
+function delcateg(del,r)
+{
+   var id = 'c'+del;
+   var d = document;
+   var data            = 'delcat='+ del;
+   if (r)
+   {
+   $.ajax({
+                type: "POST",
+                url: "http://{/literal}{$smarty.const.CONF_SHOP_URL}{literal}/core/do_search.php",
+                data: data,
+                success: function(html){ // запустится после получения резуотатов
+                    
+                    el=d.getElementById(id);
+                    tr=el.parentNode;
+                    tr.parentNode.removeChild(tr);
+              }
+            });
+   }
+   else
+   {
+      id = 't'+del;
+      el=d.getElementById(id);
+      tr=el.parentNode;
+      tr.parentNode.removeChild(tr);
+   } 
+}
+{/literal}
+{if $product_edit[14]}
+{literal}
+function addcategor()
+{
+        var str = "";
+        var d = document;
+        var tbody = d.getElementById('alternate_cat');
+        var row = d.createElement("TR");
+        var td1 = d.createElement("TD");
+        var td2 = d.createElement("TD"); 
+        td1.colSpan = 3;
+        td1.id='t'+{/literal}{$product_edit[14]}{literal};
+        var categoryid    = $("#addcategory").val();
+        subcat=0; 
+        {/literal}
+        var data            = 'addcategory='+ categoryid+'&productid='+{$product_edit[14]};
+        {literal}
+        // если searchString не пустая
+        if(categoryid) {
+            $.ajax({
+                type: "POST",
+                url: "http://{/literal}{$smarty.const.CONF_SHOP_URL}{literal}/core/do_search.php",
+                data: data,
+               success: function(html){ 
+                    //$("#results").show();
+                    $("#addcategory option:selected").attr('disabled', 'disabled');
+                    tbody.appendChild(row);
+                    row.appendChild(td1);
+                    row.appendChild(td2); 
+                    td1.innerHTML = html;
+                    td2.innerHTML= '<img src="images/backend/delete.png" alt="Удалить" onclick="delcateg({/literal}{$product_edit[14]}{literal},0);">';
+                    
+
+              }
+            });
+        }
+       
+}
+{/literal}
+{/if}
+</script>
+
+
+<div id="icon-link-manager" class="icon32"><br /></div>
+<div class="breadcrumb">
+{foreach name=patch from=$patch_category item=category}
+  <a href=./{$smarty.const.CONF_ADMIN_FILE}?dpt=catalog&sub=products&categoryID={$category.categoryID}>{$category.name}</a>&nbsp;&gt;&gt;
+{/foreach}
+<h2>{$product_title|escape:'htmlall'}</h2>
+</div>
+	
+<div class="tablenav top">
+	<div class="alignleft actions">
+		{if $options_list}
+			<a href="" onclick="show('tab1'); return false;" class="button"><strong>{$smarty.const.ADMIN_TAB_GENERAL}</strong></a>	
+			<a href="" onclick="show('tab2'); return false;" class="button">{$smarty.const.ADMIN_TAB_customparams}</a>
+		{else}
+			<a href="" class="button"><strong>{$smarty.const.ADMIN_TAB_GENERAL}</strong></a>
+		{/if}
+	</div>
+	<div class='tablenav-pages one-page'><input type="button" onclick="$('#submit_form_p').click();"  class="button-primary" value="{$smarty.const.SAVE_BUTTON}" /></div>
+	<br class="clear" />
+</div>
+
+<form action="./{$smarty.const.CONF_ADMIN_FILE}" method="post" id="form_p" enctype="multipart/form-data">
+	<input type="hidden" name="category_old" value="{$product_edit[0]}"> 
+	<input type="hidden" name="dpt" value="catalog">
+	<input type="hidden" name="sub" value="products_edit">
+	<input type="hidden" name="save_product" value="{$product_edit[14]}">
+	<div id="tab1">
+	<table class="widefat" cellspacing="0">
+		<thead>
+			<tr><th colspan="4"><a><span><strong>{$smarty.const.ADMIN_PRODUCT_CARD}:</strong></span></a></th></tr>
+		</thead>
+		<tbody>
+			<tr class="alternate">
+				<td style="width:150px;">{$smarty.const.ADMIN_CATEGORY_PARENT}</td>
+				<td><select name="product_info[categoryID]" style="width: 250px;"><option value="0">{$smarty.const.ADMIN_CATEGORY_ROOT}</option>
+					{section name=i loop=$cat_list}
+						<option value="{$cat_list[i][0]}" {if $cat_list[i][0] === $product_edit[0]}selected="selected"{/if}>{$cat_list[i][1]}</option>
+					{/section}</select>
+				</td>
+				<td>{$smarty.const.prdset_min_qunatity_to_order}:</td>
+				<td><input type="text" name="product_info[min_qunatity]" value="{$product_edit[21]}" /></td>
+			</tr>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_PRODUCT_NAME}:</td>
+				<td><input type="text" name="product_info[name]" style="width: 250px;" value="{$product_edit[1]|escape}" /></td>
+				<td>{$smarty.const.STRING_MANUFACTURER}:</td>
+				<td><select name="brand" style="width: 250px;"><option value="0"></option>
+					{section name=i loop=$brand_list}
+						<option value="{$brand_list[i][0]}" {if $brand_list[i][0] === $product_edit[15]}selected="selected"{/if}>{$brand_list[i][1]}</option>
+					{/section}</select>
+				</td>
+			</tr>
+			<tr class="alternate">
+				<td>URL:</td>
+				<td><input type="text" name="product_info[hurl]" value="{$product_edit[12]}" style="width: 250px;" /></td>
+				<td>REL CANONICAL:</td>
+				<td><input type="text" name="canonical" value="{$product_edit[19]}" style="width: 250px;" /></td>
+			</tr>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_PRODUCT_CODE}:</td>
+				<td><input type="text" name="product_code" value="{$product_edit[11]}" style="width: 145px;" /></td>
+				<td>{$smarty.const.ADMIN_MANAGER_ACCESS_1}:</td>
+				<td><select style="width: 250px;" name="product_info[managerID]"><option {if $product_edit[22]==-1}selected="selected"{/if} value="-1">Все</option>
+					{foreach from=$managers item=manager}
+						<option {if (($product_edit[22] && $product_edit[22]==$manager.ID) || ( !$product_edit[22] && $smarty.session.access==1 &&  $smarty.session.manager_id==$manager.ID))}selected="selected"{/if} value="{$manager.ID}">{$manager.name}</option>
+					{/foreach}</select>
+				</td>
+			</tr>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_PRODUCT_PRICE} {$smarty.const.CONF_CURRENCY_ISO3} ({$smarty.const.STRING_NUMBER_ONLY}):</td>
+				<td><input type="text" name="price" value="{$product_edit[4]}" style="width: 145px;" /></td>
+				<td>{$smarty.const.ADMIN_PRODUCT_RATING}:</td>
+				<td><input type="text" name="product_info[customers_rating]" value="{$product_edit[3]}" style="width: 145px;" /></td>
+			</tr>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_PRODUCT_LISTPRICE} {$smarty.const.CONF_CURRENCY_ISO3} ({$smarty.const.STRING_NUMBER_ONLY}):</td>
+				<td><input type="text" name="list_price" value="{$product_edit[10]}" style="width: 145px;" /></td>
+				<td>{$smarty.const.ADMIN_PRODUCT_INSTOCK}:</td>
+				<td><input type="text" name="in_stock" value="{$product_edit[6]}" style="width: 145px;" /></td>
+			</tr>
+		</tbody>
+	</table>
+	<br class="clear" />
+
+	<table class="widefat" cellspacing="0">
+		<thead>
+			<tr>
+				<th colspan="4"><a><span><strong>META</strong></span></a></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="alternate">
+				<td style="width:150px;">{$smarty.const.ADMIN_PRODUCT_TITLE_H1}:</td>
+				<td colspan="3"><input type="text" name="product_info[h1]" value="{$product_edit[20]|escape:'htmlall'}" style="width: 99%;" /></td>
+			</tr>
+			<tr class="alternate">
+				<td>META-TITLE:</td>
+				<td colspan="3"><input type="text" name="product_info[meta_title]" value="{$product_edit[16]|escape}" style="width: 99%;" /></td>
+			</tr>
+			<tr class="alternate">
+				<td>META-KEYWORDS:</td>
+				<td colspan="3"><input type="text" name="product_info[meta_keywords]" value="{$product_edit[17]|escape:'htmlall'}" style="width: 99%" /></td>
+			</tr>
+			<tr class="alternate">
+				<td>META-DESCRIPTION:</td>
+				<td colspan="3"><input type="text" name="product_info[meta_desc]" value="{$product_edit[18]|escape:'htmlall'}" style="width: 99%;" /></td>
+			</tr>
+		</tbody>
+	</table>
+	<br class="clear" />
+
+	<table class="widefat" cellspacing="0">
+		<thead>
+			<tr>
+				<th colspan="3"><a><span><strong>{$smarty.const.ADMIN_IMAGE}</strong></span></a></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="alternate">
+				<td colspan="3">
+					<strong>{$smarty.const.ADMIN_PRODUCT_AUTORES} {$smarty.const.ADMIN_PRODUCT_CHARACTER_ON}:</strong>
+					&nbsp;&nbsp;<input type="checkbox" name="enable_autores" id="enable_autores" checked="checked" onclick="javascript: checkautores();" style="padding: 0px; margin: -3px 0 0 0;" />
+				</td>
+			</tr>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_PRODUCT_PICTURE}:</td>
+				<td><input type="file" name="picture" style="width: 250px;" /></td>
+				<td>
+				{if $product_edit[5]}
+					<a href="./products_pictures/{$product_edit[5]}" class="thickbox">{$product_edit[5]}</a>&nbsp;&nbsp;&nbsp;
+					<a href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=catalog&amp;sub=products_edit&amp;productID={$product_edit[14]}&amp;picture_remove=5">
+					<img src="./images/backend/delete.png" alt="" title="{$smarty.const.DELETE_BUTTON}" /></a>
+				{else}
+					<font style="color: #f00;">{$smarty.const.ADMIN_PICTURE_NOT_UPLOADED}</font>
+				{/if}
+					{*<input type="text" id="fileurl" />
+					<div class="button" id="select-button">select file</div>*}
+				</td>
+			</tr>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_PRODUCT_THUMBNAIL}:</td>
+				<td><input type="file" name="thumbnail" style="width: 250px;" disabled="disabled" id="thumbnail" /></td>
+				<td>
+				{if $product_edit[7]}
+					<a href="./products_pictures/{$product_edit[7]}" class="thickbox">{$product_edit[7]}</a>&nbsp;&nbsp;&nbsp;
+					<a href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=catalog&amp;sub=products_edit&amp;productID={$product_edit[14]}&amp;picture_remove=7">
+					<img src="./images/backend/delete.png" alt="" title="{$smarty.const.DELETE_BUTTON}" /></a>
+				{else}
+					<font style="color: #f00;">{$smarty.const.ADMIN_PICTURE_NOT_UPLOADED}</font>
+				{/if}
+				</td>
+			</tr>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_PRODUCT_BIGPICTURE}:</td>
+				<td><input type="file" name="big_picture" style="width: 250px;" disabled="disabled" id="big_picture" /></td>
+				<td>
+				{if $product_edit[8]}
+					<a href="./products_pictures/{$product_edit[8]}" class="thickbox">{$product_edit[8]}</a>&nbsp;&nbsp;&nbsp;
+					<a href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=catalog&amp;sub=products_edit&amp;productID={$product_edit[14]}&amp;picture_remove=8">
+					<img src="./images/backend/delete.png" alt="" title="{$smarty.const.DELETE_BUTTON}" /></a>
+				{else}
+					<font style="color: #f00;">{$smarty.const.ADMIN_PICTURE_NOT_UPLOADED}</font>
+				{/if}
+				</td>
+			</tr>
+			<tr class="alternate">
+				<td style="vertical-align: top;">{$smarty.const.ADMIN_PRODUCT_THUMB}:</td>
+				<td style="vertical-align: top;">
+					<input type="file" uploadinputbutton="uploadinputbutton" name="file[]" style="width: 250px;" onchange="add_file('file', 1);"/><br />
+					<span id="file_1"><input type="hidden" onclick="add_file('file', 1);" value="Add another" /></span>
+				</td>
+				<td style="vertical-align: top;">
+				{foreach from=$thumb_pic key=key item=thumb}
+					<a href="./products_thumb/{$thumb.picture}" title="{$thumb.description}" class="thickbox">{$thumb.picture}</a>&nbsp;&nbsp;&nbsp;
+					<a href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=catalog&amp;sub=products_edit&amp;productID={$product_edit[14]}&amp;thumb_delete={$thumb.picture}"><img src="./images/backend/delete.png" alt="" title="{$smarty.const.DELETE_BUTTON}" /></a>
+                                        <input type="text" value="{$thumb.description}" name="thumb_desc_edit[{$thumb.thumbID}][]"><br />
+				{foreachelse}
+					<font style="color: #f00;">{$smarty.const.ADMIN_PICTURE_NOT_UPLOADED}</font>
+				{/foreach}
+				</td>
+			</tr>
+			<tr class="alternate">
+				<td style="vertical-align: top;">{$smarty.const.ADMIN_PRODUCT_DESC}:</td>
+				<td colspan="2" style="vertical-align: top;">
+					<input type="text"  name="thumb_desc[]" id="thumb_desc" value="" style="width: 400px;" /><br /><span id="thumb_desc_1"></span>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<br class="clear" />
+
+	<table class="widefat" cellspacing="0">
+		<thead>
+			<tr><th><a><span><strong>{$smarty.const.ADMIN_PRODUCT_BRIEF_DESC}</strong></span></a></th></tr>
+		</thead>
+		<tbody>
+			<tr class="alternate"><td><textarea name="brief_description" id="brief_description">{$product_edit[9]|escape:'htmlall'}</textarea></td></tr>
+		</tbody>
+	</table>
+	<br class="clear" />
+
+	<table class="widefat" cellspacing="0">
+		<thead>
+			<tr><th><a><span><strong>{$smarty.const.ADMIN_PRODUCT_DESC}</strong></span></a></th></tr>
+		</thead>
+		<tbody>
+			<tr class="alternate"><td><textarea name="description" id="description">{$product_edit[2]|escape:'htmlall'}</textarea></td></tr>
+		</tbody>
+	</table>
+	<br class="clear" />
+
+	<table class="widefat" cellspacing="0">
+		<thead>
+			<tr>
+				<th colspan="4"><a><span><strong>{$smarty.const.ADMIN_MORE}</strong></span></a></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_PRODUCT_ACCOMPANY}:</td>
+				<td><input type="text" name="accompany" id="accompany" value="{$product_edit[13]}" style="width: 245px" /></td>
+				<td><select style="width:170px;" id="accompSelect"><option value="0" selected="selected">{$smarty.const.ADMIN_SELECT}</option>
+					{section name=i loop=$accompany_list}
+						<option value="{$accompany_list[i][2]}">{$accompany_list[i][1]}, {$accompany_list[i][3]}</option>
+					{/section}</section>
+				</td>
+				<td><input type="button" value="{$smarty.const.ADD_BUTTON}" onClick="addAccomp();" style="width: 100px;" /></td>
+			</tr>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_TAGS_NAME}:</td>
+				<td colspan="3"><input type="text" name="tags" value="{$product_tags}" style="width: 99%;" /></td>
+			</tr>
+		</tbody>
+	</table>
+	<br class="clear" />
+
+	<table class="widefat" cellspacing="0" id="add_cat">
+		<thead>
+			<tr>
+				<th colspan="4"><a><span><strong>{$smarty.const.ADMIN_CATEGORY_APPENDED_PARENTS}</strong></span></a></th>
+			</tr>
+		</thead>
+			<tr class="alternate">
+				<td colspan="4">
+					<select id="addcategory" name="new_appended_category">
+					{foreach from=$cat_list item=categorie}
+					   <option value="{$categorie[0]}">{$categorie[1]}</option>
+					{/foreach}
+					</select>&nbsp;&nbsp;&nbsp;<input type="button" name="add_category" value="{$smarty.const.ADD_BUTTON}" onclick="addcategor();" />
+				</td>
+			</tr>
+			{foreach from=$ex_categories key=key item=category}
+			<tr class="alternate">
+				<td colspan="3" id="t{$key}">{$category.name}<input type="hidden" name="appended_categories[]" value="{$category.cid}" /></td>
+				<td><img onclick="delcateg({$key},0);" alt="Удалить" src="images/backend/delete.png"></a></td>
+			</tr>
+			{/foreach}  
+		<tbody id="alternate_cat">
+		</tbody>
+	</table>
+	</div>
+	<br class="clear" />
+
+	
+	{if $options_list}
+		<table class="widefat" cellspacing="0" id="tab2" style="display:none;width: 100%;">
+			<thead>
+				<tr>
+					<th style="width: 60%;"><a><span><strong>{$smarty.const.ADMIN_PRODUCTS_VARIANTS_GROUPS}</strong></span></a></th>
+					<th style="width: 40%;text-align:center;"><a><span><strong>Количество</strong></span></a></th>
+					<th style="width: 1px;">&nbsp;</th>
+				</tr>
+			</thead>
+			<tbody>
+				{foreach key=key item=options from=$options_list}
+				<tr class="alternate">
+					<td><a href="#" onclick="anichange('#{$key}');  return false" title="Показать/Скрыть">{$options.name}</a></td>
+					<td style="text-align:center;"><strong>{$options.val|@count}</strong></td>
+					<td>&nbsp;</td>
+				</tr>
+				<tr class="alternate" style="display: none;" id="{$key}">
+					<td colspan="3" align="center">
+					<table style="width: 95%;">
+						{foreach item=var from=$options.val}
+						<tr class="alternate">
+							<td><input title="Наценка к стоимости продукта" type="checkbox" id="chek{$var.variantID}" onclick="JavaScript:Checkbox_param_Change({$var.variantID},this);" name="val[{$key}][{$var.variantID}][check]" {if isset($variant[$var.variantID].optionID)}checked="checked"{/if} /></td>
+							<td>{$var.name}</td>
+							<td><input title="Надценка" {if !isset($variant[$var.variantID].optionID)}disabled="disabled"{/if} type="text" size="10" value="{$var.price_surplus}" name="val[{$key}][{$var.variantID}][price_surplus]" id="price{$var.variantID}" /></td>
+							<td><input title="Поумолчанию" {if $var.default}checked="checked"{/if} {if !isset($variant[$var.variantID].optionID)}disabled="disabled"{/if} type="radio" name="default[{$key}]" value="{$var.variantID}" id="def{$var.variantID}" /></td>
+							<td><input size="8" title="{$smarty.const.TABLE_PRODUCT_QUANTITY}" type="text" {if !isset($variant[$var.variantID].optionID)}disabled="disabled"{/if} name="val[{$key}][{$var.variantID}][count]" value="{$variant[$var.variantID].count}" id='count{$var.variantID}' /></td>
+							<td><input title="Фото" type="file" style="width: 250px;" name="var[{$var.variantID}]" {if !isset($variant[$var.variantID].optionID)}disabled="disabled"{/if} id="file{$var.variantID}" /></td>
+							<td>{if trim($var.picture)}&nbsp;&nbsp;<a class="thickbox" href="./products_pictures/{$var.picture}-B.jpg"><img class="thickbox" alt="" style="margin-bottom: 3px;" id="dp{$var.variantID}" src="./products_pictures/{$var.picture}-SC.jpg" /></a>{/if}</td>
+							<td>{if trim($var.picture)}&nbsp;&nbsp;<a href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=catalog&amp;sub=products_edit&amp;productID={$product_edit[14]}&amp;picture_remove_d={$var.variantID}"><img src="./images/backend/delete.png" alt="" title="{$smarty.const.DELETE_BUTTON}" /></a>{/if}</td>
+							<input type="hidden" name="IMG[{$var.variantID}]" value='{$var.picture}' />
+						</tr>
+						{/foreach}
+					</table>
+					</td>
+				</tr>
+				{/foreach}
+			</tbody>
+		</table>
+	{/if}
+
+	<p><input type="submit" id='submit_form_p' name="submit" class="button-primary" value="{$smarty.const.SAVE_BUTTON}" /></p>
+</form>
+
+{literal}
+<script type="text/javascript">
+function Checkbox_param_Change(q,elem) {
+        var priceid="price"+q;  
+        var defid="def"+q; 
+        var countid="count"+q;  
+        var fileid="file"+q; 
+	_checked = elem.checked;
+        document.getElementById(priceid).disabled =!_checked;
+        document.getElementById(defid).disabled =!_checked; 
+        document.getElementById(countid).disabled =!_checked; 
+        document.getElementById(fileid).disabled =!_checked;
+}
+
+function anichange (objName) {
+  if ( $(objName).css('display') == 'none' ) {
+    $(objName).animate({height: 'show'}, 400);
+  } else {
+    $(objName).animate({height: 'hide'}, 200);
+  }
+}
+
+function CuteWebUI_AjaxUploader_OnTaskComplete(task)
+	{
+		var div=document.createElement("DIV");
+		var link=document.createElement("A");
+		link.setAttribute("href","savefiles/myprefix_"+task.FileName);
+		link.innerHTML="You have uploaded file : savefiles/myprefix_"+task.FileName;
+		link.target="_blank";
+		div.appendChild(link);
+		document.body.appendChild(div);
+	}
+
+	CKEDITOR.replace( 'description', {filebrowserBrowseUrl : './core/ckeditor/plugins/elfinder/elfinder.html'});
+	CKEDITOR.replace( 'brief_description', {filebrowserBrowseUrl : './core/ckeditor/plugins/elfinder/elfinder.html'});
+</script>
+{/literal}

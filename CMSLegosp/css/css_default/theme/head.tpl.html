@@ -1,0 +1,46 @@
+{*********************************************************************************
+*                                                                                *
+*   shop-script Legosp - legosp.net                                              *
+*   Skype: legoedition                                                           *
+*   Email: legoedition@gmail.com                                                 *
+*   Лицензионное соглашение: https://legosp.net/info/litsenzionnoe_soglashenie/  *
+*   Copyright (c) 2010-2019  All rights reserved.                                *
+*                                                                                *
+*********************************************************************************}
+ 
+  <head>
+    <base href="//{$smarty.const.CONF_SHOP_URL}/">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{if $meta_title}{$meta_title}{else}{$page_title}{/if}</title>
+    <meta name="keywords" content="{if $meta_keywords}{$meta_keywords}{else}{$page_keywords}{/if}">
+    <meta name="description" content="{if $meta_desc}{$meta_desc}{else}{$page_description}{/if}">
+    {if $rel_canonical}<link rel="canonical" href="{$rel_canonical}">{/if}
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=cyrillic,latin' rel='stylesheet' type='text/css'>
+
+
+    <link rel="stylesheet" href="./css/css_{$smarty.const.CONF_COLOR_SCHEME}/source/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/css_{$smarty.const.CONF_COLOR_SCHEME}/stylesheet/stylesheet.css">
+    <link rel="stylesheet" href="./css/css_{$smarty.const.CONF_COLOR_SCHEME}/stylesheet/responsive.css">
+    <link rel="stylesheet" href="./css/css_{$smarty.const.CONF_COLOR_SCHEME}/source/awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="./css/css_{$smarty.const.CONF_COLOR_SCHEME}/source/superfish/css/superfish.css">
+    <link rel="stylesheet" href="./css/css_{$smarty.const.CONF_COLOR_SCHEME}/source/owl-carousel/owl.carousel.css">
+    <link rel="stylesheet" href="./css/fancybox.css">
+
+    <link rel="alternate" type="application/rss+xml" title="{$page_title} RSS Feed" href="http://{$smarty.const.CONF_SHOP_URL}/feed.xml">
+
+    <script src="./css/css_{$smarty.const.CONF_COLOR_SCHEME}/source/js_jquery.js"></script>
+
+    <script src="./core/core_ajaxconst.php"></script>
+    <script src="./css/css_{$smarty.const.CONF_COLOR_SCHEME}/source/js_scripts.js"></script>
+
+    <script src="./css/css_{$smarty.const.CONF_COLOR_SCHEME}/source/bootstrap/js/bootstrap.min.js"></script>
+    <script src="./css/css_{$smarty.const.CONF_COLOR_SCHEME}/source/owl-carousel/owl.carousel.min.js"></script>
+    <script src="./css/css_{$smarty.const.CONF_COLOR_SCHEME}/source/custom.js"></script>
+
+
+  </head>
+

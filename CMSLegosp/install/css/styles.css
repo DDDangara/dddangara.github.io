@@ -1,0 +1,180 @@
+
+/*********************************************************************************
+*                                                                                *
+*   shop-script Legosp - legosp.net                                              *
+*   Skype: legoedition                                                           *
+*   Email: legoedition@gmail.com                                                 *
+*   Лицензионное соглашение: https://legosp.net/info/litsenzionnoe_soglashenie/  *
+*   Copyright (c) 2010-2019  All rights reserved.                                *
+*                                                                                *
+*********************************************************************************/
+ 
+html, body { 
+	font-size:0.9em; 
+	font-family:Trebuchet MS, Arial, Helvetica, sans-serif;
+}
+
+h2 {
+	color:#49545C;
+}
+a {color: #febf01;}
+a:hover { color:#333333; }
+
+blockquote {
+	border: 1px solid silver;
+	background: #fff;
+}
+
+#wrapper {
+	width: 650px;
+	margin: auto;
+	padding: 0;
+}
+
+#header {
+	width: 590px;
+	height: 70px;
+	margin: auto;
+	color: #999999;
+}
+
+#header h1 {
+	padding-top: 18px;
+	padding-left: 350px;
+}
+
+.logo {
+	position: absolute;
+	z-index: -1;
+	top: 25px;
+}
+
+.wizard{
+	margin: auto;
+	padding: auto;
+}
+
+.wizard-nav {
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-top: 0px;
+	display: block;
+	margin-left:auto;
+	margin-right:auto;
+	overflow:hidden;
+	height: 40px;
+	background: #999999;
+	border-radius: 1px;
+	margin-bottom: 20px;
+}
+.wizard-nav a{
+	text-decoration: none;
+	height: 40px;
+	line-height: 42px;
+	width: 140px;
+	display: block;
+	margin: 0;
+	text-align:center;
+	color: #fff;
+	font-size:1em;
+	background:none;
+	cursor: default;
+	display: inline-block;
+	text-transform: uppercase;
+}
+.wizard-nav a.active {
+	color:#fff;
+	background: #333333;
+}
+
+.wizardcontrols { margin-top:20px; margin-bottom:20px; overflow:hidden; }
+
+.wizardcontrols .wizardnext {
+	width: 120px;
+	padding:2px;
+	font-size:1.2em;
+	cursor: pointer;
+	border: solid 1px #333333;
+	background: #333333c7;
+	color: #ffffff;
+}
+.wizardcontrols .wizardprev {width: 120px;padding:2px;font-size:1.2em;width: 120px;padding: 2px;font-size: 1.2em;cursor: pointer;border: solid 1px #333333;background: #333333c7;color: #ffffff;margin-right: 10px;}
+
+.wizardpage img{ float:left; margin-right:12px; margin-bottom:12px; }
+
+.wizardpage {
+	width: 644px;
+	margin:auto;
+}
+
+.wizardpage h2 {
+	margin-top: 0;
+}
+
+table{
+	margin-bottom:15px;
+}	
+
+th, td{
+	text-align:left;
+	font-size:0.9em;
+}
+
+th { padding-bottom:12px; font-size: 1em; }
+
+td.folder{
+	background:url(../images/folder-icon.png) no-repeat left center; 
+	line-height:16px;
+	padding-left:20px;
+}
+
+td.file{
+	background:url(../images/file-icon.png) no-repeat left center; 
+	line-height:16px;
+	padding-left:20px;
+}
+
+td.extension{
+	background:url(../images/setting-icon.png) no-repeat top left;
+	line-height:16px;
+	padding-left:20px;
+}
+
+.txt{ width:200px; border:solid 1px #246493; padding: 2px; }
+.txt:focus{ border:1px solid #FFD100; }
+
+#tutorial { 
+	background:url(../images/book.png) no-repeat left center;
+	line-height:16px;
+	padding-left:22px;
+    margin-right: 15px;
+}
+
+.required {
+	color: #FF0000;
+	font-weight: bold;
+}
+
+.license {
+	background: #EEEEEE;
+	width: 100%;
+	height:250px;
+	line-height:20px;
+	margin-top: 10px;
+	padding: 5px 10px;
+	border: 1px solid silver;
+	overflow: auto;
+}
+
+#footer {
+	width: 600px; 
+	margin: auto;
+	border-top: solid 1px silver;
+	padding-top: 10px;
+	text-align:center;
+	color:#666666;
+}
+#footer a {
+	color: #febf01;
+	text-decoration: none;
+}

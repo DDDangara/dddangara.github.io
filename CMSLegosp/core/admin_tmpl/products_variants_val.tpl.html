@@ -1,0 +1,48 @@
+
+{*********************************************************************************
+*                                                                                *
+*   shop-script Legosp - legosp.net                                              *
+*   Skype: legoedition                                                           *
+*   Email: legoedition@gmail.com                                                 *
+*   Лицензионное соглашение: https://legosp.net/info/litsenzionnoe_soglashenie/  *
+*   Copyright (c) 2010-2019  All rights reserved.                                *
+*                                                                                *
+*********************************************************************************}
+ 
+ 
+
+<div id="icon-link-manager" class="icon32"><br /></div><h2>{$smarty.const.ADMIN_PRODUCTS_VARIANTS} <b>{$options_name}</b></h2>
+<br class="clear" />
+
+<form method="post" action="./{$smarty.const.CONF_ADMIN_FILE}" name="form">
+	<input type="hidden" value="catalog" name="dpt">
+	<input type="hidden" value="1" name="variant_var_edit"> 
+	<input type="hidden" value="products_variants" name="sub">
+	<input type="hidden" value="{$edit}" name="edit">
+	<table class="widefat" cellspacing="0">
+		<thead>
+			<tr>
+				<th><a><span><strong>{$smarty.const.ADMIN_PRODUCTS_VARIANTS_GROUPS}</strong></span></a></th>
+				<th><a><span><strong>{$smarty.const.ADMIN_SORT_ORDER}</strong></span></a></th>
+				<th><a><span><strong>{$smarty.const.STRING_ACTIONS}</strong></span></a></th>
+			</tr>
+		</thead>
+		<tbody>
+			{foreach from=$products_variants_val item=variant}
+			<tr class="alternate">
+				<td>
+					<input type="text" name="variant[{$variant.variantID}][name]" style="width: 350px;" value="{$variant.name}" />
+				</td>
+				<td>
+					<input type="text" name="variant[{$variant.variantID}][sort_order]" style="text-align:center;" value="{$variant.sort_order}" />
+				</td>
+				<td>
+					<a title="{$smarty.const.DELETE_BUTTON}" href="javascript:confirmDel('{$smarty.const.DELETE_BUTTON}?','{$smarty.const.CONF_ADMIN_FILE}?dpt=catalog&amp;sub=products_variants&amp;edit={$edit}&amp;del_val={$variant.variantID}');"><img alt="{$smarty.const.DELETE_BUTTON}" src="images/backend/delete.png"></a>
+				</td>
+			</tr>
+			{/foreach}
+		</tbody>
+	</table>
+
+	<p><input type="button" onclick="location='./{$smarty.const.CONF_ADMIN_FILE}?dpt=catalog&amp;sub=products_variants&amp;valadd={$edit}';" class="button-primary" value="{$smarty.const.ADD_BUTTON}" />&nbsp;&nbsp;<input type="submit" name="submit" class="button-primary" value="{$smarty.const.SAVE_BUTTON}" />&nbsp;&nbsp;<input type="button" onclick="location='./{$smarty.const.CONF_ADMIN_FILE}?dpt=catalog&amp;sub=products_variants';" class="button-primary" value="{$smarty.const.CANCEL_BUTTON}" /></p>
+</form>

@@ -1,0 +1,30 @@
+
+/*********************************************************************************
+*                                                                                *
+*   shop-script Legosp - legosp.net                                              *
+*   Skype: legoedition                                                           *
+*   Email: legoedition@gmail.com                                                 *
+*   Лицензионное соглашение: https://legosp.net/info/litsenzionnoe_soglashenie/  *
+*   Copyright (c) 2010-2019  All rights reserved.                                *
+*                                                                                *
+*********************************************************************************/
+ 
+#header{
+	margin-left:30px;
+}
+
+.wizard-nav {
+	padding-left:27px;
+	margin-left: 5px;
+	padding-top: 7px;
+	width: 632px;
+}
+
+.wizardpage{ 
+	margin-left:30px;
+	padding-top:5px;
+}
+
+#footer{
+	margin-left: 25px;
+}

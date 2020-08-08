@@ -1,0 +1,114 @@
+{*********************************************************************************
+*                                                                                *
+*   shop-script Legosp - legosp.net                                              *
+*   Skype: legoedition                                                           *
+*   Email: legoedition@gmail.com                                                 *
+*   Лицензионное соглашение: https://legosp.net/info/litsenzionnoe_soglashenie/  *
+*   Copyright (c) 2010-2019  All rights reserved.                                *
+*                                                                                *
+*********************************************************************************}
+ 
+{* order notification for customer *}
+
+<html>
+ <head>
+  <meta http-equiv="Content-Type" content="text/html; charset={$smarty.const.DEFAULT_CHARSET}" />
+  <style type="text/css">
+  {literal}
+    a:link {color: #777777;}
+    a:hover {color: #555555;}
+  {/literal}
+  </style>
+ </head>
+<body>
+  <a href="https://legosp.net/"><img border="0" src="http://{$smarty.const.CONF_SHOP_URL}/css/css_default/image/logo.png"></a>
+  <hr color="#777777" />
+  <h3><font color="#777777">{$smarty.const.EMAIL_HELLO}, {$order_custname}</font></h3>
+  <font color="#777777">{$smarty.const.STRING_ORDER_ID_MAIL}: {$order_id}</font>
+  <br />
+  <br />
+  <table cellspacing="0" cellpadding="3">
+{section name=i loop=$order_content}
+	<tr>
+		<td>{if $order_content[i][4] ne ""}[{$order_content[i][4]}]{/if}</td>
+		<td>{$order_content[i][1]}</td>
+		<td align="center">{$order_content[i][2]}</td>
+		<td>{$order_content[i][3]}</td>
+	</tr>
+{/section}
+{if $shipping ne NULL}
+	<tr>
+		<td>&nbsp;</td>
+		<td>{$smarty.const.ADMIN_SHIPPING} {$shipping[2]}</td>
+		<td>&nbsp;</td>
+		<td>{$shipping[1]} {$smarty.const.CONF_CURRENCY_ID_RIGHT}</td>
+	</tr>
+{/if}
+
+{if $minimal ne NULL}
+	<tr>
+		<td>&nbsp;</td>
+		<td>{$minimal[0]}</td>
+		<td>&nbsp;</td>
+		<td>{$minimal[1]} {$smarty.const.CONF_CURRENCY_ID_RIGHT}</td>
+	</tr>
+{/if}
+{if $present ne NULL}
+	<tr>
+		<td>&nbsp;</td>
+		<td>{$present[2]}</td>
+		<td>&nbsp;</td>
+		<td>{$smarty.const.STRING_PRESENT}</td>
+	</tr>
+{/if}
+{if $discount ne NULL}
+	<tr>
+		<td>&nbsp;</td>
+		<td><b>{$smarty.const.ADMIN_DISCOUNT}</b></td>
+		<td>{$discount[1]} %</td>
+		<td><b>{$discount[3]}</b></td>
+	</tr>
+{/if}
+{if $get_fast_order ne NULL}
+	<tr>
+		<td>&nbsp;</td>
+		<td>{$smarty.const.ADMIN_FAST_ORDER}</td>
+		<td>&nbsp;</td>
+		<td>{$get_fast_order}{$smarty.const.CONF_CURRENCY_ID_RIGHT}</td>
+	</tr>
+{/if}
+	<tr>
+		<td><font color="#777777"><b>{$smarty.const.TABLE_TOTAL}:</b></font></td>
+		<td>&nbsp;</td>
+		<td width="50px">&nbsp;</td>
+		<td><font color="#777777"><b>{$order_total}</b></font></td>
+	</tr>
+  </table>
+  <br />
+  {$smarty.const.EMAIL_ORDER_WILL_BE_SHIPPED_TO}:<br />
+  {$order_shipping_address}<br />
+  <br />
+{if $manager}
+  <font color="#777777"><b>{$smarty.const.ADMIN_MANAGER_NAME_MAIL}:</b> {$manager}</font><br />
+  <br />
+{/if}
+  <br />
+  <font color="#777777"><b>{$smarty.const.EMAIL_OUR_MANAGER_WILL_CONTACT_YOU}</b></font><br />
+  <hr color="#777777" />
+  <font color="#777777">
+    <b><i>
+      {$smarty.const.EMAIL_SINCERELY}, <a href="http://{$smarty.const.CONF_SHOP_URL}">{$smarty.const.CONF_SHOP_NAME}</a>
+    </i></b>
+  </font><br />
+	Для оплаты заказа перейдите по ссылке:<br />
+	{foreach from=$payment_type key=k1 item=v1}
+		<a href="http://{$smarty.const.CONF_SHOP_URL}/index.php?payment&order_id={$order_id}&payment_type={$v1.type}&mail_to={$mail_to}"> {$v1.name} </a><br>
+	{/foreach}
+	{*
+	http://test.legosp.net/payment/
+	<pre>
+		{$payment_type|print_r}
+	</pre>
+	*}
+</body>
+</html>

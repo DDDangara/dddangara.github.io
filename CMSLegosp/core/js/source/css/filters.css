@@ -1,0 +1,25 @@
+.filters_box {margin-bottom:5px; padding:5px;
+vertical-align: top; border: 1px solid #EEEEEE; border-radius: 7px;}
+.filters_name {font:bold 12px/17px Arial; margin-bottom:6px;text-transform:uppercase;}
+.filters_name a {display:block;text-decoration:none;color:#333;cursor:pointer;}
+.filters_range {margin:10px 0;text-align:center; }
+.filters_range input {width: 4em; margin: 0 .3em; text-align:right;}
+
+#slider_price {background:#fff url(../img/slider_price-bg.png); width:96%} 
+
+.ui-slider { position: relative; }
+.ui-slider .ui-slider-handle { position: absolute; z-index: 2; width: 19px; height: 19px; background: url(../img/jslider.png) no-repeat; cursor: pointer; outline:none;}
+.ui-slider .ui-slider-range { position: absolute; z-index: 1; font-size: .7em; display: block; border: 0; overflow: hidden; }
+.ui-slider-horizontal { height: 8px; }
+.ui-slider-horizontal .ui-slider-handle { top: -6px; margin-left: -6px; }
+.ui-slider-horizontal .ui-slider-range { top: 0; height: 100%; }
+.ui-slider-horizontal .ui-slider-range-min { left: 0; }
+.ui-slider-horizontal .ui-slider-range-max { right: 0; }
+.ui-widget-content { border: 1px solid #D4D4D4; background: #fff; }
+.ui-widget-header {border: 1px solid #D4D4D4;background: #333;} 
+.ui-corner-all { -moz-border-radius: 4px; -webkit-border-radius: 4px; border-radius: 4px; } 
+
+#filters .collapsible { max-height: 125px; overflow-x: hidden; overflow-y: auto; } 
+.switcher-icon { background:url("../img/switcher.png") no-repeat; float:left; display:block; height:8px; width:8px; margin:4px 4px 0 0; } 
+.switcher-on .switcher-icon { background-position:-15px 0; } 
+.switcher-off .switcher-icon { background-position:0px 0; } 

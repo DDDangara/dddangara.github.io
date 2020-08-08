@@ -1,0 +1,97 @@
+
+{*********************************************************************************
+*                                                                                *
+*   shop-script Legosp - legosp.net                                              *
+*   Skype: legoedition                                                           *
+*   Email: legoedition@gmail.com                                                 *
+*   Лицензионное соглашение: https://legosp.net/info/litsenzionnoe_soglashenie/  *
+*   Copyright (c) 2010-2019  All rights reserved.                                *
+*                                                                                *
+*********************************************************************************}
+ 
+ 
+
+{* appearence configurations template *}
+<div id="icon-options-general" class="icon32"><br /></div><h2>{$smarty.const.ADMIN_SHARE}</h2>
+<br class="clear" />
+
+<form action="./{$smarty.const.CONF_ADMIN_FILE}" method="post">
+	<input type="hidden" name="dpt" value="conf">
+	<input type="hidden" name="sub" value="share">
+	<input type="hidden" name="save_conf" value="1">
+<table class="widefat" cellspacing="0">
+		<thead>
+			<tr>
+				<th style="width: 300px;"><a><span><strong>Добавить новую скидку</strong></span></a></th>
+				<th>{if $configuration_saved eq 1}<strong>{$smarty.const.ADMIN_UPDATE_SUCCESSFUL}</strong>{/if}</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_DISCOUNT_VALUE}:</td>
+				<td><input style="width: 100px;" type="text" name="new_discount_val" value="" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="new_discount_pr" value="" style="width: 40px;" />&nbsp;&nbsp;%</td>
+			</tr>
+		</tbody>
+	</table>
+	<br class="clear" />
+
+	<table class="widefat" cellspacing="0">
+		<thead>
+			<tr>
+				<th style="width: 300px;"><a><span><strong>{$smarty.const.ADMIN_SHARE_DISCOUNT}</strong></span></a></th>
+				<th>&nbsp;</th>
+			</tr>
+		</thead>
+		<tbody>
+			{section name=i loop=$discounts}
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_DISCOUNT_VALUE}:</td>
+				<td style="white-space:nowrap;"><input style="width: 100px;" type="text" name="discount_val_{$discounts[i][0]}" value="{$discounts[i][2]}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="discount_pr_{$discounts[i][0]}" value="{$discounts[i][1]}" style="width: 40px;" />&nbsp;&nbsp;%&nbsp;&nbsp;&nbsp;&nbsp;<a href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=conf&sub=share&delete={$discounts[i][0]}"><img src="./images/backend/delete.png" title="{$smarty.const.DELETE_BUTTON}" alt="{$smarty.const.DELETE_BUTTON}" /></a></td>
+			</tr>
+			{/section}
+		</tbody>
+	</table>
+	{*<br class="clear" />
+	
+	<table class="widefat" cellspacing="0">
+		<thead>
+			<tr>
+				<th style="width: 300px;"><a><span><strong>Добавить новый купон</strong></span></a></th>
+				<th>&nbsp;</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_SHARE_CUPON_FOR}:</td>
+				<td><input style="width: 100px;" type="text" name="new_cupon_val" value="" />&nbsp;&nbsp;
+					<select name="new_cupon_type">
+						<option value="1">%</option>
+						<option value="2">{$smarty.const.CONF_CURRENCY_ID_RIGHT}</option>
+					</select>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	{if $cupons}
+	<br class="clear" />
+	
+	<table class="widefat" cellspacing="0">
+		<thead>
+			<tr>
+				<th style="width: 300px;"><a><span><strong>{$smarty.const.ADMIN_SHARE_CUPONS}</strong></span></a></th>
+				<th>&nbsp;</th>
+			</tr>
+		</thead>
+		<tbody>
+			{section name=i loop=$cupons}
+			<tr class="alternate">
+				<td>{$cupons[i][3]}</td>
+				<td><input style="width: 100px;" type="text" name="cupon_val_{$cupons[i][0]}" value="{$cupons[i][2]}" />&nbsp;&nbsp;{if $cupons[i][1] == 1}%{else}{$smarty.const.CONF_CURRENCY_ID_RIGHT}{/if}&nbsp;&nbsp;&nbsp;&nbsp;<a href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=conf&sub=share&delete={$cupons[i][0]}"><img src="./images/backend/delete.png" title="{$smarty.const.DELETE_BUTTON}" alt="{$smarty.const.DELETE_BUTTON}" /></a></td>
+			</tr>
+			{/section}
+		</tbody>
+	</table>
+	{/if}*}
+
+	<p><input type="submit" name="submit" class="button-primary" value="{$smarty.const.SAVE_BUTTON}" /></p>
+</form>

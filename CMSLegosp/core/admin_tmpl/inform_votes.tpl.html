@@ -1,0 +1,112 @@
+
+{*********************************************************************************
+*                                                                                *
+*   shop-script Legosp - legosp.net                                              *
+*   Skype: legoedition                                                           *
+*   Email: legoedition@gmail.com                                                 *
+*   Лицензионное соглашение: https://legosp.net/info/litsenzionnoe_soglashenie/  *
+*   Copyright (c) 2010-2019  All rights reserved.                                *
+*                                                                                *
+*********************************************************************************}
+ 
+ 
+
+{* pages *}
+<div id="icon-edit-pages" class="icon32"><br /></div><h2>{$smarty.const.ADMIN_VOTES}</h2>
+<br class="clear" />
+
+<form action="./{$smarty.const.CONF_ADMIN_FILE}" method="post" enctype="multipart/form-data">
+	<input type="hidden" name="dpt" value="inform" />
+	<input type="hidden" name="sub" value="votes" />
+	<input type="hidden" name="add_vote" value="{$votes.votesID}" />
+	<table class="widefat" cellspacing="0">
+		<thead>
+			<tr>
+				<th colspan="2"><a><span><strong>{if isset($smarty.get.news)}Редактирование{else}Добавление нового{/if} голосования</strong></span></a></th>
+				<th>&nbsp;</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="alternate">
+				<td colspan="2"><strong>{$smarty.const.ADMIN_VOTES_NOW}</strong></td>
+				<td rowspan="12" style="vertical-align: top;width: 250px;">
+					<div style="width: 250px; height: 550px; overflow: auto;">
+						<table class="widefat" cellpadding="0" cellspacing="0" width="100%">
+							<thead>
+								<tr><th colspan="3"><strong>{$smarty.const.ADMIN_VOTES_ALL}</strong></th></tr>
+							</thead>
+							<tbody>
+								<tr class="alternate">
+									<td>&nbsp;</td>
+									<td colspan="2"><strong>{$smarty.const.ADMIN_VOTES_ARCHIVE}</strong></td>
+								</tr>
+								{section name=i loop=$votes_list_count}
+								<tr class="alternate">
+									<td><a href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=inform&sub=votes&archive={$votes_list[0][i]}&incomplite"><img src="./images/backend/incomplite.png" title="{$smarty.const.ADMIN_VOTES_INCOMPLITE}" alt="" /></a></td>
+									<td><a href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=inform&sub=votes&votes={$votes_list[0][i]}">{$votes_list[1][i]}</a></td>
+									<td><a href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=inform&sub=votes&del_votes={$votes_list[0][i]}"><img border="0" src="./images/backend/delete.png" alt="[{$smarty.const.ADMIN_PAGE_DELETE}]" /></a></td>
+								</tr>
+								{/section}
+							</tbody>
+						</table>
+					</div>
+				</td>
+			</tr>
+			<tr class="alternate">
+				<td style="width: 200px;">{$smarty.const.ADMIN_PAGE_TITLE}:</td>
+				<td><input type="text" name="votes_title" value="{$votes.title}" style="width: 90%;" />&nbsp;&nbsp;&nbsp;<a href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=inform&sub=votes&archive={$votes.votesID}&complite"><img src="./images/backend/complite.png" title="{$smarty.const.ADMIN_VOTES_COMPLITE}" alt="" /></a></td>
+			</tr>
+			{assign var="allr" value=0}
+			{section name=i loop=10}
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_VOTES_QUEST} {$smarty.section.i.index}:</td>
+				<td><input type="text" name="votes_quest_{if $votes_results[i].ID}{$votes_results[i].ID}{else}{$smarty.section.i.index}{/if}" value="{$votes_results[i].question}" style="width: 90%;" />&nbsp;&nbsp;<input type="text" name="votes_res_{$votes_results[i].ID}" value="{$votes_results[i].result}" style="width: 30px;" /></td>
+				{assign var="allr" value=$allr+$votes_results[i].result}
+			</tr>
+			{/section}
+		</tbody>
+	</table>
+	<br class="clear" />
+
+	<table cellspacing="0" style="width: 100%;"><tr><td>
+		<table class="widefat" cellspacing="0" style="width: 100%;float:left;">
+			<thead>
+				<tr><th colspan="2"><a><span><strong>{$smarty.const.ADMIN_VOTES_RESULT}</strong></span></a></th></tr>
+			</thead>
+			<tbody>
+				{section name=i loop=$votes_results_count}
+					{if $allr}
+					<tr class="alternate">
+						<td style="width: 250px;">{$votes_results[i].question}</td>
+						<td>
+							<div style="background: #FD5300; height: 15px; margin: 2px; text-align: center; width: {if $allr>0}{$votes_results[i].result*520/$allr+50|string_format:"%d"}{else}0{/if}px">{if $allr>0}{$votes_results[i].result*100/$allr|string_format:"%d"}{else}0{/if}%</div>
+						</td>
+					</tr>
+					{/if}
+				{/section}
+			</tbody>
+		</table>
+	</td><td style="vertical-align: top;width: 360px;">
+		<table class="widefat" cellspacing="0" style="width: 350px;float:right;">
+			<thead>
+				<tr><th colspan="2"><a><span><strong>{$smarty.const.ADMIN_SETTINGS}</strong></span></a></th></tr>
+			</thead>
+			<tbody>
+				<tr class="alternate">
+					<td style="width: 250px;">{$smarty.const.ADMIN_VOTES} {$smarty.const.ADMIN_VOTES_ON}</td>
+					<td><input type="checkbox" name="votes_on" {if $smarty.const.CONF_VOTES_ON eq 1}checked="checked"{/if} /></td>
+				</tr>
+				{*<tr class="alternate">
+					<td>{$smarty.const.ADMIN_VOTES_IP}</td>
+					<td><input type="checkbox" name="votes_ip" {if $smarty.const.CONF_VOTES_IP eq 1}checked="checked"{/if} /></td>
+				</tr>
+				<tr class="alternate">
+					<td>{$smarty.const.ADMIN_VOTES_TOMAIL}</td>
+					<td><input type="checkbox" name="votes_tomail" {if $smarty.const.CONF_VOTES_TOMAIL eq 1}checked="checked"{/if} /></td>
+				</tr>*}
+			</tbody>
+		</table>
+	</td></tr></table>
+
+	<p><input type="button" onclick="location='./{$smarty.const.CONF_ADMIN_FILE}?dpt=inform&sub=votes&add=1';" class="button" value="{$smarty.const.ADMIN_AUX_ADD}" />&nbsp;&nbsp;<input type="submit" name="submit" class="button-primary" value="{$smarty.const.SAVE_BUTTON}" /></p>
+</form>

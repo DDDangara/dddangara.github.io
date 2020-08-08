@@ -1,0 +1,46 @@
+
+{*********************************************************************************
+*                                                                                *
+*   shop-script Legosp - legosp.net                                              *
+*   Skype: legoedition                                                           *
+*   Email: legoedition@gmail.com                                                 *
+*   Лицензионное соглашение: https://legosp.net/info/litsenzionnoe_soglashenie/  *
+*   Copyright (c) 2010-2019  All rights reserved.                                *
+*                                                                                *
+*********************************************************************************}
+
+{function name=cats_tree}
+    {math assign="leval" equation="x + y" x=$leval y=1}
+    {foreach name=foo from=$data item=category}
+        <li class="panel"><a href="./{$category.hurl}"{if $categoryID == $category.categoryID} class="active"{/if}>{$category.name}</a>
+
+        {if $smarty.const.CONF_SHOW_MENU == 1}{if count( (array)$category.subitems ) > 0}<span class="head"><a style="float:right;padding-right:5px;" class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion-category" href="#category{$category.categoryID}"><span class="plus">+</span><span class="minus">-</span></a></span>{/if}{/if}
+
+            {if count( (array)$category.subitems )>0}
+                {if $smarty.const.CONF_SHOW_MENU == 1}<div id="category{$category.categoryID}" class="panel-collapse collapse " style="clear:both">{/if}
+                    <ul>
+                        {call name=cats_tree data=$category.subitems m=$m}
+                    </ul>
+                {if $smarty.const.CONF_SHOW_MENU == 1}</div>{/if}
+            {/if}
+
+        </li>
+    {/foreach}
+{/function}
+
+<div class="box box-categories">
+    <div class="box-heading">{$smarty.const.ADMIN_CATEGORY_TITLE}</div>
+    <div class="box-content box-category">
+{if $smarty.const.CONF_SHOW_MENU == 1}
+    <ul class="accordion" id="accordion-category">
+            {call name=cats_tree data=$categories_tree leval=0}
+    </ul>
+{else}
+    <ul>
+            {call name=cats_tree data=$categories_tree leval=0}
+    </ul>
+{/if}
+    </div>
+</div>
+
+

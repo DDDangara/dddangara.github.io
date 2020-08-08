@@ -1,0 +1,76 @@
+
+{*********************************************************************************
+*                                                                                *
+*   shop-script Legosp - legosp.net                                              *
+*   Skype: legoedition                                                           *
+*   Email: legoedition@gmail.com                                                 *
+*   Лицензионное соглашение: https://legosp.net/info/litsenzionnoe_soglashenie/  *
+*   Copyright (c) 2010-2019  All rights reserved.                                *
+*                                                                                *
+*********************************************************************************}
+ 
+ 
+
+{* appearence configurations template *}
+<div id="icon-options-general" class="icon32"><br /></div><h2>{$smarty.const.ADMIN_SHIPPING}</h2>
+<br class="clear" />
+
+<form action="./{$smarty.const.CONF_ADMIN_FILE}" method="post">
+	<input type="hidden" name="dpt" value="conf">
+	<input type="hidden" name="sub" value="shipping">
+	<input type="hidden" name="save_conf" value="1">
+	<table class="widefat" cellspacing="0">
+		<thead>
+			<tr class="alternate">
+				<th style="width: 300px;"><a><span><strong>{$smarty.const.ADMIN_SHIPPING_CONF}</strong></span></a></th>
+				<th>{if $configuration_saved eq 1}<strong>{$smarty.const.ADMIN_UPDATE_SUCCESSFUL}</strong>{/if}</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_SHIPPING_FREE} ({$smarty.const.CONF_CURRENCY_ID_RIGHT}):</td>
+				<td><input style="width: 135px;" type="text" name="shipping_free_val" value="{$smarty.const.CONF_SHIPPING_FREE_VAL}" />&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="shipping_free_on" {if $smarty.const.CONF_SHIPPING_FREE_ON eq 1}checked="checked"{/if} />&nbsp;&nbsp;{$smarty.const.ADMIN_ON}</td>
+			</tr>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_FAST_ORDER} ({$smarty.const.CONF_CURRENCY_ID_RIGHT}):</td>
+				<td><input style="width: 135px;" type="text" name="fast_order_cost" value="{$smarty.const.CONF_FAST_ORDER_COST|escape}" />&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="fast_order_on" {if $smarty.const.CONF_FAST_ORDER_ON eq 1}checked="checked"{/if} />&nbsp;&nbsp;{$smarty.const.ADMIN_ON}</td>
+			</tr>
+		</tbody>
+	</table>
+	<br class="clear" />
+
+	<table class="widefat" cellspacing="0">
+		<thead>
+			<tr>
+				<th style="width: 300px;"><a><span><strong>Добавить способ доставки</strong></span></a></th>
+				<th>&nbsp;</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_SHIPPING_WHERE}:</td>
+				<td><input style="width: 200px;" type="text" name="new_shipping_where" value="" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input style="width: 50px;" type="text" name="new_shipping_val" value="" />&nbsp;&nbsp;{$smarty.const.CONF_CURRENCY_ID_RIGHT}</td>
+			</tr>
+		</tbody>
+	</table>
+	<br class="clear" />
+
+	<table class="widefat" cellspacing="0">
+		<thead>
+			<tr>
+				<th style="width: 300px;"><a><span><strong>{$smarty.const.ADMIN_SHIPPING}</strong></span></a></th>
+				<th>&nbsp;</th>
+			</tr>
+		</thead>
+		<tbody>
+			{section name=i loop=$shipping}
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_SHIPPING_WHERE}:</td>
+				<td style="white-space:nowrap;"><input style="width: 200px;" type="text" name="shipping[{$shipping[i][0]}][code]" value="{$shipping[i][2]}" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input style="width: 50px;" type="text" name="shipping[{$shipping[i][0]}][value]" value="{$shipping[i][1]}" />&nbsp;&nbsp;{$smarty.const.CONF_CURRENCY_ID_RIGHT}&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" id="def1" value="{$shipping[i][0]}" name="default" {if $shipping[i][3]}checked{/if} title="{$smarty.const.STRING_default}">&nbsp;&nbsp;&nbsp;&nbsp;<a href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=conf&sub=shipping&delete={$shipping[i][0]}"><img src="./images/backend/delete.png" title="{$smarty.const.DELETE_BUTTON}" alt="{$smarty.const.DELETE_BUTTON}" /></a></td>
+			</tr>
+			{/section}
+		</tbody>
+	</table>
+
+	<p><input type="submit" name="submit" class="button-primary" value="{$smarty.const.SAVE_BUTTON}" /></p>
+</form>

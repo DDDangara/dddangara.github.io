@@ -1,0 +1,76 @@
+
+{*********************************************************************************
+*                                                                                *
+*   shop-script Legosp - legosp.net                                              *
+*   Skype: legoedition                                                           *
+*   Email: legoedition@gmail.com                                                 *
+*   Лицензионное соглашение: https://legosp.net/info/litsenzionnoe_soglashenie/  *
+*   Copyright (c) 2010-2019  All rights reserved.                                *
+*                                                                                *
+*********************************************************************************}
+ 
+{* customer information form *}
+
+<div class="box">
+<h1 class="page-title">{$smarty.const.STRING_CONTACT_INFORMATION}</h1>
+
+{if $error} <label for="last_name" generated="true" class="error">{$smarty.const.ERROR_FILL_FORM}</label> {/if}
+<form action="./{if $smarty.const.CONF_CHPU}cart/order_placed/{else}index.php?order_placement_result=1{/if}" name="custinfo_form" id="custinfo_form" method="post" class="form-horizontal">
+
+  <div class="form-group">
+    <label for="first_name" class="col-sm-3 control-label">{$smarty.const.CUSTOMER_FIRST_NAME} <em class="red">*</em></label>
+    <div class="col-sm-9">
+      <input required  type="text" name="first_name" id="first_name" value="{if $smarty.session.userinf.cust_firstname}{$smarty.session.userinf.cust_firstname}{else}{$smarty.post.first_name}{/if}" style="width: 100%;"  />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="last_name" class="col-sm-3 control-label">{$smarty.const.CUSTOMER_LAST_NAME} <em class="red">*</em></label>
+    <div class="col-sm-9">
+      <input required  type="text" name="last_name" id="last_name" value="{if $smarty.session.userinf.cust_lastname}{$smarty.session.userinf.cust_lastname}{else}{$smarty.post.last_name}{/if}"  style="width: 100%;" />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="email" class="col-sm-3 control-label">{$smarty.const.CUSTOMER_EMAIL} <em class="red">*</em></label>
+    <div class="col-sm-9">
+      <input required type="email" name="email" id="email" value="{if $smarty.session.userinf.cust_email}{$smarty.session.userinf.cust_email}{else}{$reg_userinfo[2]}{/if}" style="width: 100%;"/>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="phone" class="col-sm-3 control-label">{$smarty.const.CUSTOMER_PHONE_NUMBER} <em class="red">*</em></label>
+    <div class="col-sm-9">
+      <input required type="tel" name="phone" id="phone" value="{if $smarty.session.userinf.cust_phone}{$smarty.session.userinf.cust_phone}{else}{$smarty.post.phone}{/if}" style="width: 100%;"/>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="city" class="col-sm-3 control-label">{$smarty.const.CUSTOMER_CITY} <em class="red">*</em></label>
+    <div class="col-sm-9">
+      <input required  type="text" name="city" id="city" value="{if $smarty.session.userinf.cust_city}{$smarty.session.userinf.cust_city}{else}{$reg_userinfo[4]}{/if}" style="width: 100%;"/>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="address" class="col-sm-3 control-label">{$smarty.const.CUSTOMER_ADDRESS} <em class="red">*</em></label>
+    <div class="col-sm-9">
+      <input required type="text" maxlength="100" name="address" id="address" value="{if $smarty.session.userinf.cust_address}{$smarty.session.userinf.cust_address}{else}{$reg_userinfo[5]}{/if}" style="width: 100%;"/>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="comment" class="col-sm-3 control-label">{$smarty.const.CUSTOMER_COMMENT}</label>
+    <div class="col-sm-9">
+      <textarea style="width:100%;" name="comment" id="comment" rows='8' cols='20'></textarea>
+    </div>
+  </div>
+
+<div class="buttons">
+   <div class="right"><input type="hidden" name="complete_order" value="1" />
+   <input type="submit" value="{$smarty.const.STRING_PLACE_ORDER}" class="button" /></div>
+</div>
+
+</form>
+
+</div>

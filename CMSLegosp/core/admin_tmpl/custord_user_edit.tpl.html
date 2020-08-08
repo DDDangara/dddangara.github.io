@@ -1,0 +1,65 @@
+
+{*********************************************************************************
+*                                                                                *
+*   shop-script Legosp - legosp.net                                              *
+*   Skype: legoedition                                                           *
+*   Email: legoedition@gmail.com                                                 *
+*   Лицензионное соглашение: https://legosp.net/info/litsenzionnoe_soglashenie/  *
+*   Copyright (c) 2010-2019  All rights reserved.                                *
+*                                                                                *
+*********************************************************************************}
+ 
+ 
+
+<div id="icon-options-general" class="icon32"><br /></div><h2>{$smarty.const.ADMIN_USERS_EDIT}</h2>
+<br class="clear" />
+
+<form action="./{$smarty.const.CONF_ADMIN_FILE}" method="post">
+	<input type="hidden" name="dpt" value='custord' />
+	<input type="hidden" name="sub" value='users' />
+	<input type="hidden" name="custID" value="{$userinfo.custID}" />
+	<table class="widefat" cellspacing="0">
+		<thead>
+			<tr>
+				<th style="width: 150px;"><a><span><strong>Наименование</strong></span></a></th>
+				<th><a><span><strong>Значение</strong></span></a></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="alternate">
+				<td><strong>{$smarty.const.CUSTOMER_FIRST_NAME}</strong></td>
+				<td><input style="width: 250px" type="text" name="userinfo[cust_firstname]" value="{$userinfo.cust_firstname}" /></td>
+			</tr>
+			<tr class="alternate">
+				<td><strong>{$smarty.const.CUSTOMER_LAST_NAME}</strong></td>
+				<td><input style="width: 250px" type="text" name="userinfo[cust_lastname]" value="{$userinfo.cust_lastname}" /></td>
+			</tr>
+			<tr class="alternate">
+				<td><strong>{$smarty.const.CUSTOMER_EMAIL}</strong></td>
+				<td><input style="width: 250px" type="text" name="userinfo[cust_email]" value="{$userinfo.cust_email}" /></td>
+			</tr>
+			<tr class="alternate">
+				<td><strong>{$smarty.const.CUSTOMER_PHONE_NUMBER}</strong></td>
+				<td><input style="width: 250px" type="text" name="userinfo[cust_phone]" value="{$userinfo.cust_phone}" /></td>
+			</tr>
+			<tr class="alternate">
+				<td><strong>{$smarty.const.CUSTOMER_CITY}</strong></td>
+				<td><input style="width: 250px" type="text" name="userinfo[cust_city]" value="{$userinfo.cust_city}" /></td>
+			</tr>
+			<tr class="alternate">
+				<td><strong>{$smarty.const.CUSTOMER_ADDRESS}</strong></td>
+				<td><textarea style="width: 250px" name="userinfo[cust_address]">{$userinfo.cust_address}</textarea></td>
+			</tr>
+			<tr class="alternate">
+				<td><strong>{$smarty.const.CUSTOMER_ZIP}</strong></td>
+				<td><input style="width: 250px" type="text" style="width: 250px" maxlength="6" value="{$userinfo.cust_zip}" name="userinfo[cust_zip]"></td>
+			</tr>
+			<tr class="alternate">
+				<td style="text-align:right;"><input id='corect_password' name="chpass" type="checkbox"></td>
+				<td>Изменить пароль</td>
+			</tr>
+		</tbody>
+	</table>
+	
+	<p><input type="submit" name="submit" class="button-primary" value="{$smarty.const.SAVE_BUTTON}" /></p>
+</form>

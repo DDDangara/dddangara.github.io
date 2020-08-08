@@ -1,0 +1,86 @@
+
+
+{*********************************************************************************
+*                                                                                *
+*   shop-script Legosp - legosp.net                                              *
+*   Skype: legoedition                                                           *
+*   Email: legoedition@gmail.com                                                 *
+*   Лицензионное соглашение: https://legosp.net/info/litsenzionnoe_soglashenie/  *
+*   Copyright (c) 2010-2019  All rights reserved.                                *
+*                                                                                *
+*********************************************************************************}
+ 
+ 
+
+{* general configurations template *}
+<div id="icon-plugins" class="icon32"><br /></div><h2>{$smarty.const.ADMIN_MYSQL_DB}</h2>
+<br class="clear" />
+<div style="padding: 5px; border: #CCC solid 1px;">{$smarty.const.ADMIN_MYSQL_DB_WARNING}</div>
+<br class="clear" />
+
+<form action="./{$smarty.const.CONF_ADMIN_FILE}" method="post" id="form" enctype="multipart/form-data" />
+	<input type="hidden" name="dpt" value="system" />
+	<input type="hidden" name="sub" value="mysql_db" />
+	<input type="hidden" name="save_mysql" value="1" />
+	<table class="widefat" cellspacing="0">
+		<thead>
+			<tr>
+				<th width="160"><a><span><strong>{$smarty.const.ADMIN_MYSQL_DB_SETTINGS}</strong></span></a></th>
+				<th>{if $configuration_saved eq 1}<strong>{$smarty.const.ADMIN_UPDATE_SUCCESSFUL}</strong>{else}&nbsp;{/if}</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="alternate">
+				<td width="40%">{$smarty.const.ADMIN_MYSQL_DB_HOST}:</td>
+				<td><input type="text" name="mysql_db_host" value="{$smarty.const.DB_HOST|escape}" style="width: 200px;" /></td>
+			</tr>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_MYSQL_DB_USER}:</td>
+				<td><input type="text" name="mysql_db_user" value="{$smarty.const.DB_USER|escape}" style="width: 200px;" /></td>
+			</tr>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_MYSQL_DB_PASS}:</td>
+				<td><input type="text" name="mysql_db_pass" value="{$smarty.const.DB_PASS|escape}" style="width: 200px;" /></td>
+			</tr>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_MYSQL_CHARSET}:</td>
+				<td>
+					<select name="mysql_charset" style="width: 200px;">
+						<option value="cp1251" {if $smarty.const.DB_CHARSET == "cp1251"}selected="selected"{/if}>windows-1251</option>
+						<option value="utf8" {if $smarty.const.DB_CHARSET == "utf8"}selected="selected"{/if}>utf-8</option>
+					</select>
+				</td>
+			</tr>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_MYSQL_DB_NAME}:</td>
+				<td><input type="text" name="mysql_db_name" value="{$smarty.const.DB_NAME|escape}" style="width: 200px;" /></td>
+			</tr>
+		</tbody>
+	</table>
+		<br class="clear" />
+	<table class="widefat" cellspacing="0">
+		<thead>
+			<tr>
+				<th width="160"><a><span><strong>{$smarty.const.ADMIN_MYSQL_DB_OP}</strong></span></a></th>
+				<th>{if $configuration_saved eq 1}<strong>{$smarty.const.ADMIN_UPDATE_SUCCESSFUL}</strong>{else}&nbsp;{/if}</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="alternate">
+				<td width="40%">{$smarty.const.ADMIN_MYSQL_DB_IMPORT}</td>
+				<td><input type="file" name="mysql_db_import" style="width: 220px;" size="22" />&nbsp;&nbsp;&nbsp;<input type="submit" style="width: 40px;" class="button" value="OK"/></td>
+			</tr>
+			<tr class="alternate">
+				<td colspan="2"><a href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=system&amp;sub=mysql_db&amp;export">[{$smarty.const.ADMIN_MYSQL_DB_EXPORT}]</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+				<a href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=system&amp;sub=mysql_db&amp;optimize">[{$smarty.const.ADMIN_MYSQL_DB_OPTIMIZE}]</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+				<a href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=system&amp;sub=mysql_db&amp;test">[{$smarty.const.ADMIN_MYSQL_DB_TEST}]</a></td>
+			</tr>
+			{if $mysql_result}
+			<tr class="alternate">
+				<td colspan="2" style="padding: 0;">{$mysql_result}</td>
+			</tr>
+			{/if}
+		</tbody>
+	</table>
+	<p><input type="submit" name="submit" class="button-primary" value="{$smarty.const.SAVE_BUTTON}" /></p>
+</form>

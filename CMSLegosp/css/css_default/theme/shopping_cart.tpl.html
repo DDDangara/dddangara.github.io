@@ -1,0 +1,184 @@
+
+{*********************************************************************************
+*                                                                                *
+*   shop-script Legosp - legosp.net                                              *
+*   Skype: legoedition                                                           *
+*   Email: legoedition@gmail.com                                                 *
+*   Лицензионное соглашение: https://legosp.net/info/litsenzionnoe_soglashenie/  *
+*   Copyright (c) 2010-2019  All rights reserved.                                *
+*                                                                                *
+*********************************************************************************}
+ 
+{* shopping cart *}
+
+<script type="text/javascript"><!--{literal}
+var ship;
+
+var ship_val_id=new Array ({/literal}{section name=i loop=$shipping_list}{$shipping_list[i][0]},{/section}0{literal});
+var ship_val=new Array ({/literal}{section name=i loop=$shipping_list}'{$shipping_list[i][3]}',{/section}'{$smarty.const.CONF_CURRENCY_ID_LEFT}0{$smarty.const.CONF_CURRENCY_ID_RIGHT}'{literal});
+
+
+function get_values(){
+  ship=parseInt(document.getElementById("shipping").value);
+  var i=0;
+  while (ship_val_id[i] != ship)
+	{
+	i++;
+	}
+  document.getElementById("shipping_cost_show").innerHTML=ship_val[i];
+  }
+
+{/literal}-->
+</script>
+
+
+
+<h1 class="page-title">{if $cart_total ne ""}{$smarty.const.CART_TITLE}{else}{$smarty.const.CART_EMPTY}{/if}</h1>
+{if $cart_total ne ""}
+	<form action="./{if $smarty.const.CONF_CHPU}cart/{else}index.php?shopping_cart=yes{/if}" method="post" id="cart">
+	<div class="cart-info">
+	  <table>
+		<thead>
+		    <tr>
+		      <td class="image">{$smarty.const.ADMIN_PAGE_PICTURE}</td>
+		      <td class="name hidden-xs">{$smarty.const.TABLE_PRODUCT_NAME}</td>
+		      <td class="quantity"><span class="hidden-sm hidden-xs">{$smarty.const.TABLE_PRODUCT_QUANTITY}</span><span class="visible-sm visible-xs">Кол.во</span></td>
+		      <td class="price hidden-xx">{$smarty.const.TABLE_PRODUCT_COST}</td>
+		      <td class="delet hidden-xs"><a href="./cart/&clear" title="{$smarty.const.CART_CLEAR}"><img src="./images/del.png" title="{$smarty.const.CART_CLEAR}" alt="{$smarty.const.CART_CLEAR}" /></a></td>
+		    </tr>
+		</thead>
+		<tbody>
+{section loop=$cart_content name=i}
+		{if $cart_content[i].min_q>$cart_content[i].quantity}{assign var="min_q" value="1"}
+		<tr class="danger">
+			<td colspan="5">{$smarty.const.ORDERS_MIN_PRODUCT}<strong>{$cart_content[i].min_q}</strong></td>
+		</tr>
+		{/if}
+	    <tr id="line_{$cart_content[i].id}" {if $cart_content[i].min_q>$cart_content[i].quantity}{assign var="min_q" value="1"}class="danger"{/if}>
+	      <td class="image">
+	      	<a href="./{$cart_content[i].hurl}"><img src="./products_pictures/{$cart_content[i].picture}" alt="" /></a>
+	      	<div class="visible-xs"><a href="./{$cart_content[i].hurl}" id="name{$cart_content[i].id}">{if $cart_content[i].product_code ne ""}[{$cart_content[i].product_code}] {/if}{$cart_content[i].name}</a></div>
+	      	<div class="visible-xx">Цена: <span class="price">{$cart_content[i].cost}</span></div>
+	      </td>
+	      <td class="name hidden-xs">
+		<a href="./{$cart_content[i].hurl}" id="name{$cart_content[i].id}">
+{if $cart_content[i].product_code ne ""}[{$cart_content[i].product_code}] {/if}{$cart_content[i].name}
+		</a>
+	      </td>
+	      <td class="quantity"><input type="number" name="count[{$cart_content[i].id}]" id="count_{$cart_content[i].id}" value="{$cart_content[i].quantity}" style="width: 60px;" min={$cart_content[i].min_q} {* onChange="$('#cart').submit();" *}/>
+<div class="visible-phone">
+		<!--<a onclick="cart_update('cart');" class="btn btn-mini" title="{$smarty.const.UPDATE_BUTTON}"><i class="icon-refresh"></i></a>-->
+		<div class="visible-xs"><a href="./cart/&remove={$cart_content[i].id}" title="{$smarty.const.DELETE_BUTTON}"><img src="./images/del.png" title="{$smarty.const.DELETE_BUTTON}" alt="{$smarty.const.DELETE_BUTTON}" /></a></div>
+</div>
+		  </td>
+	      <td class="price hidden-xx" id="price_{$cart_content[i].id}"><span class="price">{$cart_content[i].cost}</span></td>
+	      <td class="delet hidden-xs" id="price_{$cart_content[i].id}"><a href="./cart/&remove={$cart_content[i].id}" title="{$smarty.const.DELETE_BUTTON}"><img src="./images/del.png" title="{$smarty.const.DELETE_BUTTON}" alt="{$smarty.const.DELETE_BUTTON}" /></a></td>
+	    </tr>
+{/section}
+		</tbody>
+	  </table>
+	</div>
+
+	<div class="cart-info">
+	<table>
+{* быстрая доставка *}
+{if $smarty.const.CONF_FAST_ORDER_ON>0}
+	    <tr>
+	      <td class="a-left">{$smarty.const.ADMIN_FAST_ORDER}</td>
+	      <td class="a-center"><input type="checkbox" name="get_fast_order" {if $get_fast_order > 0} checked{/if} /></td>
+	      <td class="price">{$smarty.const.CONF_FAST_ORDER_COST} {$smarty.const.CONF_CURRENCY_ID_RIGHT}</td>
+	    </tr>
+{/if}
+{* доставка *}
+		<tr>
+			<td>{$smarty.const.STRING_SHIPPING}</td>
+{if $shipping_free != 1}
+			<td>
+				<select name="shipping" onchange="get_values();" id="shipping" style="width: 100%;">
+				{*<option value="0">{$smarty.const.STRING_SHIPPING_NONE}</option>*}
+				{section name=i loop=$shipping_list}
+				<option value="{$shipping_list[i][0]}" {if $shipping_selected[0] == $shipping_list[i][0]}selected{/if}>{$shipping_list[i][2]}</option>
+				{/section}
+				</select>
+			</td>
+			<td class="price"><span id="shipping_cost_show" class="price">{$shipping_selected[3]}</span></td>
+{else}
+			<td colspan="2" style="text-align:right;"><b>{$smarty.const.STRING_SHIPPING_FREE}</b></td>
+{/if}
+		</tr>
+	</table>
+	</div>
+
+	<div class="cart-info">
+	<table class="table table-bordered">
+	<tbody>
+{* Подарок *}
+{if $present_list ne NULL}
+	    <tr>
+	      <td class="hidden-xs"><img src="./images/present.png" alt="{$smarty.const.STRING_PRESENT}" /></td>
+	{if $smarty.const.CONF_PRESENT_SELECT eq 1}
+		      <td>{$smarty.const.STRING_PRESENT_SELECT}</td>
+		      <td>
+			<select name="presents" id="presents" style="width:100%;">
+			{section name=i loop=$present_list}
+			  <option value="{$present_list[i][0]}" {if $present_selected == $present_list[i][0]}selected{/if}>{$present_list[i][2]}</option>
+			{/section}
+			</select>
+		      </td>
+	{else}
+		      <td colspan="2">{if $smarty.const.CONF_PRESENT_SELECT eq 1}{$smarty.const.STRING_PRESENT_SELECT}{else}<a href="./{$present_list[0][3]}">{$present_list[0][2]}</a>{/if}</td>
+	{/if}
+	      <td style="text-align:right;"><b>{$smarty.const.STRING_PRESENT}</b></td>
+	    </tr>
+{/if}
+
+	{if $discount ne NULL}
+	    <tr>
+	      <td class="hidden-xs"><img src="./images/discount.png" alt="{$smarty.const.ADMIN_DISCOUNT}" /></td>
+	      <td>{$smarty.const.ADMIN_DISCOUNT}</td>
+	      <td style="text-align:center;" class="text-error">{$discount[1]} %</td>
+	      <td style="text-align:right;"><b>{$discount[3]}</b></td>
+	    </tr>
+	{/if}
+
+{if $minimal ne NULL}
+	    <tr>
+	      <td>&nbsp;</td>
+	      <td>{$minimal[0]}</td>
+	      <td>&nbsp;</td>
+	      <td>{$minimal[1]} {$smarty.const.CONF_CURRENCY_ID_RIGHT}</td>
+	    </tr>
+{/if}
+		</tbody>
+	  </table>
+	  </div>
+
+	  <div class="cart-total">
+		  <table>
+			<tbody>
+			    <tr>
+			      <td>{$smarty.const.TABLE_TOTAL}</td>
+			      <td>{$cart_total}</td>
+			    </tr>
+			</tbody>
+		  </table>
+	  </div>
+
+	  <input type="hidden" name="update" value="1">
+	  <input type="hidden" name="shopping_cart" value="1">
+	          {if (!$smarty.const.CONF_SHOW_ADD2CART_INSTOCK)}
+		          {foreach from=$in_stock key=id item=foo}
+		             <input type="hidden" name="products_instock_{$id}" value="{$foo}">
+		          {/foreach}
+	          {/if}
+	</form>
+
+	<form action="./{$nurl}" method="post" id="order">
+	  <div class="buttons">
+		<div class="left"><a href="{$go_back}" class="button">{$smarty.const.STRING_BACK_TO_SHOPPING}</a></div>
+		<div class="right"><a onclick="cart_update('cart');" class="button">{$smarty.const.UPDATE_BUTTON}</a></div>
+		<div class="right">{if !$min_q}<a onclick="$('#order').submit();" class="button">{$smarty.const.CART_PROCEED_TO_CHECKOUT}</a>{/if}</div>
+	  </div>
+	 <input type="hidden" name="order_custinfo" value="yes">
+	</form>
+{/if}

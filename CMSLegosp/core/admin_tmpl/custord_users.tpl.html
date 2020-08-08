@@ -1,0 +1,92 @@
+
+
+{*********************************************************************************
+*                                                                                *
+*   shop-script Legosp - legosp.net                                              *
+*   Skype: legoedition                                                           *
+*   Email: legoedition@gmail.com                                                 *
+*   Лицензионное соглашение: https://legosp.net/info/litsenzionnoe_soglashenie/  *
+*   Copyright (c) 2010-2019  All rights reserved.                                *
+*                                                                                *
+*********************************************************************************}
+ 
+ 
+
+{* new orders list *}
+
+<div id="icon-users" class="icon32"><br /></div><h2>{$smarty.const.ADMIN_USERS}</h2>
+
+{if count($users) ne 0}
+	<div class="tablenav top">
+		{*<div class="alignleft actions">
+			<select name='action'>
+				<option value='-1' selected='selected'>{$smarty.const.STRING_ACTIONS}</option>
+				<option value='delete'>{$smarty.const.DELETE_BUTTON}</option>
+				<option value='complite'>Проверен</option>
+			</select>
+			<input type="submit" name="" id="doaction" class="button-secondary action" value="Применить"  />
+		</div>*}
+		<div class='tablenav-pages one-page'><span class="displaying-num">{$users|count} {$smarty.const.STRING_couple}</span></div>
+		<br class="clear" />
+	</div>
+
+<table class="widefat" cellspacing="0">
+	<thead>
+		<tr>
+			
+			<th width="16"><a><span>ID</span></a></th>
+			<th><a><span>{$smarty.const.STRING_USER_NAME}</span></a></th>
+			<th><a><span>{$smarty.const.ADMIN_COMPANY_PHONE}</span></a></th>
+			<th><a><span>E-mail</span></a></th>
+			<th><a><span>{$smarty.const.STRING_ACTIONS}</span></a></th>
+		</tr>
+	</thead>
+	
+	<tfoot>
+		<tr>
+			
+			<th width="16"><a><span>ID</span></a></th>
+			<th><a><span>{$smarty.const.STRING_USER_NAME}</span></a></th>
+			<th><a><span>{$smarty.const.ADMIN_COMPANY_PHONE}</span></a></th>
+			<th><a><span>E-mail</span></a></th>
+			<th><a><span>{$smarty.const.STRING_ACTIONS}</span></a></th>
+		</tr>
+	</tfoot>
+
+	<tbody>
+		{foreach from=$users item=user}
+		<tr class="alternate">
+			{*<th class='check-column'><input type='checkbox' name='users[]' value='1' /></th>*}
+			<td>{$user.custID}</td>
+			<td class="username column-username"><strong><a>{$user.cust_lastname} {$user.cust_firstname}</a></strong><div class="row-actions"><span class='edit'><a href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=custord&amp;sub=users&amp;eu_id={$user.custID}">Изменить</a></span></div></td>
+			<td class="name column-name">{$user.cust_phone}</td>
+			<td class="email column-email"><a href='mailto:{$user.cust_email}' title='E-mail: {$user.cust_email}'>{$user.cust_email}</a></td>
+			<td class="role column-role">
+				<a href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=custord&amp;sub=users&amp;eu_id={$user.custID}"><img alt="" src="./images/backend/edit.png"></a>&nbsp;&nbsp;&nbsp;
+				{if !$user.grup}<a href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=custord&amp;sub=users&amp;user={$user.custID}&amp;complite"><img title="Проверен" src="./images/backend/complite.png"></a>&nbsp;&nbsp;&nbsp;{/if}
+				<a href="javascript:confirmDelete('{$smarty.const.QUESTION_DELETE_CONFIRMATION}','{$smarty.const.CONF_ADMIN_FILE}?dpt=custord&amp;sub=users&amp;delete={$user.custID}');"><img alt="Отмена" src="./images/backend/delete.png"></a>
+			</td>
+		</tr>
+		{/foreach}
+	</tbody>
+
+</table>
+
+	<div class="tablenav bottom">
+		{*<div class="alignleft actions">
+			<select name='action2'>
+				<option value='-1' selected='selected'>{$smarty.const.STRING_ACTIONS}</option>
+				<option value='delete'>{$smarty.const.DELETE_BUTTON}</option>
+			</select>
+			<input type="submit" name="" id="doaction2" class="button-secondary action" value="Применить"  />
+		</div>*}
+		<div class='tablenav-pages one-page'><span class="displaying-num">{$users|count} {$smarty.const.STRING_couple}</span></div>
+		<br class="clear" />
+	</div>
+
+
+{else}
+    <b>{$smarty.const.STRING_NO_USERS}</b>
+{/if}
+
+<br class="clear" />

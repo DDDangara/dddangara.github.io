@@ -1,0 +1,39 @@
+
+{*********************************************************************************
+*                                                                                *
+*   shop-script Legosp - legosp.net                                              *
+*   Skype: legoedition                                                           *
+*   Email: legoedition@gmail.com                                                 *
+*   Лицензионное соглашение: https://legosp.net/info/litsenzionnoe_soglashenie/  *
+*   Copyright (c) 2010-2019  All rights reserved.                                *
+*                                                                                *
+*********************************************************************************}
+ 
+<div class="box">
+	<h1 class="page-title">{$smarty.const.ADMIN_NEWS}</h1>
+
+{if $newslist}
+	{section name=j loop=$newslist}
+		{if $newslist[j][5]>0}
+		<div class="blog_post clearfix">
+			{if $newslist[j][4]}<div class="image"><a href="./{$newslist[j][6]}"><img src="./products_pictures/{$newslist[j][4]}" alt=""></a></div>{/if}
+			<h4><a href="./{$newslist[j][6]}">{$newslist[j][1]}</a></h4>
+			<div class="post_date"><i class="fa fa-calendar"></i> {$newslist[j][2]}</div>
+			<div class="post_info">{$newslist[j][3]}</div>
+		</div>
+		<div class="divider_line"></div>
+		{/if}
+	{/section}
+{elseif $newstext}
+	<div class="blog_post clearfix">
+		{if $newstext[4]}<div class="image"><a href="./products_pictures/{$newstext[4]}" class="thickbox"><img src="./products_pictures/{$newstext[4]}" alt=""></a></div>{/if}
+		<h4>{$newstext[0]}</h4>
+		<div class="post_date"><i class="fa fa-calendar"></i> {$newstext[2]}</div>
+		<div class="post_info">{$newstext[1]}</div>
+	</div>
+	<div class="divider_line"></div>
+	<div class="text-center"><a href="./{$smarty.const.REDIRECT_NEWS}/"><strong>{$smarty.const.ADMIN_NEWS_ALL}</strong></a></div>
+{/if}
+
+	<p style="text-align: right;">{$catalog_navigator}</p>
+</div>

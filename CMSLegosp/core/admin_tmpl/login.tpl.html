@@ -1,0 +1,50 @@
+
+{*********************************************************************************
+*                                                                                *
+*   shop-script Legosp - legosp.net                                              *
+*   Skype: legoedition                                                           *
+*   Email: legoedition@gmail.com                                                 *
+*   Лицензионное соглашение: https://legosp.net/info/litsenzionnoe_soglashenie/  *
+*   Copyright (c) 2010-2019  All rights reserved.                                *
+*                                                                                *
+*********************************************************************************}
+ 
+ 
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+ <meta http-equiv="Content-Type" content="text/html; charset={$smarty.const.DEFAULT_CHARSET}" />
+ <title>{$smarty.const.ACCESS} - LegoSP</title>
+ <meta name="description" content="" />
+ <meta name="keywords" content="" />
+ <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+ <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+ <link rel="stylesheet" type="text/css" href="./core/admin_tmpl/css/admin_login.css" />
+ <script type="text/javascript" src="./core/js/js_jquery.js"></script>
+  
+</head>
+
+<body>
+
+<table id="loginbox"><tr><td align="center">
+ <div class="r2"><div class="r3"><div class="r1"><div class="r4">
+  <div class="logo"><a href="http://legosp.net" title="LegoSP"><img src="./core/admin_tmpl/images/login/logo-4.png" alt="LegoSP" /></a></div>
+  <div class="left"><img src="./core/admin_tmpl/images/login/login.png" alt="" /></div>
+  <div class="right">
+   <div id="login_result">{$errorStr}</div>
+   <form action="access_admin.php" method="post" enctype="multipart/form-data" id="form">
+    <input type="hidden" value="1" name="authorize">
+    <label class="desc">{$smarty.const.ACCESS_LOGIN} / Login :</label>
+    <input name="login" type="text" id="input_username" value="admin" class="text" style="width:182px;" />
+    <label class="desc">{$smarty.const.ACCESS_PASS} / Password :</label>
+    <input name="password" type="password"  class="text" value="123456" style="width:182px;" />
+    <button class="button button_login"><span>{$smarty.const.ACCESS_ENTER} / Enter</span></button>
+   </form>
+  </div>
+ <div class="clr"></div></div></div></div></div>
+ <div class="copy">Powered By <a href="http://legosp.net">Legosp</a></div>
+</td></tr></table>
+
+</body>
+</html>

@@ -1,0 +1,24 @@
+{*********************************************************************************
+*                                                                                *
+*   shop-script Legosp - legosp.net                                              *
+*   Skype: legoedition                                                           *
+*   Email: legoedition@gmail.com                                                 *
+*   Лицензионное соглашение: https://legosp.net/info/litsenzionnoe_soglashenie/  *
+*   Copyright (c) 2010-2019  All rights reserved.                                *
+*                                                                                *
+*********************************************************************************}
+ 
+{* shopping cart brief info *}
+
+
+<div class="cart-icon pull-left">
+        <i class="icon-cart"></i>
+</div>
+<div class="cart-inner">
+  <h4>{$smarty.const.CART_TITLE}</h4>
+  {if $shopping_cart_value}
+    <a href="./{if $smarty.const.CONF_CHPU}cart/{else}index.php?shopping_cart=yes{/if}"><span id="sci">{$shopping_cart_items}</span> {$smarty.const.STRING_PRODUCTS} - <span id="scs">{$shopping_cart_value_shown}</span></a>
+  {else}
+    <a href="./{if $smarty.const.CONF_CHPU}cart/{else}index.php?shopping_cart=yes{/if}"><span id="sci">{$shopping_cart_items}</span> {$smarty.const.STRING_PRODUCTS} - <span id="scs">{$shopping_cart_value_shown}</span></a>
+  {/if}
+</div>

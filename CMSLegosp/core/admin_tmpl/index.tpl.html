@@ -1,0 +1,173 @@
+
+{*********************************************************************************
+*                                                                                *
+*   shop-script Legosp - legosp.net                                              *
+*   Skype: legoedition                                                           *
+*   Email: legoedition@gmail.com                                                 *
+*   Лицензионное соглашение: https://legosp.net/info/litsenzionnoe_soglashenie/  *
+*   Copyright (c) 2010-2019  All rights reserved.                                *
+*                                                                                *
+*********************************************************************************}
+ 
+ 
+
+<!DOCTYPE html>
+<!--[if IE 8]>
+	<html xmlns="http://www.w3.org/1999/xhtml" class="ie8" dir="ltr" lang="ru-RU">
+<![endif]-->
+<!--[if !(IE 8) ]><!-->
+	<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="ru-RU">
+<!--<![endif]-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset={$smarty.const.DEFAULT_CHARSET}">
+<title>{$smarty.const.ADMIN_TITLE}</title>
+<script type="text/javascript" src="./core/js/js_jquery.js"></script>
+<script type="text/javascript" src="./core/core_ajaxconst.php"></script>
+    <script src="./core/boostrap/js/bootstrap.min.js"></script>
+
+<script type="text/javascript" src="./core/js/admin.js"></script>
+<script type="text/javascript" src="./core/ckeditor/ckeditor.js"></script>
+<script src="./core/ckeditor/adapters/jquery.js"></script>
+    <script src="./core/admin_tmpl/js/selectize/js/selectize.min.js"></script>
+    <script src="./core/admin_tmpl/js/js.js"></script>
+
+
+
+<link rel="stylesheet" type="text/css" href="./css/fancybox.css" media="screen" />
+    <link rel="stylesheet" href="./core/boostrap/css/bootstrap.min.css">
+    <link rel='stylesheet' href='./core/admin_tmpl/js/selectize/css/selectize.bootstrap3.css' type='text/css' media='all'/>
+<link rel='stylesheet' href='./core/admin_tmpl/css/style.css' type='text/css' media='all' />
+
+<link rel='stylesheet' id='colors-css'  href='./core/admin_tmpl/css/colors-fresh.css' type='text/css' media='all' />
+
+<!--[if lte IE 7]>
+	<link rel='stylesheet' id='ie-css'  href='./core/admin_tmpl/css/ie.css' type='text/css' media='all' />
+<![endif]-->
+
+<style type="text/css" media="print">{literal}#wpadminbar { display:none; }{/literal}</style>
+
+</head>
+<body class="wp-admin no-js admin-bar">
+<script type="text/javascript">document.body.className = document.body.className.replace('no-js','js');</script>
+
+<div id="wpwrap">
+	<div id="adminmenuback"></div>
+	<div id="adminmenuwrap">
+		<div id="adminmenushadow"></div>
+		{include file="menu.tpl.html"}
+	</div>
+	<div id="wpcontent">
+		<div id="wpbody">
+			<div id="wpbody-content">
+				<div id="screen-meta" class="metabox-prefs">
+					<div id="contextual-help-wrap" class="hidden">
+						<div id="contextual-help-back"></div>
+						<div id="contextual-help-columns">
+							<div class="contextual-help-tabs">
+								<ul>
+									<li id="tab-link-overview" class="active">
+										<a href="#tab-panel-overview">Обзор</a>
+									</li>
+									{*<li id="tab-link-moderating-comments">
+										<a href="#tab-panel-moderating-comments">Модерация</a>
+									</li>*}
+								</ul>
+							</div>
+							<div class="contextual-help-sidebar">
+								<p><strong>{$smarty.const.STRING_DOP_INFO}:</strong></p>
+								<p><a href="http://legosp.blogspot.com/" target="_blank">{$smarty.const.STRING_BLOG}</a></p>
+								<p><a href="http://forum.legosp.net/" target="_blank">{$smarty.const.STRING_FORUM_SUPPORT}</a></p>
+								<p><a href="http://legosp.net/contact/" target="_blank">{$smarty.const.STRING_FEEDBACK}</a></p>
+							</div>
+							<div class="contextual-help-tabs-wrap">
+								{include file="help.tpl.html"}
+							</div>
+						</div>
+					</div>
+				</div>
+				<div id="screen-meta-links">
+					<div id="contextual-help-link-wrap" class="hide-if-no-js screen-meta-toggle">
+						<a href="#contextual-help-wrap" id="contextual-help-link" class="show-settings">{$smarty.const.STRING_HELP}</a>
+					</div>
+				</div>
+				<div class="wrap" style="padding-right: 20px;">
+					{include file="$admin_main_content_template"}
+				</div>
+
+				<div class="clear"></div>
+			</div><!-- wpbody-content -->
+			<div class="clear"></div>
+		</div><!-- wpbody -->
+		<div class="clear"></div>
+	</div><!-- wpcontent -->
+
+	<div id="footer">
+		<p id="footer-left" class="alignleft"><span id="footer-thankyou">{$smarty.const.ADMIN_Thank_you_for_using} <a href="http://legosp.net">Legosp</a>.</span></p>
+		<p id="footer-upgrade" class="alignright">{$smarty.const.Version}</p>
+		<div class="clear"></div>
+	</div>
+	
+	<div id="wpadminbar" class="nojq nojs" role="navigation">
+		<div class="quicklinks">
+			<ul id="wp-admin-bar-root-default" class="ab-top-menu">
+				<li id="wp-admin-bar-wp-logo" class="menupop">
+					<a class="ab-item" tabindex="10" href="https://legosp.net" title="Legosp"><span class="ab-icon"></span></a>
+					<div class="ab-sub-wrapper">
+						<ul id="wp-admin-bar-wp-logo-default" class="ab-submenu">
+							<li><a class="ab-item" tabindex="10" href="https://legosp.net" target="_blank">Legosp</a></li>
+						</ul>
+						<ul class="ab-sub-secondary ab-submenu">
+							<li><a class="ab-item" tabindex="10" href="https://legosp.net/">{$smarty.const.STRING_BLOG}</a></li>
+							<li><a class="ab-item" tabindex="10" href="http://forum.legosp.net/" target="_blank">{$smarty.const.STRING_FORUM_SUPPORT}</a></li>
+							<li><a class="ab-item" tabindex="10" href="https://legosp.net/contact/">{$smarty.const.STRING_FEEDBACK}</a></li>
+						</ul>
+					</div>
+				</li>
+				{*if $smarty.const.CONF_REVIEW_MODER}
+				{if $review.moder eq 0}
+				<li>
+					<a class="ab-item" tabindex="10" href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=catalog&sub=review" title="{$reviews|count} отзывов ожидают проверки"><span class="ab-icon"></span><span id="ab-awaiting-mod" class="ab-label awaiting-mod pending-count count-{$reviews|count}">{$reviews|count}</span></a>
+				</li>
+				{/if}
+				{/if*}
+		
+				<li id="wp-admin-bar-new-content" class="menupop"><a class="ab-item" tabindex="10" title="{$smarty.const.ADD_BUTTON}"><span class="ab-icon"></span><span class="ab-label">{$smarty.const.ADD_BUTTON}</span></a>
+					<div class="ab-sub-wrapper">
+						<ul id="wp-admin-bar-new-content-default" class="ab-submenu">
+							<li><a class="ab-item" tabindex="10" href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=catalog&sub=categories_edit">{$smarty.const.ADMIN_MENU_categories}</a></li>
+							<li><a class="ab-item" tabindex="10" href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=catalog&sub=products_edit{if $smarty.get.categoryID}&categoryID={$smarty.get.categoryID}{/if}">{$smarty.const.ADMIN_PRODUCTS}</a></li>
+							<li><a class="ab-item" tabindex="10" href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=catalog&sub=products_variants&add=1">{$smarty.const.ADMIN_PRODUCTS_VARIANTS_GROUPS}</a></li>
+							<li><a class="ab-item" tabindex="10" href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=catalog&sub=brands">{$smarty.const.STRING_BRANDS}</a></li>
+							<li><a class="ab-item" tabindex="10" href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=inform&sub=aux_pages">{$smarty.const.ADMIN_MENU_aux_pages}</a></li>
+							<li><a class="ab-item" tabindex="10" href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=inform&sub=news">Новость</a></li>
+							<li><a class="ab-item" tabindex="10" href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=inform&sub=pages">Статью</a></li>
+							<li><a class="ab-item" tabindex="10" href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=inform&sub=votes&add=1">Голосование</a></li>
+						</ul>
+					</div>
+				</li>
+			</ul>
+			<ul id="wp-admin-bar-top-secondary" class="ab-top-secondary ab-top-menu">
+				<li id="wp-admin-bar-my-account" class="menupop with-avatar">
+					<a class="ab-item" tabindex="10" title="{$smarty.const.ADMIN_CUST_WELCOME_TITLE}">{$smarty.const.ADMIN_CUST_WELCOME}, {$login_name}</a>
+					<div class="ab-sub-wrapper">
+						<ul id="wp-admin-bar-user-actions" class="ab-submenu">
+							<li id="wp-admin-bar-user-info">
+								<img alt='' src='./core/admin_tmpl/images/no_avatar.gif' class='avatar avatar-64 photo' height='64' width='64' />
+								<span class='display-name'>{$login_name}</span>
+							</li>
+							<li>
+								<a class="ab-item" tabindex="10" href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=system&sub=login_pass">Изменить профиль</a>
+							</li>
+							<li><a class="ab-item" tabindex="10" href="./{$smarty.const.CONF_ADMIN_FILE}?logout">Выйти</a></li>
+						</ul>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+
+	<script type="text/javascript" src="./core/admin_tmpl/css/work.js"></script>
+	<div class="clear"></div>
+</div><!-- wpwrap -->
+</body>
+</html>

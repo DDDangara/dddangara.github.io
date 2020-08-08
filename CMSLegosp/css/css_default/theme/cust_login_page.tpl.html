@@ -1,0 +1,58 @@
+
+{*********************************************************************************
+*                                                                                *
+*   shop-script Legosp - legosp.net                                              *
+*   Skype: legoedition                                                           *
+*   Email: legoedition@gmail.com                                                 *
+*   Лицензионное соглашение: https://legosp.net/info/litsenzionnoe_soglashenie/  *
+*   Copyright (c) 2010-2019  All rights reserved.                                *
+*                                                                                *
+*********************************************************************************}
+ 
+{* login information *}
+<div class="box">
+	<h1 class="page-title">Личный кабинет</h1>
+
+
+
+ {if ($smarty.session.cust_login=='yes' || $smarty.session.cust_login_openID=='yes')}
+ <div class="heading">{$smarty.const.CUST_WELCOME} {$smarty.session.userinf.cust_firstname}!</div><br />
+ <p><a href='./index.php?order_history=1'>{$smarty.const.ORDERS_HISTORY}</a></p>
+ <a href="index.php?cust_logout=yes" id="login_box" class="btn btn-2">{$smarty.const.CUST_LOGOUT}</a>
+ {else}
+
+ <form style="max-width: 400px;" action="index.php" name="customer_login_form" method=post onSubmit="return validate_loginfo(this);">
+
+ 	<input type=hidden name="cust_login" value="yes">
+			{if $cust_error_password ne NULL}
+				<div class="alert alert-danger">{if $cust_firstname ne NULL} {$cust_firstname}, {/if}
+				{$smarty.const.ERROR_CUST_PASSWORD}</div>
+			{else}
+				{if $cust_no_such_email ne NULL}
+					<div class="alert alert-danger">{$smarty.const.ERROR_NO_SUCH_EMAIL}</div>
+				{/if}
+			{/if}
+
+		{if $cust_error_password ne NULL && $cust_email ne NULL}
+			<input type=hidden name=cust_email value="{$cust_email}"/>
+		{else}
+
+		<p>{$smarty.const.CUST_LOGIN}<br/>
+		<input class="text" id="cust_email" style="width: 100%;" name="cust_email" type="text"/></p>
+
+		{/if}
+		<p>{$smarty.const.CUST_PASS}<br/>
+		<input class="text" id="cust_password" style="width: 100%;" name="cust_password" type="password"/></p>
+
+		<div class="buttons">
+			<div class="left"><a onclick="document.customer_login_form.submit();" class="btn">Войти</a></div>
+			<div class="right"><a class="btn btn-default" href="./index.php?cust_register=yes">Регистрация покупателя</a></div>
+		</div>
+
+
+		{*<a href="https://loginza.ru/api/widget?token_url=http://{$smarty.const.CONF_SHOP_URL}/{$product_category_path[0][0]}" id="loginza">Войти через OpenID</a> *}
+	</form>
+
+ {/if}
+
+</div>

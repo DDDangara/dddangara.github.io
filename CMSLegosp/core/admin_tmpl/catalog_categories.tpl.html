@@ -1,0 +1,54 @@
+
+
+{*********************************************************************************
+*                                                                                *
+*   shop-script Legosp - legosp.net                                              *
+*   Skype: legoedition                                                           *
+*   Email: legoedition@gmail.com                                                 *
+*   Лицензионное соглашение: https://legosp.net/info/litsenzionnoe_soglashenie/  *
+*   Copyright (c) 2010-2019  All rights reserved.                                *
+*                                                                                *
+*********************************************************************************}
+ 
+ 
+
+{* products and categories view *}
+<div id="icon-link-manager" class="icon32"><br /></div><h2>{$smarty.const.ADMIN_CATEGORIES}</h2>
+<br class="clear" />
+
+<form action="./{$smarty.const.CONF_ADMIN_FILE}" method="post" enctype="multipart/form-data">
+	<p><input type="button" onclick="location='./{$smarty.const.CONF_ADMIN_FILE}?dpt=catalog&sub=categories_edit';" class="button-primary" value="{$smarty.const.ADMIN_NEWS_ADD}" />&nbsp;&nbsp;<input type="submit" name="submit" class="button-primary" value="{$smarty.const.SAVE_BUTTON}" /></p>
+	<input type="hidden" name="dpt" value="catalog" />
+	<input type="hidden" name="sub" value="categories" />
+	<input type="hidden" name="categories_update" value="1" />
+	<table class="widefat" cellspacing="0">
+		<thead>
+			<tr>
+				<th style="width: 20px;"><a><span><strong>ID</strong></span></a></th>
+				<th style="width: 50px;"><a><span><strong>{$smarty.const.ADMIN_ON}</strong></span></a></th>
+				<th><a><span><strong>{$smarty.const.ADMIN_CATEGORIES_NAME}</strong></span></a></th>
+				<th style="width: 100px;"><a><span><strong>{$smarty.const.ADMIN_CATEGORY_COUNT_P}</strong></span></a></th>
+				<th style="width: 100px;"><a><span><strong>{$smarty.const.STRING_ACTIONS}</strong></span></a></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="alternate">
+				<td colspan="2">&nbsp;</td>
+				<td><a href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=catalog&sub=products&categoryID=0" style="font-weight: bold;">{$smarty.const.ADMIN_CATEGORY_ROOT}</a></td>
+				<td align="center">({$products_in_root_category})</td>
+				<td>&nbsp;</td>
+			</tr>
+			{foreach from=$categories item=category}
+			<tr class="alternate" onMouseOver="this.style.background='#F5F5F5'" onMouseOut="this.style.background='#FFFFFF'">
+				<td>{$category.categoryID}</td>
+				<td align="center"><input type="checkbox" name="category_{$category.categoryID}" {if $category.enabled>0}checked{/if}></td>
+				<td>{section name=j loop=$category.level}&nbsp;&nbsp;&nbsp;&nbsp;{/section}<a href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=catalog&sub=products&categoryID={$category.categoryID}"{if $category.level eq 0} style="font-weight: bold;"{/if}>{$category.name}</a></td>
+				<td align="center">({$category.products_count_admin})</td>
+				<td align="center"><a href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=catalog&sub=categories_edit&c_id={$category.categoryID}"><img src="./images/backend/edit.png" alt="" /></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=catalog&sub=categories&c_id={$category.categoryID}&del"><img src="./images/backend/delete.png" alt="" /></a></td>
+			</tr>
+		       {/foreach}
+		</tbody>
+	</table>
+
+	<p><input type="button" onclick="location='./{$smarty.const.CONF_ADMIN_FILE}?dpt=catalog&sub=categories_edit';" class="button-primary" value="{$smarty.const.ADMIN_NEWS_ADD}" />&nbsp;&nbsp;<input type="submit" name="submit" class="button-primary" value="{$smarty.const.SAVE_BUTTON}" /></p>
+</form>

@@ -1,0 +1,82 @@
+{*********************************************************************************
+*                                                                                *
+*   shop-script Legosp - legosp.net                                              *
+*   Skype: legoedition                                                           *
+*   Email: legoedition@gmail.com                                                 *
+*   Лицензионное соглашение: https://legosp.net/info/litsenzionnoe_soglashenie/  *
+*   Copyright (c) 2010-2019  All rights reserved.                                *
+*                                                                                *
+*********************************************************************************}
+ 
+{* product hits view *}
+<div id="hitsproducts" class="box with-scroll">
+	<!-- Carousel nav -->
+	<a class="next" href="#owl-hitsproducts" id="owl-hitsproducts_next"><span></span></a>
+	<a class="prev" href="#owl-hitsproducts" id="owl-hitsproducts_prev"><span></span></a>
+
+	<div class="box-heading">{$smarty.const.HOT_NEW}</div>
+	<div class="box-content">
+		<div class="box-product">
+			<div class="row">
+				<div id="owl-hitsproducts" class="owl-carousel">
+					{section name=i1 loop=$hits_to_show max=$smarty.const.CONF_MAX_HITS}
+					<div class="item">
+						<div class="product-grid col-xs-12">
+							<div class="product clearfix product-hover">
+								<div class="left">
+									<div class="image ">
+										<a href="./{$hits_to_show[i1][5]}"><img src="./products_pictures/{$hits_to_show[i1][3]}" alt="{$hits_to_show[i1][1]|escape}" class="img-responsive zoom-image-effect"/></a>
+									</div>
+								</div>
+								<div class="right">
+									<div class="name"><a href="./{$hits_to_show[i1][5]}">{$hits_to_show[i1][1]}</a></div>
+									{if $hits_to_show[i1][2] > 0}
+									<div class="price">{$hits_to_show[i1][6]}</div>
+									{/if}
+									<div class="rating">{section name=i loop=5}{if $smarty.section.i.index < $hits_to_show[i1][7]}<i class="fa fa-star active"></i>{else}<i class="fa fa-star"></i>{/if}{/section}</div>
+									<div class="only-hover">
+										<a href="{$np.hurl}" class="button"><span>{$smarty.const.MORE_ABOUT_PRODUCT}</span></a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					{/section}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript"><!--
+  $(document).ready(function() {
+
+  var owl = $("#owl-hitsproducts");
+
+  owl.owlCarousel({
+      items : 1,
+      itemsDesktop : [1199,1],
+      itemsDesktopSmall : [979,1],
+      itemsTablet: [768,1],
+      itemsMobile : [479,1],
+      // itemsDesktop : [1000,3],
+      // itemsDesktopSmall : [900,2],
+      // itemsTablet: [600,2],
+      // itemsMobile : [479,1],
+      slideSpeed : 500,
+      pagination: false
+  });
+
+  // Custom Navigation Events
+  $("#owl-hitsproducts_next").click(function(){
+    owl.trigger('owl.next');
+    return false;
+  })
+  $("#owl-hitsproducts_prev").click(function(){
+    owl.trigger('owl.prev');
+    return false;
+  })
+
+});
+--></script>
+{*$smarty.const.CONF_SCROLL_HITS*}

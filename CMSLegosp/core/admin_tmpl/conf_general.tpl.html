@@ -1,0 +1,173 @@
+
+{*********************************************************************************
+*                                                                                *
+*   shop-script Legosp - legosp.net                                              *
+*   Skype: legoedition                                                           *
+*   Email: legoedition@gmail.com                                                 *
+*   Лицензионное соглашение: https://legosp.net/info/litsenzionnoe_soglashenie/  *
+*   Copyright (c) 2010-2019  All rights reserved.                                *
+*                                                                                *
+*********************************************************************************}
+ 
+ 
+
+{* general configurations template *}
+<script type="text/javascript">
+{literal}
+function anichange() {
+  if ($('#host').css('display') == 'none') {
+    $('#host').animate({height: 'show'}, 400);
+    $('#port').animate({height: 'show'}, 400); 
+    $('#SMTP_User').animate({height: 'show'}, 400);
+    $('#SMTP_Pass').animate({height: 'show'}, 400);  
+  } else {
+    $('#host').animate({height: 'hide'}, 200);
+    $('#port').animate({height: 'hide'}, 200); 
+    $('#SMTP_User').animate({height: 'hide'}, 200);
+    $('#SMTP_Pass').animate({height: 'hide'}, 200);    
+  }
+}
+
+$(document).ready(function() {
+	$("#admin_file_info").hide();
+	$("#msg0").hide();
+	$("#msg1").hide();
+	$("#msg2").hide();
+	$('#admin_file,#admin_file_access').focus(function () {
+		$("#admin_file_info").stop(true, true).fadeIn(500);
+		$("#msg0").stop(true, true).fadeIn(500);
+		$("#msg1").stop(true, true).fadeIn(500);
+		$("#msg2").stop(true, true).fadeIn(500);
+	});
+	$('#admin_file,#admin_file_access').focusout(function () {
+		$("#admin_file_info").stop(true, true).fadeOut(500);
+		$("#msg0").stop(true, true).fadeOut(500);
+		$("#msg1").stop(true, true).fadeOut(500);
+		$("#msg2").stop(true, true).fadeOut(500);
+	});
+
+});
+
+{/literal}
+</script>
+
+<div id="icon-options-general" class="icon32"><br /></div><h2>{$smarty.const.ADMIN_SETTINGS}</h2>
+<br class="clear" />
+
+<form action="./{$smarty.const.CONF_ADMIN_FILE}" method="post">
+	<input type="hidden" name="dpt" value="conf" />
+	<input type="hidden" name="sub" value="general" />
+	<input type="hidden" name="save_general" value="1" />
+	<table class="widefat" cellspacing="0">
+		<thead>
+			<tr>
+				<th style="width: 300px;"><a><span><strong>{$smarty.const.ADMIN_SETTINGS_GENERAL}</strong></span></a></th>
+				<th>{if $error eq 1}{$smarty.const.ADMIN_UPDATE_ERROR}{else}{if $configuration_saved eq 1}{$smarty.const.ADMIN_UPDATE_SUCCESSFUL}{/if}{/if}</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_SHOP_NAME}:</td>
+				<td><input type="text" name="shop_name" value="{$smarty.const.CONF_SHOP_NAME|escape}" style="width: 100%;" /></td>
+			</tr>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_SHOP_DESCRIPTION}:</td>
+				<td><input type="text" name="shop_description" value="{$smarty.const.CONF_SHOP_DESCRIPTION|escape}" style="width: 100%;" /></td>
+			</tr>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_SHOP_KEYWORDS}:</td>
+				<td><input type="text" name="shop_keywords" value="{$smarty.const.CONF_SHOP_KEYWORDS|escape}" style="width: 100%;" /></td>
+			</tr>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_SHOP_URL}:</td>
+				<td><input type="text" name="shop_url" value="{$smarty.const.CONF_SHOP_URL|escape}" /></td>
+			</tr>					
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_SETTINGS_CPU}:</td>
+				<td><input type='checkbox' name='chpu' {if $smarty.const.CONF_CHPU eq 1}value="1" checked="checked"{/if} /></td>
+			</tr>					
+			{if $msg2}
+			<tr class="alternate" id="msg2">
+				<td>&nbsp;</td>
+				<td>{$msg2}</td>
+			</tr>
+			{/if}					
+			<tr class="alternate">
+				<td style="vertical-align:top;">{$smarty.const.ADMIN_FILE}</td>
+				<td><input type="text" name="admin_file" id="admin_file" value="{$smarty.const.CONF_ADMIN_FILE}" /><span id="msg0"><br />{$msg0}</span></td>
+			</tr>					
+			<tr class="alternate">
+				<td style="vertical-align:top;">{$smarty.const.ADMIN_FILE_ACCESS}</td>
+				<td><input type="text" name="admin_file_access" id="admin_file_access" value="{$smarty.const.CONF_ADMIN_FILE_ACCESS}" /><span id="msg1"><br />{$msg1}</span></td>
+			</tr>
+			<tr class="alternate" id="admin_file_info">
+				<td>&nbsp;</td>
+				<td style="color:#303F4A;font-weight: bold;">{$smarty.const.ADMIN_FILE_INFO}</td>
+			</tr>
+		</tbody>
+	</table>
+	<br class="clear" />
+	
+	<table class="widefat" cellspacing="0">
+		<thead>
+			<tr>
+				<th style="width: 300px;"><a><span><strong>Email</strong></span></a></th>
+				<th>&nbsp;</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_ORDERS_EMAIL}:</td>
+				<td><input type="text" name="orders_email" value="{$smarty.const.CONF_ORDERS_EMAIL|escape}" /></td>
+			</tr>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_SHOP_EMAIL}:</td>
+				<td><input type="text" name="general_email" value="{$smarty.const.CONF_GENERAL_EMAIL|escape}" /></td>
+			</tr>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_CONF_EMAILSMTP}:</td>
+				<td><input type='checkbox' onclick="anichange();" name='smtp' {if $smarty.const.CONF_SMTP eq 1}checked="checked" {/if}value="1" /></td>
+			</tr>
+			<tr class="alternate" id='host' {if $smarty.const.CONF_SMTP ne 1}style="display: none;"{/if}>
+				<td>HOST:</td>
+				<td><input type="text" name='smtp_host' value="{$smarty.const.CONF_SMTP_HOST|escape}" /></td>
+			</tr>
+			<tr class="alternate" id='port' {if $smarty.const.CONF_SMTP ne 1}style="display: none;"{/if}>
+				<td>PORT:</td>
+				<td><input type="tex"t name='smtp_port' value="{$smarty.const.CONF_SMTP_Port|escape}" /></td>
+			</tr>
+			<tr class="alternate" id='SMTP_User' {if $smarty.const.CONF_SMTP ne 1}style="display: none;"{/if}>
+				<td>USER:</td>
+				<td><input type="text" name='smtp_user' value="{$smarty.const.CONF_SMTP_User|escape}" /></td>
+			</tr>
+			<tr class="alternate" id='SMTP_Pass' {if $smarty.const.CONF_SMTP ne 1}style="display: none;"{/if}>
+				<td>PASSWORD:</td>
+				<td><input type="text" name='smtp_pass' value="{$smarty.const.CONF_SMTP_Pass|escape}" /></td>
+			</tr>
+		</tbody>
+	</table>
+	<br class="clear" />
+
+	<table class="widefat" cellspacing="0">
+		<thead>
+			<tr>
+				<th style="width: 300px;"><a><span><strong>{$smarty.const.ADMIN_CURRENCY}</strong></span></a></th>
+				<th>&nbsp;</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_CURRENCY_DEFAUL}:</td>
+				<td>
+					<select name="currency_id">
+					{foreach from=$CURRENCY item=curr} 
+						<option value="{$curr.CID}" {if $smarty.const.CONF_CURRENCY_ID==$curr.CID}selected="selected"{/if}>{$curr.Name}</option>
+					{/foreach} 
+					</select>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+ 	<p><input type="submit" name="submit" class="button-primary" value="{$smarty.const.SAVE_BUTTON}" /></p>
+</form>

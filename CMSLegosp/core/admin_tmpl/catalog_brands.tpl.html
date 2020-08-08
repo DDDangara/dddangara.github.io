@@ -1,0 +1,111 @@
+
+
+{*********************************************************************************
+*                                                                                *
+*   shop-script Legosp - legosp.net                                              *
+*   Skype: legoedition                                                           *
+*   Email: legoedition@gmail.com                                                 *
+*   Лицензионное соглашение: https://legosp.net/info/litsenzionnoe_soglashenie/  *
+*   Copyright (c) 2010-2019  All rights reserved.                                *
+*                                                                                *
+*********************************************************************************}
+ 
+ 
+
+{* pages *}
+<div id="icon-link-manager" class="icon32"><br /></div><h2>{$smarty.const.STRING_BRANDS}</h2>
+<br class="clear" />
+
+<form action="./{$smarty.const.CONF_ADMIN_FILE}" method="post" enctype="multipart/form-data">
+	<input type="hidden" name="dpt" value="catalog" />
+	<input type="hidden" name="sub" value="brands" />
+	<input type="hidden" name="add_brand" value="{$new_brand}" />
+	<table class="widefat" cellspacing="0">
+		<thead>
+			<tr class="alternate">
+				<th colspan="2"><a><span><strong>{if isset($smarty.get.brands)}Редактирование{else}Добавление нового{/if} производителя</strong></span></a></th>
+				<th>&nbsp;</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="alternate">
+				<td style="width: 200px;">{$smarty.const.STRING_MANUFACTURER}:</td>
+				<td><input type="text" name="brand[name]" value="{$brand_info.name}" style="width: 100%" /></td>
+				<td rowspan="9" style="vertical-align: top;width: 250px;">
+					<div style="width: 250px; height: 550px; overflow: auto;">
+						<table class="widefat" cellpadding="0" cellspacing="0" width="100%">
+							<thead>
+								<tr class="alternate"><th colspan="2"><strong>{$smarty.const.ADMIN_BRANDS_ALL}</strong></th></tr>
+							</thead>
+							<tbody>
+								{section name=i loop=$brand_list_count}
+								<tr class="alternate">
+									<td align="left"><a href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=catalog&sub=brands&brands={$brand_list[0][i]}">{$brand_list[1][i]}</a></td>
+									<td align="right"><a href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=catalog&sub=brands&del_brand={$brand_list[0][i]}"><img border="0" src="./images/backend/delete.png" alt="[{$smarty.const.ADMIN_PAGE_DELETE}]"</a></td>
+								</tr>
+								{/section}
+							</tbody>
+						</table>
+					</div>
+				</td>
+			</tr>
+			<tr class="alternate">
+				<td style="vertical-align: top;">{$smarty.const.ADMIN_BRAND_COMMENT}</td>
+				<td><input type="text" name="brand[comment]" value="{$brand_info.comment}" style="width: 100%;" /></td>
+			</tr>
+			<tr class="alternate">
+				<td style="vertical-align: top;">META-TITLE:</td>
+				<td><input type="text" name="brand[meta_title]" value="{$brand_info.meta_title}" style="width: 100%;" /></td>
+			</tr>
+			<tr class="alternate">
+				<td style="vertical-align: top;">META-KEYWORDS:</td>
+				<td><input type="text" name="brand[meta_keywords]" value="{$brand_info.meta_keywords}" style="width: 100%;" /></td>
+			</tr>
+			<tr class="alternate">
+				<td style="vertical-align: top;">META-DESCRIPTION:</td>
+				<td><input type="text" name="brand[meta_desc]" value="{$brand_info.meta_desc}" style="width: 100%;" /></td>
+			</tr>
+			<tr class="alternate">
+				<td style="vertical-align: top;">URL:</td>
+				<td><input type="text" name="brand[hurl]" value="{$brand_info.hurl}" style="width: 100%;" /></td>
+			</tr>
+			<tr class="alternate">
+				<td style="vertical-align: top;">REL CANONICAL:</td>
+				<td><input type="text" name="brand[canonical]" value="{$brand_info.canonical}" style="width: 100%;" /></td>
+			</tr>
+			<tr class="alternate">
+				<td style="vertical-align: top;">{$smarty.const.ADMIN_CATEGORY_LOGO}:</td>
+				<td><input type="file" name="brand_pic" style="width: 250px;" /></td>
+			</tr>
+			<tr class="alternate">
+				<td>&nbsp;</td>
+				<td> 
+				{capture assign='brand_pictures'}./products_pictures/{$brand_info.Pict}{/capture}    
+				{if $brand_pictures|file_exists ne '' &&  $brand_info.Pict}
+					<img src="./products_pictures/{$brand_info.Pict}" alt="" />
+					<a href="javascript:confirmDelete('{$smarty.const.QUESTION_DELETE_PICTURE}','{$smarty.const.CONF_ADMIN_FILE}?dpt=catalog&sub=brands&brands={$brand_info.brandID}&picture_remove={$brand_info.brandID}')" style="width: 150px;"><img src="./images/backend/delete.png" alt="" /></a>
+				{else}
+					<img src="./products_pictures/nophoto.jpg" alt="" />
+				{/if}
+				</td>
+			</tr>
+			<tr class="alternate">
+				<td style="vertical-align: top;">{$smarty.const.ADMIN_PAGE_TEXT}:</td>
+				<td colspan="2"><textarea id="brand_text" name="brand[brief]" style="width: 100%;" rows="10">{$brand_info.brief}</textarea></td>
+			</tr>
+			<tr class="alternate">
+				<td style="vertical-align: top;">{$smarty.const.ADMIN_PAGE_BRIEF}:</td>
+				<td colspan="2"><textarea id="brand_brief" name="brand[description]" style="width: 100%;" rows="10">{$brand_info.description}</textarea></td>
+			</tr>
+		</tbody>
+	</table>
+
+	<p><input type="button" onclick="location='./{$smarty.const.CONF_ADMIN_FILE}?dpt=catalog&sub=brands';" class="button" value="{$smarty.const.ADMIN_PAGE_ADD}" />&nbsp;&nbsp;<input type="submit" name="submit" class="button-primary" value="{$smarty.const.SAVE_BUTTON}" /></p>
+</form>
+
+{literal}
+<script type="text/javascript">
+	CKEDITOR.replace( 'brand_text', {filebrowserBrowseUrl : '/core/ckeditor/plugins/elfinder/elfinder.html'});
+	CKEDITOR.replace( 'brand_brief', {filebrowserBrowseUrl : '/core/ckeditor/plugins/elfinder/elfinder.html'});
+</script>
+{/literal}

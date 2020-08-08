@@ -1,0 +1,29 @@
+
+{*********************************************************************************
+*                                                                                *
+*   shop-script Legosp - legosp.net                                              *
+*   Skype: legoedition                                                           *
+*   Email: legoedition@gmail.com                                                 *
+*   Лицензионное соглашение: https://legosp.net/info/litsenzionnoe_soglashenie/  *
+*   Copyright (c) 2010-2019  All rights reserved.                                *
+*                                                                                *
+*********************************************************************************}
+ 
+{* login information *}
+ {if ($smarty.session.cust_login=='yes' || $smarty.session.cust_login_openID=='yes')}
+			<a href='./index.php?order_history=1' title="{$smarty.const.ORDERS_HISTORY}">{$smarty.const.CUST_WELCOME} <b>{$smarty.session.userinf.cust_firstname}</b></a> <i>|</i>
+			<a href="./index.php?cust_logout=yes" id="login_box">{$smarty.const.CUST_LOGOUT}</a>
+ {else}
+ <a href="./cust_register/">Регистрация</a> <i>|</i> <a href="./cust_login/">Войти</a>
+ {/if}
+
+ {*
+ {if ($smarty.session.cust_login=='yes' || $smarty.session.cust_login_openID=='yes')}
+			{$smarty.const.CUST_WELCOME} <b>{$smarty.session.userinf.cust_firstname}</b>!
+            <a href='./index.php?order_history=1'>{$smarty.const.ORDERS_HISTORY}</a> <i>|</i>
+			<a href="./index.php?cust_logout=yes" id="login_box">{$smarty.const.CUST_LOGOUT}</a>
+ {else}
+ <a href="./cust_login/">Вход в личный кабинет</a> <i>|</i> <a href="./cust_register/">Регистрация</a>
+ {/if}
+
+ *}

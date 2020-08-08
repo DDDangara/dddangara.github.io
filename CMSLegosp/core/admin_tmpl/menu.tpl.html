@@ -1,0 +1,115 @@
+
+
+{*********************************************************************************
+*                                                                                *
+*   shop-script Legosp - legosp.net                                              *
+*   Skype: legoedition                                                           *
+*   Email: legoedition@gmail.com                                                 *
+*   Лицензионное соглашение: https://legosp.net/info/litsenzionnoe_soglashenie/  *
+*   Copyright (c) 2010-2019  All rights reserved.                                *
+*                                                                                *
+*********************************************************************************}
+ 
+ 
+
+<ul id="adminmenu" role="navigation">
+
+	<li class="wp-first-item wp-has-submenu wp-not-current-submenu menu-top menu-top-first menu-icon-dashboard menu-top-last" id="menu-dashboard">
+		<div class='wp-menu-image'><a href='./{$smarty.const.CONF_ADMIN_FILE}'><br /></a></div>
+		<div class="wp-menu-arrow"><div></div></div>
+		<a href='./{$smarty.const.CONF_ADMIN_FILE}' class="wp-first-item wp-has-submenu wp-not-current-submenu menu-top menu-top-first menu-icon-dashboard menu-top-last" tabindex="1">{$smarty.const.ADMIN_MENU_console}</a>
+		<div class='wp-submenu'><div class='wp-submenu-wrap'><div class='wp-submenu-head'>Êîíñîëü</div>
+			<ul>
+				<li class="wp-first-item"><a href='./{$smarty.const.CONF_ADMIN_FILE}' class="wp-first-item" tabindex="1">{$smarty.const.ADMIN_MENU_Index}</a></li>
+				<li><a href='./' tabindex="1" title="{$smarty.const.ADMIN_MENU_go_site} {$smarty.const.CONF_SHOP_NAME}" target="_blank">{$smarty.const.ADMIN_MENU_go_site}</a></li>
+			</ul>
+		</div></div>
+	</li>
+	
+	
+
+	<li class="wp-not-current-submenu wp-menu-separator"><div class="separator"></div></li>
+
+
+	
+	{section name=j loop=$admin_departments}
+		{if $admin_departments[j].id == "conf"}{assign var="ico" value="settings"}
+		{elseif $admin_departments[j].id == "system"}{assign var="ico" value="plugins"}
+		{elseif $admin_departments[j].id == "inform"}{assign var="ico" value="page"}
+		{elseif $admin_departments[j].id == "catalog"}{assign var="ico" value="links"}
+		{elseif $admin_departments[j].id == "custord"}{assign var="ico" value="post"}
+		{/if}
+		<li class="{if $admin_departments[j].id == $current_dpt}wp-has-submenu wp-has-current-submenu wp-menu-open menu-top menu-icon-{$ico}{else}wp-has-submenu wp-not-current-submenu menu-top menu-icon-{$ico} menu-top-first{/if}" id="menu-{$ico}">
+			<div class='wp-menu-image'><a href='./{$smarty.const.CONF_ADMIN_FILE}?dpt={$admin_departments[j].id}'><br /></a></div><div class="wp-menu-arrow"><div></div></div>
+	
+			<a href='./{$smarty.const.CONF_ADMIN_FILE}?dpt={$admin_departments[j].id}' class={if $admin_departments[j].id == $current_dpt}"wp-has-submenu wp-has-current-submenu wp-menu-open menu-top menu-icon-{$ico}"{else}"wp-has-submenu wp-not-current-submenu menu-top menu-icon-{$ico} menu-top-first"{/if} tabindex="1">{$admin_departments[j].name}</a>
+	  
+
+{*<li class="wp-has-submenu wp-not-current-submenu menu-top menu-icon-tools" id="menu-tools">*}
+
+			{if $admin_departments[j].id == "catalog"}
+			<div class='wp-submenu'><div class='wp-submenu-wrap'><div class='wp-submenu-head'>{$admin_departments[j].name}</div>
+					<ul>
+					{section name=i loop=$admin_sub_menus.catalog}
+						<li {if $smarty.section.i.first}class="wp-first-item{if $admin_sub_menus.catalog[i].id == $current_sub} current{/if}"{elseif $admin_sub_menus.catalog[i].id == $current_sub}class="current"{/if}>
+							<a href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=catalog&sub={$admin_sub_menus.catalog[i].id}" {if $smarty.section.i.first}class="wp-first-item{if $admin_sub_menus.catalog[i].id == $current_sub} current{/if}"{elseif $admin_sub_menus.catalog[i].id == $current_sub}class="current"{/if} tabindex="1">{$admin_sub_menus.catalog[i].name}</a>
+						</li>
+					{/section}
+					</ul>
+			</div></div>
+			{/if}
+		
+			{if $admin_departments[j].id == "inform"}
+			<div class='wp-submenu'><div class='wp-submenu-wrap'><div class='wp-submenu-head'>{$admin_departments[j].name}</div>
+					<ul>
+					{section name=i loop=$admin_sub_menus.inform}
+						<li {if $smarty.section.i.first}class="wp-first-item{if $admin_sub_menus.inform[i].id == $current_sub} current{/if}"{elseif $admin_sub_menus.inform[i].id == $current_sub}class="current"{/if}>
+							<a href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=inform&sub={$admin_sub_menus.inform[i].id}" {if $smarty.section.i.first}class="wp-first-item{if $admin_sub_menus.inform[i].id == $current_sub} current{/if}"{elseif $admin_sub_menus.inform[i].id == $current_sub}class="current"{/if} tabindex="1">{$admin_sub_menus.inform[i].name}</a>
+						</li>
+					{/section}
+				</ul>
+			</div></div>
+			{/if}
+			
+			{if $admin_departments[j].id == "custord"}
+			<div class='wp-submenu'><div class='wp-submenu-wrap'><div class='wp-submenu-head'>{$admin_departments[j].name}</div>
+					<ul>
+					{section name=i loop=$admin_sub_menus.custord}
+						<li {if $smarty.section.i.first}class="wp-first-item{if $admin_sub_menus.custord[i].id == $current_sub} current{/if}"{elseif $admin_sub_menus.custord[i].id == $current_sub}class="current"{/if}>
+							<a href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=custord&sub={$admin_sub_menus.custord[i].id}" {if $smarty.section.i.first}class="wp-first-item{if $admin_sub_menus.custord[i].id == $current_sub} current{/if}"{elseif $admin_sub_menus.custord[i].id == $current_sub}class="current"{/if} tabindex="1">{$admin_sub_menus.custord[i].name}</a>
+						</li>
+					{/section}
+					</ul>
+			</div></div>
+			{/if}
+
+			{if $admin_departments[j].id == "conf"}
+			<div class='wp-submenu'><div class='wp-submenu-wrap'><div class='wp-submenu-head'>{$admin_departments[j].name}</div>
+					<ul>
+					{section name=i loop=$admin_sub_menus.conf}
+						<li {if $smarty.section.i.first}class="wp-first-item{if $admin_sub_menus.conf[i].id == $current_sub} current{/if}"{elseif $admin_sub_menus.conf[i].id == $current_sub}class="current"{/if}>
+							<a href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=conf&sub={$admin_sub_menus.conf[i].id}" {if $smarty.section.i.first}class="wp-first-item{if $admin_sub_menus.conf[i].id == $current_sub} current{/if}"{elseif $admin_sub_menus.conf[i].id == $current_sub}class="current"{/if} tabindex="1">{$admin_sub_menus.conf[i].name}</a>
+						</li>
+					{/section}
+					</ul>
+			</div></div>
+			{/if}
+
+			{if $admin_departments[j].id == "system"}
+			<div class='wp-submenu'><div class='wp-submenu-wrap'><div class='wp-submenu-head'>{$admin_departments[j].name}</div>
+					<ul>
+					{section name=i loop=$admin_sub_menus.system}
+						<li {if $smarty.section.i.first}class="wp-first-item{if $admin_sub_menus.system[i].id == $current_sub} current{/if}"{elseif $admin_sub_menus.system[i].id == $current_sub}class="current"{/if}>
+							<a href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=system&sub={$admin_sub_menus.system[i].id}" {if $smarty.section.i.first}class="wp-first-item{if $admin_sub_menus.system[i].id == $current_sub} current{/if}"{elseif $admin_sub_menus.system[i].id == $current_sub}class="current"{/if} tabindex="1">{$admin_sub_menus.system[i].name}</a>
+						</li>
+					{/section}
+					</ul>
+			</div></div>
+			{/if}
+
+		</li>
+	{/section}
+	<li class="wp-not-current-submenu wp-menu-separator"><div class="separator"></div></li>
+	<li id="collapse-menu" class="hide-if-no-js"><div id="collapse-button"><div></div></div><span>{$smarty.const.ADMIN_MENU_minimize}</span></li>
+
+</ul>

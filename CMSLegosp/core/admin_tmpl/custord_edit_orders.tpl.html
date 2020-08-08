@@ -1,0 +1,342 @@
+
+
+{*********************************************************************************
+*                                                                                *
+*   shop-script Legosp - legosp.net                                              *
+*   Skype: legoedition                                                           *
+*   Email: legoedition@gmail.com                                                 *
+*   Лицензионное соглашение: https://legosp.net/info/litsenzionnoe_soglashenie/  *
+*   Copyright (c) 2010-2019  All rights reserved.                                *
+*                                                                                *
+*********************************************************************************}
+ 
+ 
+
+{literal}
+
+<script type="text/javascript">
+$(function() {
+    $("input[name='send_ch_order']").click(function () {
+      $("#text_ch_order").show();
+    })
+    $(".search_button").click(function() {
+        // получаем то, что написал пользователь
+        var searchString    = $("#search_box").val();
+        // формируем строку запроса
+        var data            = 'search='+ searchString;
+
+        // если searchString не пустая
+        if(searchString) {
+            // делаем ajax запрос
+            $.ajax({
+                type: "POST",
+                url: "core/do_search.php",
+                data: data,
+               beforeSend: function(html) { // запустится до вызова запроса
+                    $("#results").html('');
+               }, 
+               success: function(html){ // запустится после получения резуотатов
+                    $("#results").show();
+                    $("#results").append(html);
+              }
+            });
+        }
+        return false;
+    });
+});
+
+function formatFloat(string)
+{
+	var sign = string.match(/(-)[\d]+\.?[\d]*/g);
+	if(sign){
+		sign='-';
+	}else{
+		sign = '';
+	}
+    string = string.replace(/[^0123456789.]/g,'');
+    var parts = string.split('.');
+    
+    while(parts.length > 2)
+    {
+        parts[1] = parts[1].concat(parts[2]);
+        parts.splice(2,1);
+    };
+    
+    if(parts[0] == '')
+    {
+        parts[0] = '0';
+    };
+    
+    if(parts.length !=2 || parts[1] == '')
+    {
+        parts[1] = '00';
+    };
+    
+    if(parts[1].length == 1)
+    {
+        parts[1] += '0';
+    };
+    
+    return ''+ sign + parts.join('.');
+};
+
+function onPriceChange(el)
+{
+var order_total = 0;
+var frm = document.forms['order_edit'];
+for(i=0; i<frm.elements.length; i++)
+{
+  if(frm.elements[i].name.indexOf('order_content') == 0)
+  {
+    var el = frm.elements[i];
+    if(el.name.indexOf('Price') != -1)
+    {
+        var item_id = el.name.replace('order_content[','').replace('][Price]','');
+        var item_price = parseFloat(el.value) * parseInt(frm.elements['order_content['+item_id+'][Quantity]'].value);
+        item_price = Math.round(item_price * 100) / 100; 
+        
+     
+        document.getElementById('item_price_'+item_id).innerHTML = formatFloat(item_price.toString());
+        order_total += item_price;
+        
+    }
+    else if(frm.elements[i].name == 'order_discount')
+    {
+        
+       order_total -= parseFloat(frm.elements[i].value);
+    }
+  }
+  else if(frm.elements[i].name.indexOf('addproduct') == 0)  
+  {
+    var el = frm.elements[i];
+    if(el.name.indexOf('Price') != -1)
+    { 
+        var item_id = el.name.replace('addproduct[','').replace('][Price]','');
+        var item_price = parseFloat(el.value) * parseInt(frm.elements['addproduct['+item_id+'][Quantity]'].value);
+        item_price = Math.round(item_price * 100) / 100; 
+        document.getElementById('item_price_'+item_id).innerHTML = formatFloat(item_price.toString());
+        order_total += item_price;     
+    }     
+  } 
+}
+order_total = Math.round(order_total * 100) / 100;
+document.getElementById('order_total').innerHTML = formatFloat(order_total.toString());
+if (document.getElementById('discont_pr').value>0) procentsum(); 
+
+}
+function procentsum()
+{
+   var order_total = 0;
+   var frm = document.forms['order_edit'];
+   for(i=0; i<frm.elements.length; i++)
+   {
+      if(frm.elements[i].name.indexOf('order_content') == 0)
+      {
+        var el = frm.elements[i];
+        if(el.name.indexOf('Price') != -1)
+        {
+        var item_id = el.name.replace('order_content[','').replace('][Price]','');
+        var item_price = parseFloat(el.value) * parseInt(frm.elements['order_content['+item_id+'][Quantity]'].value);
+        item_price = Math.round(item_price * 100) / 100;
+        document.getElementById('item_price_'+item_id).innerHTML = formatFloat(item_price.toString());
+        order_total += item_price;
+        }
+      }
+      else if(frm.elements[i].name.indexOf('addproduct') == 0)  
+      {
+        var el = frm.elements[i];
+        if(el.name.indexOf('Price') != -1)
+        { 
+        var item_id = el.name.replace('addproduct[','').replace('][Price]','');
+        var item_price = parseFloat(el.value) * parseInt(frm.elements['addproduct['+item_id+'][Quantity]'].value);
+        item_price = Math.round(item_price * 100) / 100; 
+        document.getElementById('item_price_'+item_id).innerHTML = formatFloat(item_price.toString());
+        order_total += item_price;     
+        }     
+      }    
+   }
+   order_total = Math.round(order_total * 100) / 100;
+   order_discont=(Math.round(document.getElementById('discont_pr').value * 100) /100*Math.round(order_total*100)/100)/100;
+   order_discont=Math.round(order_discont * 100) /100;
+   document.getElementById('discont').value = formatFloat(order_discont.toString());
+   order_total -= parseFloat(document.getElementById('discont').value);
+   order_total = Math.round(order_total * 100) / 100;
+   document.getElementById('order_total').innerHTML = formatFloat(order_total.toString());
+
+}
+function remotetr(id)
+{
+  var d = document;
+  el=d.getElementById(id);
+  tr=el.parentNode;
+  tr.parentNode.removeChild(tr);
+}
+
+
+function addproduct(id)
+{
+   var d = document;
+   var tbody = d.getElementById('tab1').getElementsByTagName('TBODY')[0];
+   var row = d.createElement("TR");
+   tbody.appendChild(row);
+   var td1 = d.createElement("TD");
+   td1.id = 'n'+id; 
+   var td2 = d.createElement("TD");
+   var td3 = d.createElement("TD"); 
+   var td4 = d.createElement("TD"); 
+   var td5 = d.createElement("TD"); 
+   row.appendChild(td1);
+   row.appendChild(td2);
+   row.appendChild(td3);
+   row.appendChild(td4);
+   row.appendChild(td5);
+   td1.innerHTML = document.getElementById('name_'+id).innerHTML;
+   td2.innerHTML = '<input name="addproduct['+id+'][Price]" size=12 value="'+document.getElementById('price_'+id).innerHTML+'" onblur="onPriceChange(this);">'; 
+   td3.innerHTML = '<input name="addproduct['+id+'][Quantity]" size=4 value="1" onblur="onPriceChange(this);">'; 
+   td4.innerHTML = '<span id="item_price_'+id+'">'+document.getElementById('price_'+id).innerHTML+'</span>'; 
+   td5.innerHTML = '<a  href="javascript:remotetr(\'n'+id+'\');"><img src="images/backend/delete.png" alt="Удалить"></a>';
+   remotetr('name_'+id);
+   onPriceChange(id);
+}
+
+function sumprocent()
+{
+   var order_total = 0;
+   var frm = document.forms['order_edit'];
+   for(i=0; i<frm.elements.length; i++)
+   {
+      if(frm.elements[i].name.indexOf('order_content') == 0)
+      {
+        var el = frm.elements[i];
+        if(el.name.indexOf('Price') != -1)
+        {
+        var item_id = el.name.replace('order_content[','').replace('][Price]','');
+        var item_price = parseFloat(el.value) * parseInt(frm.elements['order_content['+item_id+'][Quantity]'].value);
+        item_price = Math.round(item_price * 100) / 100;
+        document.getElementById('item_price_'+item_id).innerHTML = formatFloat(item_price.toString());
+        order_total += item_price;
+        }
+      } 
+   }
+   order_total = Math.round(order_total * 100) / 100;
+   order_discont=(Math.round(document.getElementById('discont').value * 100) /100)*100/order_total;
+   order_discont=Math.round(order_discont * 100) /100;
+   document.getElementById('discont_pr').value = formatFloat(order_discont.toString());
+   order_total -= parseFloat(document.getElementById('discont').value);
+   order_total = Math.round(order_total * 100) / 100;
+   document.getElementById('order_total').innerHTML = formatFloat(order_total.toString());
+}
+</script>
+{/literal}
+
+<div id="icon-options-general" class="icon32"><br /></div><h2>{$smarty.const.ORDER_EDIT} № {$smarty.get.orderID}</h2>
+<br class="clear" />
+
+<form id="order_edit" name="order_edit" method="post">
+	<input type="hidden" name="dpt" value="custord">
+	<input type="hidden" name="sub" value="edit_orders">
+	<input type="hidden" name="save_order" value="{$smarty.get.orderID}">
+	<h2>{$smarty.const.TABLE_CUSTOMER}</h2>
+	<table class="widefat" cellspacing="0">
+		<thead>
+			<tr class="alternate">
+				<th><a><span><strong>{$smarty.const.CUSTOMER_FIRST_NAME}</strong></span></a></th>
+				<th><a><span><strong>{$smarty.const.CUSTOMER_LAST_NAME}</strong></span></a></th>
+				<th><a><span><strong>{$smarty.const.CUSTOMER_PHONE_NUMBER}:</strong></span></a></th>
+				<th><a><span><strong>Email:</strong></span></a></th>
+				<th><a><span><strong>{$smarty.const.CUSTOMER_ADDRESS}</strong></span></a></th>
+				<th><a><span><strong>{$smarty.const.CUSTOMER_COMMENT}</strong></span></a></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="alternate">
+				<td><input value="{$orderinfo.cust_firstname}" name="shipping[cust_firstname]" maxlength="255" /></td>
+				<td><input value="{$orderinfo.cust_lastname}" name="shipping[cust_lastname]" maxlength="255" /></td>
+				<td><input value="{$orderinfo.cust_phone}" name="shipping[cust_phone]" maxlength="20" /></td>
+				<td><input value="{$orderinfo.cust_email}" name="shipping[cust_email]" maxlength="255" /></td>
+				<td><textarea  name="shipping[cust_address]" style="width: 100%;">{$orderinfo.cust_address}</textarea></td>
+				<td><textarea  name="shipping[comment]" style="width: 100%;">{$orderinfo.comment}</textarea></td>
+			</tr>
+		</tbody>
+	</table>
+    <h2>{$smarty.const.ORDER_STATUS}</h2>
+    <div class="col-sm-12">
+ <select name="shipping[status]">
+     {foreach from=$order_statuses item=status}
+         <option {if $orderinfo.status==$status.statusID}selected="" {/if} value="{$status.statusID}">{$status.status_name}</option>
+     {/foreach}
+ </select>
+    <label><input type="checkbox" name="send_ch_order"> <span class="ml10">Уведомить покупателя</span></label>
+    </div>
+    <div class="col-sm-4" id="text_ch_order" style="display: none">
+    <textarea class="form-control" placeholder="Комментарий для покупателя" rows="4" name="text_ch_order"></textarea>
+    </div>
+    <div class="clearfix"></div>
+    <input type="hidden" name="staus" value="{$orderinfo.status}">
+
+
+	<h2>{$smarty.const.TABLE_ORDERED_PRODUCTS}</h2>
+	<table class="widefat" cellspacing="0" id="tab1">
+		<thead>
+			<tr>
+				<th><a><span><strong>{$smarty.const.ADMIN_PRODUCT_NAME}</strong></span></a></th>
+				<th><a><span><strong>{$smarty.const.TABLE_PRODUCT_COST}</strong></span></a></th>
+				<th><a><span><strong>{$smarty.const.TABLE_PRODUCT_QUANTITY}</strong></span></a></th>
+				<th><a><span><strong>{$smarty.const.TABLE_PRODUCT_SUMM}</strong></span></a></th>
+				<th>&nbsp;</th>
+			</tr>
+		</thead>
+		{assign var='total' value=0}
+		{assign var='i' value=0}
+		{foreach name=ar from=$order_products item=product}
+			<tr {if $smarty.foreach.ar.index is not even}bgcolor="#EEEEEE"{else}bgcolor="#FFFFFF"{/if}>
+				<td >{$product.name}</td>
+				<td > 
+					<input type="text" id="p_{$product.id}" onblur="onPriceChange(this);" value="{$product.Price}" size="12" name="order_content[{$product.id}][Price]">
+				</td >
+				<td > 
+					{assign var="lenst" value=strlen($smarty.const.ADMIN_SHIPPING)}
+					<input id="q_{$product.id}" type="{if substr($product.name,0,$lenst)!=$smarty.const.ADMIN_SHIPPING && $product.name!=$smarty.const.ADMIN_FAST_ORDER}text{else}hidden{/if}" onblur="onPriceChange(this);" value="{$product.Quantity}" size="4" name="order_content[{$product.id}][Quantity]">
+				</td>
+				<td>
+					{math assign="i"  equation="x + 1" x=$i}
+					<span id="item_price_{$product.id}">{math equation="x * y" x=$product.Quantity y=$product.Price}</span>
+				</td>
+				<td>
+					<a href="javascript:confirmDelete('{$smarty.const.QUESTION_DELETE_CONFIRMATION}','{$smarty.const.CONF_ADMIN_FILE}?dpt=custord&amp;sub=edit_orders&amp;orderID={$smarty.get.orderID}&amp;terminate={$product.id}');"><img alt="Удалить" src="images/backend/delete.png"></a>
+				</td>
+			</tr>
+			{math assign="total"  equation="x + y * z" x=$total y=$product.Price z=$product.Quantity}
+		{/foreach}
+		<tbody></tbody>
+			<tr class="alternate">
+				<td colspan="5">
+					{$smarty.const.ADMIN_ORDERS_SEARCHP}
+					<form method="post" action="./do_search.php">
+						<input type="text" name="search" id="search_box" class='search_box' style="width: 200px;" />
+						<input type="submit" value="Поиск" class="search_button" />  {$smarty.const.ADMIN_ORDERS_SEARCHP_DESC}
+						<br />
+					</form>
+				</td>
+			</tr>
+			<tr>
+				<td id="results" colspan="5"></td>
+			</tr>
+			<tr>
+				<td><h3>{$smarty.const.ADMIN_DISCOUNT_STRING}</h3></td>
+				<td colspan="2">
+					<input id="discont_pr" type="text" value="{$order_discont.dp}" size="4" onblur="procentsum();" name="order_discontpr"> %  
+				</td>
+				<td colspan="2">
+					{$smarty.const.CONF_CURRENCY_ID_LEFT} <input id="discont"  type="text"    onblur="sumprocent();" value="{$order_discont.Price}"  name="dicount[{$order_discont.id}][Price]"> {$smarty.const.CONF_CURRENCY_ID_RIGHT}
+					{math assign="total"  equation="x - y" x=$total y=$order_discont.Price}
+				</td>
+			</tr>
+			<tr bgcolor="#EEE">
+				<td colspan="3"><h2>{$smarty.const.TABLE_TOTAL}:</h2></td>
+				<td colspan="2" style="text-align: right;"><b>{$smarty.const.CONF_CURRENCY_ID_LEFT}<span id="order_total">{$total}</span> {$smarty.const.CONF_CURRENCY_ID_RIGHT}</b></td>
+			</tr>
+	</table>
+
+	<p><input type="submit" name="submit" class="button-primary" value="{$smarty.const.SAVE_BUTTON}" /></p>
+</form>

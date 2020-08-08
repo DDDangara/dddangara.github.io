@@ -1,0 +1,49 @@
+{*********************************************************************************
+*                                                                                *
+*   shop-script Legosp - legosp.net                                              *
+*   Skype: legoedition                                                           *
+*   Email: legoedition@gmail.com                                                 *
+*   Лицензионное соглашение: https://legosp.net/info/litsenzionnoe_soglashenie/  *
+*   Copyright (c) 2010-2019  All rights reserved.                                *
+*                                                                                *
+*********************************************************************************}
+ 
+      <h2 class="box-top">{$meta_title}</h2>
+
+{if $history ne 0}
+ <table class='table'>
+  <tr>
+     <th>{$smarty.const.STRING_ORDER_ID}</th> 
+     <th><b>{$smarty.const.ADMIN_PRODUCT_NAME}<b></th>
+     <th style="width: 100px;">{$smarty.const.TABLE_ORDER_TIME}</th>
+     <th style="width: 100px;"><b>{$smarty.const.TABLE_PRODUCT_COST}</b></th>
+     <th><b>{$smarty.const.TABLE_PRODUCT_QUANTITY}</b></th>
+     <th style="width: 100px;"><b>{$smarty.const.TABLE_PRODUCT_SUMM}</b></th>
+  </tr>
+{foreach name=horder from=$historyall item=order}
+  <tr {if $smarty.foreach.horder.index is even}class="row_odd"{/if}>
+      <th>{$order.orderID}</th>
+     <th>
+             
+          {foreach name=hproduct_info from=$products_info item=product_info}
+             {if $order.productID === $product_info[0].productID}
+                 <a target="_blank" href="/product/{$product_info[0].hurl}">{$order.name}</a>
+                 {*$product_info[0].hurl|@debug_print_var*}
+             {/if}
+
+         {/foreach}
+               
+      </th>
+      <th>{$order.order_time}</th>
+     <th>{$smarty.const.CONF_CURRENCY_ID_LEFT}{$order.Price|print_price}{$smarty.const.CONF_CURRENCY_ID_RIGHT}</th>
+     <th>{$order.Quantity}</th>
+     <th>{math assign="total" equation="x * y" x=$order.Price y=$order.Quantity}{$smarty.const.CONF_CURRENCY_ID_LEFT}{$total|print_price}{$smarty.const.CONF_CURRENCY_ID_RIGHT}</th>
+</tr>
+
+{/foreach}
+ </table> 
+
+
+{else}
+<div class="info a-center">Заказов нет!</div>
+{/if}

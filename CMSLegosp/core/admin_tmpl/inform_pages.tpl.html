@@ -1,0 +1,115 @@
+
+{*********************************************************************************
+*                                                                                *
+*   shop-script Legosp - legosp.net                                              *
+*   Skype: legoedition                                                           *
+*   Email: legoedition@gmail.com                                                 *
+*   Лицензионное соглашение: https://legosp.net/info/litsenzionnoe_soglashenie/  *
+*   Copyright (c) 2010-2019  All rights reserved.                                *
+*                                                                                *
+*********************************************************************************}
+ 
+ 
+
+{* pages *}
+<div id="icon-edit-pages" class="icon32"><br /></div><h2>{$smarty.const.ADMIN_PAGES}</h2>
+<br class="clear" />
+
+<form action="./{$smarty.const.CONF_ADMIN_FILE}" method="post" enctype="multipart/form-data">
+	<input type="hidden" name="dpt" value="inform" />
+	<input type="hidden" name="sub" value="pages" />
+	<input type="hidden" name="add_page" value="{$new_page}" />
+	<table class="widefat" cellspacing="0">
+		<thead>
+			<tr>
+				<th colspan="2"><a><span><strong>{if isset($smarty.get.pages)}Редактирование{else}Добавление новой{/if} статьи</strong></span></a></th>
+				<th>&nbsp;</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="alternate">
+				<td style="width: 200px;">{$smarty.const.ADMIN_PAGE_TITLE}:</td>
+				<td><input type="text" name="page_title" value="{$pagetext[1]}" style="width: 100%;" /></td>
+				<td rowspan="8" style="vertical-align: top;width: 250px; ">
+					<div style="width: 250px; height: 550px; overflow: auto;">
+						<table class="widefat" cellpadding="0" cellspacing="0" width="100%">
+							<thead>
+								<tr><th colspan="3"><strong>{$smarty.const.ADMIN_PAGE_ALL}</strong></th></tr>
+							</thead>
+							<tbody>
+								<tr class="alternate">
+									<td><b>{$smarty.const.ADMIN_PAGE_ON}</b></td>
+									<td><b>{$smarty.const.ADMIN_PAGE_TITLE}</b></td>
+									<td>&nbsp;</td>
+								</tr>
+								{section name=i loop=$page_list_count}
+									<tr class="alternate">
+										<td align="left"><input type="checkbox" name="page_{$page_list[0][i]}" {if $page_list[2][i]>0}checked{/if}></td>
+										<td align="left"><a href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=inform&sub=pages&pages={$page_list[0][i]}">{$page_list[1][i]}</a></td>
+										<td align="right"><a href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=inform&sub=pages&del_page={$page_list[0][i]}"><img border="0" src="./images/backend/delete.png" alt="[{$smarty.const.ADMIN_PAGE_DELETE}]" /></a></td>
+									</tr>
+								{/section}
+							</tbody>
+						</table>
+					</div>
+				</td>
+			</tr>
+			<tr class="alternate">
+				<td>META-TITLE:</td>
+				<td><input type="text" name="meta_title" value="{$pagetext[6]|escape:'htmlall'}" style="width: 100%;" /></td>
+			</tr>
+			<tr class="alternate">
+				<td>META-KEYWORDS:</td>
+				<td><input type="text" name="meta_keywords" value="{$pagetext[7]|escape:'htmlall'}" style="width: 100%;" /></td>
+			</tr>
+			<tr class="alternate">
+				<td>META-DESCRIPTION:</td>
+				<td><input type="text" name="meta_desc" value="{$pagetext[8]|escape:'htmlall'}" style="width: 100%;" /></td>
+			</tr>
+			<tr class="alternate">
+				<td>URL:</td>
+				<td><input type="text" name="hurl" value="{$pagetext[9]|escape:'htmlall'}" style="width: 100%;" /></td>
+			</tr>
+			<tr class="alternate">
+				<td>REL CANONICAL:</td>
+				<td><input type="text" name="canonical" value="{$pagetext[10]|escape:'htmlall'}" style="width: 100%;" /></td>
+			</tr>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_PAGE_PICTURE}:</td>
+				<td><input type="file" name="page_pic" style="width: 250px;" /></td>
+			</tr>
+			<tr class="alternate">
+				<td>&nbsp;</td>
+				<td>
+				{if $pagetext[5]}
+					<img src="./products_pictures/{$pagetext[5]}" style="width: 250px;" alt="" />
+					<a href="javascript:confirmDelete('{$smarty.const.QUESTION_DELETE_PICTURE}','{$smarty.const.CONF_ADMIN_FILE}?dpt=inform&sub=pages&pages={$pagetext[0]}&picture_remove={$pagetext[0]}')"><img src="./images/backend/delete.png" alt="" /></a>
+				{else}
+					<img src="./products_pictures/nophoto.jpg" alt="" style="border: #CCC solid 1px;" />
+				{/if}
+				</td>
+			</tr>
+			<tr class="alternate">
+				<td style="vertical-align: top;">{$smarty.const.ADMIN_PAGE_TEXT}:</td>
+				<td colspan="2"><textarea id="page_text" name="page_text" rows="10">{$pagetext[2]|escape:'htmlall'}</textarea></td>
+			</tr>
+			<tr class="alternate">
+				<td style="vertical-align: top;">{$smarty.const.ADMIN_PAGE_BRIEF}:</td>
+				<td colspan="2"><textarea id="page_brief" name="page_brief" rows="10">{$pagetext[4]|escape:'htmlall'}</textarea></td>
+			</tr>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_PAGE_DATE}:</td>
+				<td colspan="2"><input type="text" name="page_date_d" value="{$page_date_d}" size="2" />&nbsp;<input type="text" name="page_date_m" value="{$page_date_m}" size="2" />&nbsp;<input type="text" name="page_date_y" value="{$page_date_y}" size="5" /></td>
+			</tr>
+		</tbody>
+	</table>
+
+	<p><input type="button" onclick="location='./{$smarty.const.CONF_ADMIN_FILE}?dpt=inform&sub=pages';" class="button" value="{$smarty.const.ADMIN_AUX_ADD}" />&nbsp;&nbsp;<input type="submit" name="submit" class="button-primary" value="{$smarty.const.SAVE_BUTTON}" /></p>
+</form>
+
+{literal}
+<script type="text/javascript">
+	CKEDITOR.replace( 'page_text', {filebrowserBrowseUrl : '/core/ckeditor/plugins/elfinder/elfinder.html'});
+	CKEDITOR.replace( 'page_brief', {filebrowserBrowseUrl : '/core/ckeditor/plugins/elfinder/elfinder.html'});
+</script>
+{/literal}

@@ -1,0 +1,236 @@
+
+{*********************************************************************************
+*                                                                                *
+*   shop-script Legosp - legosp.net                                              *
+*   Skype: legoedition                                                           *
+*   Email: legoedition@gmail.com                                                 *
+*   Лицензионное соглашение: https://legosp.net/info/litsenzionnoe_soglashenie/  *
+*   Copyright (c) 2010-2019  All rights reserved.                                *
+*                                                                                *
+*********************************************************************************}
+ 
+ 
+
+{* appearence configurations template *}
+<script type="text/javascript" src="./core/js/colorpicker.js"></script>
+<script type="text/javascript">
+{literal}
+function anichange (objName) {
+  if ( $(objName).css('display') == 'none' ) {
+    $(objName).animate({height: 'show'}, 400);
+  } else {
+    $(objName).animate({height: 'hide'}, 200);
+  }
+}
+
+function colorp(objName) {
+$(document).ready(function(){
+$('#'+objName).ColorPicker({
+  onSubmit: function(hsb, hex, rgb,el) {
+    $(el).val(hex);
+    $(el).ColorPickerHide(); 
+  },
+  onBeforeShow: function () {
+    $(this).ColorPickerSetColor(this.value);
+  }
+ })
+.bind('keyup', function(){
+  $(this).ColorPickerSetColor(this.value);
+});
+}); 
+}                   
+</script>
+{/literal}
+
+<div id="icon-options-general" class="icon32"><br /></div><h2>{$smarty.const.ADMIN_SETTINGS_APPEARENCE}</h2>
+<br class="clear" />
+
+<form action="./{$smarty.const.CONF_ADMIN_FILE}" method="post" enctype="multipart/form-data">
+	<input type="hidden" name="dpt" value="conf" />
+	<input type="hidden" name="sub" value="appearence" />
+	<input type="hidden" name="save_appearence" value="1" />
+	<table class="widefat" cellspacing="0">
+		<thead>
+			<tr>
+				<th style="width: 400px;"><a><span><strong>{$smarty.const.ADMIN_SETTINGS}</strong></span></a></th>
+				<th>{if $configuration_saved eq 1}<strong>{$smarty.const.ADMIN_UPDATE_SUCCESSFUL}</strong>{/if}</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_COLOR_SCHEME}:</td>
+				<td>
+					<select name="color_scheme" style="width: 100px;" onchange="javascript: document.getElementById('color_image').src='./css/css_'+this.value+'/preview.png';document.getElementById('bf').href='./css/css_'+this.value+'/preview.png';">
+					{section name=i loop=$scheme_list}
+						<option value="{$scheme_list[i]}" {if $scheme_list[i] == $smarty.const.CONF_COLOR_SCHEME}selected="selected"{/if}>{$scheme_list[i]}</option>
+					{/section}
+					</select>
+					<a href="./css/css_{$smarty.const.CONF_COLOR_SCHEME}/preview.png" id="bf" style="right:5%;position: absolute;" class="thickbox"><img style="width: 200px;border: 1px solid #DDD; padding: 2px;" src="./css/css_{$smarty.const.CONF_COLOR_SCHEME}/preview.png" id="color_image" alt="" /></a>
+				</td>
+			</tr>
+			{*<tr class="alternate">
+				<td>{$smarty.const.ADMIN_COLOR_IMPORT}:</td>
+				<td><input style="width: 100px;" type="file" name="color_filename" /></td>
+			</tr>*}
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_MAX_PRODUCTS_COUNT_PER_PAGE}:</td>
+				<td><input style="width: 100px;" type="text" name="productscount" value="{$smarty.const.CONF_PRODUCTS_PER_PAGE|escape}" /></td>
+			</tr>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_MAX_COLUMNS_PER_PAGE}:</td>
+				<td><input style="width: 100px;" type="text" name="colscount" value="{$smarty.const.CONF_COLUMNS_PER_PAGE|escape}" /></td>
+			</tr>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_MAX_NEWS_COUNT_PER_PAGE}:</td>
+				<td><input style="width: 100px;" type="text" name="newscount" value="{$smarty.const.CONF_NEWS_PER_PAGE|escape}" /></td>
+			</tr>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_MAX_PAGES_COUNT_PER_PAGE}:</td>
+				<td><input style="width: 100px;" type="text" name="pagescount" value="{$smarty.const.CONF_PAGES_PER_PAGE|escape}" /></td>
+			</tr>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_TAGS_SHOW_COUNT}:</td>
+				<td><input style="width: 100px;" type="text" name="tagscount" value="{$smarty.const.CONF_TAG_COUNT|escape}" /></td>
+			</tr>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_TAGS_SHOW_VIEW}:</td>
+				<td><input type="checkbox" name="tagsview" {if $smarty.const.CONF_TAG_VIEW_SW eq 1}checked="checked"{/if} /></td>
+			</tr>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_PRICE_SHOW_COUNT}:</td>
+				<td><input style="width: 100px;" type="text" name="price_show_count" value="{$smarty.const.CONF_PRICE_SHOW_COUNT|escape}" /></td>
+			</tr>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_SHOW_MENU}:</td>
+				<td><input type="checkbox" name="showmenu" {if $smarty.const.CONF_SHOW_MENU eq 1}checked="checked"{/if} /></td>
+			</tr>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_SHOW_BESTCHOICE}:</td>
+				<td><input type="checkbox" name="bestchoice" {if $smarty.const.CONF_SHOW_BEST_CHOICE eq 1}checked="checked"{/if} /></td>
+			</tr>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_ONLINE_ON}:</td>
+				<td><input type="checkbox" name="online_on" {if $smarty.const.CONF_ONLINE_ON eq 1}checked="checked"{/if} /></td>
+			</tr>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_NEWS_ONHOME}:</td>
+				<td><input type="checkbox" onclick="anichange('#news');" name="newsonhome" {if $smarty.const.CONF_NEWS_ONHOME eq 1}checked="checked"{/if} /></td>
+			</tr>
+			<tr class="alternate" id="news" {if !$smarty.const.CONF_NEWS_ONHOME}style="display: none;"{/if}> 
+				<td>{$smarty.const.ADMIN_NEWS_ONHOME_COUNT}:</td>
+				<td><input style="width: 100px;" type="text" name="newsonhomecount" value="{$smarty.const.CONF_NEWS_ONHOME_COUNT}" /></td>
+			</tr>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_PAGES_ONHOME}:</td>
+				<td><input type="checkbox" onclick="anichange('#pages');" name="pagesonhome" {if $smarty.const.CONF_PAGES_ONHOME eq 1}checked="checked"{/if} /></td>
+			</tr>
+			<tr class="alternate" id="pages" {if !$smarty.const.CONF_PAGES_ONHOME}style="display: none;"{/if}> 
+				<td>{$smarty.const.ADMIN_PAGES_ONHOME_COUNT}:</td>
+				<td><input style="width: 100px;" type="text" name="pagesonhomecount" value="{$smarty.const.CONF_PAGES_ONHOME_COUNT}" /></td>
+			</tr>
+			<tr class="alternate">
+				<td>Google Translate:</td>
+				<td><input type="checkbox" name="google_translate" {if $smarty.const.CONF_GOOGLE_TR eq 1}checked="checked"{/if} /></td>
+			</tr>
+		</tbody>
+	</table>
+	<br class="clear" />
+
+	<table class="widefat" cellspacing="0">
+		<thead>
+			<tr>
+				<th style="width: 400px;"><a><span><strong>{$smarty.const.ADMIN_HITS_SETTINGS}</strong></span></a></th>
+				<th>&nbsp;</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_SCROLL_HITS}:</td>
+				<td><input  style="width: 100px;" type="text" name="scrollhits" value="{$smarty.const.CONF_SCROLL_HITS|escape}"></td>
+			</tr>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_MAX_HITS}:</td>
+				<td><input style="width: 100px;" type="text" name="hitscount" value="{$smarty.const.CONF_MAX_HITS|escape}"></td>
+			</tr>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_HITS_FRIQ}:</td>
+				<td><input style="width: 100px;" type="text" name="hitsfriq" value="{$smarty.const.CONF_HITS_FRIQ|escape}"></td>
+			</tr>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_HITS_SPEED}:</td>
+				<td><input style="width: 100px;" type="text" name="hitsspeed" value="{$smarty.const.CONF_HITS_SPEED|escape}"></td>
+			</tr>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_HITS_TYPE}:</td>
+				<td>
+				  <select name="hitstype" style="width: 100px;">
+					<option value="0" {if $smarty.const.CONF_HITS_TYPE == 0}selected="selected"{/if}>JCarousel</option>
+					<option value="1" {if $smarty.const.CONF_HITS_TYPE == 1}selected="selected"{/if}>HideSlide</option>
+				  </select>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<br class="clear" />
+
+	<table class="widefat" cellspacing="0">
+		<thead>
+			<tr>
+				<th style="width: 400px;"><a><span><strong>{$smarty.const.ADMIN_MAIN_COLORS}</strong></span></a></th>
+				<th>&nbsp;</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_COLOR} 1:</td>
+				<td><b>#</b><input style="width: 100px;" onFocus="colorp('darkcolor');" id="darkcolor" type="text" name="darkcolor" value="{$smarty.const.CONF_DARK_COLOR|escape}"> <span style="border: 1px solid #000; background: #{$smarty.const.CONF_DARK_COLOR};">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
+			</tr>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_COLOR} 2:</td>
+				<td><b>#</b><input style="width: 100px;" onFocus="colorp('middlecolor');" id="middlecolor"  type="text" name="middlecolor" value="{$smarty.const.CONF_MIDDLE_COLOR|escape}"> <span style="border: 1px solid #000; background: #{$smarty.const.CONF_MIDDLE_COLOR}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
+			</tr>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_COLOR} 3:</td>
+				<td><b>#</b><input style="width: 100px;" onFocus="colorp('lightcolor');" id="lightcolor" type="text" name="lightcolor" value="{$smarty.const.CONF_LIGHT_COLOR|escape}"> <span style="border: 1px solid #000; background: #{$smarty.const.CONF_LIGHT_COLOR}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
+			</tr>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_COLOR_VOTE}:</td>
+				<td><b>#</b><input style="width: 100px;" onFocus="colorp('votecolor');" id="votecolor" type="text" name="votecolor" value="{$smarty.const.CONF_VOTE_COLOR|escape}"> <span style="border: 1px solid #000; background: #{$smarty.const.CONF_VOTE_COLOR}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
+			</tr>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_COLOR_BODY}:</td>
+				<td><b>#</b><input style="width: 100px;" onFocus="colorp('bodycolor');" id="bodycolor" type="text" name="bodycolor" value="{$smarty.const.CONF_BODY_COLOR|escape}"> <span style="border: 1px solid #000; background: #{$smarty.const.CONF_BODY_COLOR}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
+			</tr>
+		</tbody>
+	</table>
+	<br class="clear" />
+
+	<table class="widefat" cellspacing="0">
+		<thead>
+			<tr>
+				<th style="width: 400px;"><a><span><strong>{$smarty.const.ADMIN_IMAGE_SIZE}</strong></span></a></th>
+				<th>&nbsp;</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_IMAGE_SMALL}:</td>
+				<td><input style="width: 54px;" type="text" name="resize_small_x" value="{$smarty.const.RESIZE_SMALL_X|escape}" />&nbsp;x&nbsp;<input style="width: 54px" type="text" name="resize_small_y" value="{$smarty.const.RESIZE_SMALL_Y|escape}" /></td>
+			</tr>
+			<tr class="alternate">
+				<td >{$smarty.const.ADMIN_IMAGE_NORMAL}:</td>
+				<td><input style="width: 54px" type="text" name="resize_normal_x" value="{$smarty.const.RESIZE_NORMAL_X|escape}" />&nbsp;x&nbsp;<input style="width: 54px" type="text" name="resize_normal_y" value="{$smarty.const.RESIZE_NORMAL_Y|escape}" /></td>
+			</tr>
+			<tr class="alternate">
+				<td >{$smarty.const.ADMIN_IMAGE_BIG}:</td>
+				<td><input  style="width: 54px" type="text" name="resize_big_x" value="{$smarty.const.RESIZE_BIG_X|escape}" />&nbsp;x&nbsp;<input  style="width: 54px" type="text" name="resize_big_y" value="{$smarty.const.RESIZE_BIG_Y|escape}" /></td>
+			</tr>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_COLOR_IMAGE}:</td>
+				<td><b>#</b><input style="width: 100px;" onFocus="colorp('colorpickerField');" id="colorpickerField" name="imagecolor" type="text" value="{$smarty.const.CONF_IMAGE_COLOR|escape}" /> <span style="border: 1px solid #000; background: #{$smarty.const.CONF_IMAGE_COLOR}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
+			</tr>
+		</tbody>
+	</table>
+
+ 	<p><input type="submit" name="submit" class="button-primary" value="{$smarty.const.SAVE_BUTTON}" /></p>
+</form>

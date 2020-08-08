@@ -1,0 +1,53 @@
+{*********************************************************************************
+*                                                                                *
+*   shop-script Legosp - legosp.net                                              *
+*   Skype: legoedition                                                           *
+*   Email: legoedition@gmail.com                                                 *
+*   Лицензионное соглашение: https://legosp.net/info/litsenzionnoe_soglashenie/  *
+*   Copyright (c) 2010-2019  All rights reserved.                                *
+*                                                                                *
+*********************************************************************************}
+ 
+{* register notification for customer *}
+
+<html>
+ <head>
+  <meta http-equiv="Content-Type" content="text/html; charset={$smarty.const.DEFAULT_CHARSET}" />
+  <style type="text/css">
+  {literal}
+    a:link {color: #777777;}
+    a:hover {color: #555555;}
+  {/literal}
+  </style>
+ </head>
+<body>
+  <a href="https://legosp.net/"><img border="0" src="cid:mail_img_1"></p></a>
+  <hr color="#777777" />
+  <h3><font color="#777777">{$smarty.const.EMAIL_HELLO}, {$order_custname}</font></h3>
+  <font color="#777777">{$smarty.const.STRING_ORDER_ID_MAIL}: {$order_id}</font>
+  <br />
+  TEXT OF WELCOME MESSAGE
+  <br />
+  REGISTRATION DATA:
+  <br />
+  _ваш емейл_: (исп. для входа в систему): {$email}
+  <br />
+  _ваш пароль_: {$password}
+  <br />
+  link: восстановить пароль
+  <br />
+  _адрес доставки_: {$order_shipping_address}
+  <br />
+  _контактный телефон_: {$phone}
+  <br />
+  <br />
+  <br />
+  <font color="#777777"><b>_приятных покупок_</b></font><br />
+  <hr color="#777777" />
+  <font color="#777777">
+    <b><i>
+      {$smarty.const.EMAIL_SINCERELY}, <a href="http://{$smarty.const.CONF_SHOP_URL}">{$smarty.const.CONF_SHOP_NAME}</a>
+    </i></b>
+  </font>
+</body>
+</html>

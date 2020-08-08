@@ -1,0 +1,38 @@
+
+
+{*********************************************************************************
+*                                                                                *
+*   shop-script Legosp - legosp.net                                              *
+*   Skype: legoedition                                                           *
+*   Email: legoedition@gmail.com                                                 *
+*   Лицензионное соглашение: https://legosp.net/info/litsenzionnoe_soglashenie/  *
+*   Copyright (c) 2010-2019  All rights reserved.                                *
+*                                                                                *
+*********************************************************************************}
+ 
+ 
+
+<div id="icon-plugins" class="icon32"><br /></div><h2>{$smarty.const.admin_menedger_deny}</h2>
+<br class="clear" />
+
+<form method="post" id="form_file">
+	<div style="padding: 5px; border: #CCC solid 1px;">
+		<input type='checkbox' onclick='var o=$("#form_file input[type=checkbox]");for(var i=0;i<o.length;i++)if(o[i].type="checkbox")o[i].checked=this.checked' /> Выбрать всё.
+	</div>
+	<input type="hidden" value="{$smarty.get.deny}" name="menedger_id">
+	{foreach from=$admin_departments item=dpt}
+		<li style="float: left;list-style:none;padding: 0 10px;">
+			<h2>{$dpt.name}</h2>
+			<ul>
+			{foreach from=$dpt.sub_departments  item=sub}
+				<li>
+					{assign var="sear" value="`$dpt.id`_`$sub.id`"}
+					<input type="checkbox" {if array_search($sear,$mdeny)}checked="checked"{/if} name="file[]" class="file" value="{$dpt.id}_{$sub.id}" />{$sub.name}
+				</li>
+			{/foreach}
+			</ul>
+		</li>
+	{/foreach}
+	<br class="clear" />
+	<p><input type="submit" name="submit" class="button-primary" value="{$smarty.const.SAVE_BUTTON}" /></p>
+</form>

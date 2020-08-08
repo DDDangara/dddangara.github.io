@@ -1,0 +1,317 @@
+{*********************************************************************************
+*                                                                                *
+*   shop-script Legosp - legosp.net                                              *
+*   Skype: legoedition                                                           *
+*   Email: legoedition@gmail.com                                                 *
+*   Лицензионное соглашение: https://legosp.net/info/litsenzionnoe_soglashenie/  *
+*   Copyright (c) 2010-2019  All rights reserved.                                *
+*                                                                                *
+*********************************************************************************}
+ 
+{* product detailed information view *}
+
+<div class="box">
+    <h1 class="page-title">{$product_info.h1}{if $smarty.session.access==3} <a class="iframe" href="{$smarty.const.CONF_ADMIN_FILE}?dpt=catalog&amp;sub=products_edit&amp;productID={$product_info.productID}" title="{$smarty.const.ADMIN_EDIT}"><i class="fa fa-pencil-square-o"></i></a>{/if}</h1>
+
+    <div class="product-info">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="product-image">
+                    {if $product_info.you_save_val_p > 0}<div class="sale">-{$product_info.you_save_val_p}%</div>{/if}
+                    {if $product_info.picture || $p_default[$product_info.productID]}
+                    <a href="./products_pictures/{if $p_default[$product_info.productID]}{$p_default[$product_info.productID]}-B.jpg{else}{$product_info.big_picture}{/if}" rel="example_group">
+                        <img src="./products_pictures/{if $p_default[$product_info.productID]}{$p_default[$product_info.productID]}.jpg{else}{$product_info.picture}{/if}" class="img-responsive" alt="{$product_info.name|escape}"/>
+                    </a>
+                    {else}
+                    <img src="./css/css_{$smarty.const.CONF_COLOR_SCHEME}/image/no_image-250x250.jpg" alt="{$product_info.name|escape}"/>
+                    {/if}
+                </div>
+                {if $product_thumb}
+                <div class="thumbnails clearfix">
+                    <ul>
+                        {foreach from=$product_thumb item=thumb}
+                        <li><a rel="example_group" href="./products_thumb/{$thumb.picture}"><img src="./products_thumb/P_{$thumb.picture}" class="img-responsive" alt="{$thumb.description|escape}"></a></li>
+                        {/foreach}
+                    </ul>
+                </div>
+                {/if}
+            </div>
+            <div class="col-sm-6 item-page-info">
+
+                <div class="description">
+                    <!-- <strong>{$product_info.name}</strong><br> -->
+                    <div class="rating">{section name=i loop=5}{if $smarty.section.i.index < $product_info.customers_rating}<i class="fa fa-star active"></i>{else}<i class="fa fa-star"></i>{/if}{/section}</div>
+                    {if $product_info.brand_name}
+                    <span>{$smarty.const.STRING_MANUFACTURER}:</span> {$product_info.brand_name}<br>
+                    {/if}
+                    {if $product_info.product_code}
+                    <span>{$smarty.const.ADMIN_PRODUCT_CODE}:</span> {$product_info.product_code}<br>
+                    {/if}
+                    {if !$smarty.const.CONF_SHOW_ADD2CART_INSTOCK}
+                        <span>{$smarty.const.IN_STOCK}:</span> <span class="{if $product_info.in_stock<1}text-danger{else}text-success{/if}">{if $product_info.in_stock>0}{$smarty.const.PRODUCT_IN_STOCK}{else}
+                        {if $product_info.brand_comment ne NULL}{$product_info.brand_comment}{else}{$smarty.const.PRODUCT_NO_IN_STOCK}{/if}
+                        {/if}</span>
+                    {/if}
+                </div>
+                <div class="price">
+                    <span class="price-new price-sale vnewprice{$product_info.productID}">{$product_info.Price_letters}</span>
+                    {if $product_info.list_price>$product_info.Price}<span class="price-old">{$product_info.list_price_letters}</span>{/if}
+                </div>
+                <div id="product">
+                    <div class="options">
+                        <h4>Доступные варианты</h4>
+                        {if count((array)$options)}
+                            <div class="variants">
+                                {foreach from=$options item=option key=key name=option}
+                                    {assign var="i" value=$i+1}
+                                    {if  count((array)$option)>1}
+                                    <div class="form-group">
+                                        <div class="option">
+                                        <label style="padding-top: 15px;" class="col-sm-3 control-label">{$key}:</label>
+                                        <div class="col-sm-9">
+                                            <select class="product_option search_button" name="product_option" style="width: 100%">
+                                                {foreach from=$option item=var}
+                                                    <option {if $var.default} selected{/if}  value="{$var.variantID}">{$var.name_var}{if $var.price_surplus!=0}({if $var.price_surplus>0}+{/if}{math equation="x/y" x=$var.price_surplus y=$smarty.const.CURRENCY_val format="%.2f"}){/if}</option>
+                                                {/foreach}
+                                            </select>
+                                        </div>
+                                        </div>
+                                    </div>
+                                    {else}
+                                        <div class="option">
+                                            {$key}: {$option.0.name_var}
+                                            {if $option.var.0.default}
+                                                <input type="hidden" class="product_option" value="{$option.0.variantID}" >
+                                            {/if}
+                                        </div>
+                                    {/if}
+                                {/foreach}
+                                <input type="hidden" class="productid" value="{$product_info.productID}">
+                            </div>
+                        {/if}
+                    </div>
+                    {if $product_info[28] eq 1}
+                    <div class="cart">
+                        <input value="1" min="1" class="quantity" type="number" id="count_{$product_info.productID}" name="count"/>
+                        <a  href="./add2cart/{$product_info.productID}" id="tocart_{$product_info.productID}" class="ajaxcart button">{$smarty.const.ADD_TO_CART_STRING}</a>
+                    </div>
+                    {/if}
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="tabs">
+        <a rel="#tab_description">{$smarty.const.ADMIN_PRODUCT_DESC}</a>
+        {if $smarty.const.CONF_REVIEW_WRITE}<a rel="#tab_review">{$smarty.const.PRODUCT_REVIEW_TITLE}{if $reviews} ({$reviews|count}){/if}</a>{/if}
+    </div>
+
+    <div id="tab_description" class="tab-content">{$product_info.description}</div>
+
+    <div class="middle">
+        {if $product_info ne NULL}
+
+
+        {if $smarty.const.CONF_REVIEW_WRITE}
+            {* reviws *}
+
+            <div id="tab_review" class="tab-content">
+                <div id="review"></div>
+                {if $reviews}
+                    <div id="read">
+                        <h2 id="review-title">{$smarty.const.PRODUCT_REVIEW_ALL}</h2>
+                        <div class="review-list">
+                            {foreach from=$reviews item=rew}
+                                <div class="author"><b>{$rew.username}</b> <span>{$rew.date_time|date_format:"%d.%m.%Y"}</span></div>
+                                <div class="text">{$rew.review}</div>
+                            {/foreach}
+                        </div>
+                        <div class="buttons">
+                            <div class="right"><a onclick="{literal}document.getElementById('read').style.display = 'none'; document.getElementById('write').style.display = 'block';{/literal}" class="button">{$smarty.const.PRODUCT_REVIEW_WRITE}</a></div>
+                        </div>
+                    </div>
+
+                    <div id="write" style="display: none;">
+                        <h2 id="review-title" id="review_title">{$smarty.const.PRODUCT_REVIEW_WRITE}</h2>
+                        <div class="div_review_write">
+
+                            
+                            <form action="index.php" class="cmxform" method="post" id="review_form">
+
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        {$smarty.const.PRODUCT_REVIEW_NAME}
+                                        <br />
+                                        <input type="text" required="" name="name" id="first_name" value="{$smarty.session.userinf.cust_firstname}" class="required" style="width: 100%;" />
+                                    </div>
+                                    <div class="col-sm-6">
+                                        {$smarty.const.PRODUCT_REVIEW_EMAIL}
+                                        <br />
+                                        <input type="email" required="" name="email" id="email" value="{$smarty.session.userinf.cust_email}" class="required email" style="width: 100%;" />
+                                    </div>
+                                </div>
+
+                                <br />
+                                {$smarty.const.PRODUCT_REVIEW_HELLO}
+                                <textarea name="review" id="review"  style="width: 100%;" rows="8" cols="5" required></textarea>
+
+                                <input type="hidden" id="last_name" value="none" />
+                                <input type="hidden" id="phone" value="8 (000) 000-00-00" />
+                                <input name="productID" id="productID" value="{$product_info.productID}" type="hidden" />
+
+                                <br />
+                                {$smarty.const.VOTING_FOR_ITEM_TITLE} <br />
+                                {$smarty.const.MARK_POOR} &nbsp;
+                                    <input type="radio" name="mark" value="0.1" title="1"  />
+                                    &nbsp;
+                                    <input type="radio" name="mark" value="1" title="2"  />
+                                    &nbsp;
+                                    <input type="radio" name="mark" value="2.5" title="3" />
+                                    &nbsp;
+                                    <input type="radio" name="mark" value="3.8" title="4" />
+                                    &nbsp;
+                                    <input type="radio" name="mark" value="5" title="5" checked="checked" />
+                                &nbsp; {$smarty.const.MARK_EXCELLENT}
+                                <br />
+                                <input type="hidden" name="vote" value="yes" />
+                                {if !isset($smarty.session.cust_id)}
+                                    <br />
+                                    {$smarty.const.STRING_SEND_CAPCHA}:
+                                    <br />
+                                    <img id="cap" src="./core/core_captcha.php?bg=F7F7F7" alt="{$smarty.const.STRING_SEND_CAPCHA}" onclick="go_cap()" style="cursor:pointer;" title="Обновить капчу"/>
+                                    <input class='required error' minlength='3' type="text" name="captcha" id="captcha"/>
+                                    
+                                {/if}
+                                <div style="color: #f36909;" id="results"></div>
+                                <div class="buttons">
+                                    <div class="left"><a onclick="{literal}document.getElementById('write').style.display = 'none'; document.getElementById('read').style.display = 'block';{/literal}" class="button">{$smarty.const.PRODUCT_REVIEW_ALL}</a></div>
+                                    <div class="right"><input class="button review" type="submit" value="{$smarty.const.PRODUCT_REVIEW_WRITE}"/></div>
+                                </div>
+                            </form>
+
+                        </div>
+
+                    </div>
+                {else}
+                    <div>
+                        <h2 id="review-title">{$smarty.const.PRODUCT_REVIEW_WRITE}</h2>
+                        <div class="div_review_write">
+
+                            <div id="results"></div>
+                            <br>
+                            <form action="index.php" method="post" id="review_form">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        {$smarty.const.PRODUCT_REVIEW_NAME}
+                                        <br />
+                                        <input type="text" name="name" id="first_name" style="width: 100%;" value="" required />
+                                    </div>
+                                    <div class="col-sm-6">
+                                        {$smarty.const.PRODUCT_REVIEW_EMAIL}
+                                        <br />
+                                        <input type="email" name="email" id="email" style="width: 100%;" value="" required/>
+                                    </div>
+                                </div>
+
+
+                                <br />
+                                {$smarty.const.PRODUCT_REVIEW_HELLO}
+                                <textarea name="review" style="width: 100%;" rows="8" cols="5" required></textarea>
+
+                                <input type="hidden" id="last_name" value="none" />
+                                <input type="hidden" id="phone" value="8 (000) 000-00-00" />
+                                <input name="productID" id="productID" value="{$product_info.productID}" type="hidden" />
+
+                                <br />
+                                {$smarty.const.VOTING_FOR_ITEM_TITLE}<br />
+                                <span>{$smarty.const.MARK_POOR}</span>&nbsp;
+                                <input type="radio" name="mark" value="0.1" style="margin: 0;" />
+                                &nbsp;
+                                <input type="radio" name="mark" value="1" style="margin: 0;" />
+                                &nbsp;
+                                <input type="radio" name="mark" value="2.5" style="margin: 0;" />
+                                &nbsp;
+                                <input type="radio" name="mark" value="3.8" style="margin: 0;" />
+                                &nbsp;
+                                <input type="radio" name="mark" value="5" style="margin: 0;" checked="checked" />
+                                &nbsp; <span>{$smarty.const.MARK_EXCELLENT}</span>
+                                <br />
+                                <input type="hidden" name="vote" value="yes" />
+                                {if !isset($smarty.session.cust_id)}
+                                    <br />
+                                    <b>{$smarty.const.STRING_SEND_CAPCHA}:</b>
+                                    <br />
+                                    <img id="cap" src="./core/core_captcha.php?bg=F7F7F7" alt="{$smarty.const.STRING_SEND_CAPCHA}" onclick="go_cap()" style="cursor:pointer;" title="Обновить капчу"/>
+                                    <input minlength='3' type="text" name="captcha" id="captcha" required/>
+                                    
+                                    
+                                {/if}
+                                <div style="color: #f36909;" id="results"></div>
+                            </form>
+                        </div>
+                        <div class="buttons">
+                                    <div align="right"><input form="review_form" class="button review" type="submit" value="{$smarty.const.PRODUCT_REVIEW_WRITE}"></div>
+                        </div>
+                    </div>
+                {/if}
+            </div>
+        {/if}
+
+        {* more image *}
+
+        {* related products *}
+        {if $accompany}
+            <div class="box">
+                <div class="box-heading">{$smarty.const.ADMIN_PRODUCT_ACCOMPANY}</div>
+
+                <!-- accompany Products grid -->
+                <div class="product-grid">
+                    <div class="row">
+                        {foreach from=$accompany item=acc}
+                        <div class="col-sm-3 col-xs-6">
+                            <div class="product clearfix product-hover">
+                                <div class="left">
+                                    <div class="image">
+                                        {if $acc.thumbnail}
+                                        <a href="./{$acc.hurl}"><img src="./products_pictures/{$acc.thumbnail}" alt="{$acc.name|escape}" class="img-responsive zoom-image-effect"></a>
+                                        {else}
+                                        <a href="./{$acc.hurl}"><img src="./css/css_{$smarty.const.CONF_COLOR_SCHEME}/image/no_image-250x250.jpg" alt="{$acc.name|escape}" class="img-responsive zoom-image-effect"></a>
+                                        {/if}
+                                    </div>
+                                </div>
+                                <div class="right">
+                                    <div class="name"><a href="./{$acc.hurl}">{$acc.name}</a></div>
+                                    <div class="only-hover">
+                                        <a  href="./{$acc.hurl}" class="button"><span>{$smarty.const.MORE_ABOUT_PRODUCT}</span></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {/foreach}
+                    </div>
+                </div>
+
+            </div>
+    {/if}
+    <div>
+        {*include file="dechevle.tpl.html"*}
+    </div>
+    {* all products
+    {if $product_all_count ne NULL}
+    <div id="tab_all_product" class="page">
+    <div id="allproduct" style="background: #F7F7F7; border: 1px solid #DDDDDD; padding: 10px; margin-bottom: 10px; height: 200px; overflow: auto;">
+    <ul>
+    {section name=i5 loop=$product_all max=$product_all_count}
+    <li>
+    <a href="index.php?productID={$product_all[i5][0]}">{$product_all[i5][1]}</a>
+    </li>
+    {/section}
+    </ul>
+    </div>
+    </div>
+    {/if}
+    *}
+</div>
+{/if}
+</div>

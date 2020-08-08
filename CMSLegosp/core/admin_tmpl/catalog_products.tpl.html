@@ -1,0 +1,109 @@
+
+
+{*********************************************************************************
+*                                                                                *
+*   shop-script Legosp - legosp.net                                              *
+*   Skype: legoedition                                                           *
+*   Email: legoedition@gmail.com                                                 *
+*   Лицензионное соглашение: https://legosp.net/info/litsenzionnoe_soglashenie/  *
+*   Copyright (c) 2010-2019  All rights reserved.                                *
+*                                                                                *
+*********************************************************************************}
+ 
+ 
+
+{* products view *}
+<div id="icon-link-manager" class="icon32"><br /></div>
+<div class="breadcrumb">
+{foreach name=patch from=$patch_category item=category}
+  {if !$smarty.foreach.patch.last}<a href=./{$smarty.const.CONF_ADMIN_FILE}?dpt=catalog&sub=products&categoryID={$category.categoryID}>{$category.name}</a>&nbsp;&gt;&gt;{else}<h2>{$category.name}</h2>{/if}
+{/foreach}
+</div>
+<div class="tablenav top">
+<input type="button" onclick="location='./{$smarty.const.CONF_ADMIN_FILE}?dpt=catalog&amp;sub=products_edit&amp;categoryID={$categoryID}';" class="button-primary" value="{$smarty.const.ADD_BUTTON}" />&nbsp;&nbsp;<input form="form" type="submit" name="submit" class="button-primary" value="{$smarty.const.SAVE_BUTTON}" />
+ 
+</div>
+<br class="clear" />
+
+<form id="form" action="./{$smarty.const.CONF_ADMIN_FILE}" method="post" enctype="multipart/form-data">
+	<input type="hidden" name="dpt" value="catalog" />
+	<input type="hidden" name="sub" value="products" />
+	<input type="hidden" name="products_update" value="1" />
+	<input type="hidden" name="categoryID" value="{$categoryID}" />
+	
+	<table class="widefat" cellspacing="0">
+		<thead>
+			<tr>
+				<th id="div_category_title" style="{if !$categoryID==0} display: none;{/if}"><a><span><strong>{$smarty.const.ADMIN_CATEGORIES}</strong></span></a><a title='{$smarty.const.STRING_CATEGORY_HIDE}' class='mouseclic' onclick="$('#div_category').hide(); $('#div_category_title').hide(); $('#cat_show').show();"><img src="./core/admin_tmpl/images/bd_firstpage.png" align="right" alt="" /></a></th>
+				<th><a onclick="$('#div_category').show(); $('#div_category_title').show(); $('#cat_show').hide();" class='mouseclic' id="cat_show" title='{$smarty.const.STRING_CATEGORY_SHOW}'><img src="./core/admin_tmpl/images/bd_lastpage.png" align="left" alt="" /></a>&nbsp;&nbsp;<a><span><strong>{$smarty.const.ADMIN_PRODUCT_TITLE}</strong></span></a></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="alternate">
+				<td style="vertical-align: top;width: 250px;padding: 3px;{if $smarty.get.categoryID != 0}display: none;{/if}" id="div_category">
+					<table class="widefat" cellspacing="0" style="width: 250px;">
+						<thead>
+							<tr>
+								<th><a><span><strong><a href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=catalog&sub=products&categoryID=0">{$smarty.const.ADMIN_CATEGORY_ROOT}</a></strong></span></a></th>
+								<th><a><span><strong>({$products_in_root_category})</strong></span></a></th>
+                                                                <th></th>
+							</tr>
+						</thead>
+						<tbody>
+{math assign="m" equation="x" x=-1}
+{function name=cats_tree}
+  {math assign="m" equation="x + y" x=$m y=1}
+    {foreach $data as $category}
+      <tr class="alternate">
+	<td style="padding-left: {math equation="$m*10"}px; {if $m eq 1} font-weight: bold;{/if}"><a href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=catalog&sub=products&categoryID={$category.categoryID}">{$category.name}</a></td>
+	<td>({$category.products_count_admin})</td>
+        <td><a href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=catalog&sub=categories_edit&c_id={$category.categoryID}"><img src="./images/backend/edit.png" alt="" /></a></td>
+        {if count($category.subitems)>0}
+          {call name=cats_tree data=$category.subitems m=$m}
+        {/if}
+      </tr>   
+    {/foreach}
+{/function}
+{call name=cats_tree data=$categories m=0}
+
+
+                                                        
+							{*{section name=i loop=$categories}
+							<tr class="alternate">
+								<td>{section name=j loop=$categories[i][5] max=$categories[i][5]}&nbsp;&nbsp;&nbsp;&nbsp;{/section}<a href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=catalog&sub=products&categoryID={$categories[i][0]}"{if $categories[i][5] eq 0} style="font-weight: bold;"{/if}>{$categories[i][1]}</a></td>
+								<td>({$categories[i][3]})&nbsp;&nbsp;<a href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=catalog&sub=categories_edit&c_id={$categories[i][0]}"><img src="./images/backend/edit.png" alt="" /></a></td>
+							</tr>
+							{/section}*}
+					</tbody>
+					</table>
+				</td>
+                                
+				<td style="vertical-align: top; padding: 3px;" width="100%">
+     <table id="product_list" data-state-save="true" data-state-save-id-table="saveId" data-show-columns="true" data-toggle="table" data-sort-name="name" data-search="true" data-sort-order="asc" data-pagination="true" data-side-pagination="server" data-url="./{$smarty.const.CONF_ADMIN_FILE}?dpt=catalog&sub=products&categoryID={$smarty.get.categoryID}&load_productlist">
+         <thead>
+         <tr>
+             <th data-visible="false" data-field="productID" data-sortable="true">ID</th>
+             <th data-formatter="operateenabled" data-switchable="false">{$smarty.const.ADMIN_ENABLED}</th>
+             <th data-formatter="operateyml" data-switchable="false">YML</th>
+             <th data-field="product_code" data-sortable="true">{$smarty.const.ADMIN_PRODUCT_CODE}</th>
+             <th data-switchable="false" data-field="name" data-sortable="true">{$smarty.const.ADMIN_PRODUCT_NAME}</th>
+             <th data-visible="false" data-field="customers_rating">{$smarty.const.ADMIN_PRODUCT_RATING}</th>
+             <th data-switchable="false" data-field="Price" data-formatter="operatePrice" data-sortable="true">{$smarty.const.ADMIN_PRODUCT_PRICE}, {$currency_iso_3}</th>
+             <th data-sortable="true" data-formatter="in_stock" data-field="in_stock">{$smarty.const.ADMIN_PRODUCT_INSTOCK}</th>
+             <th data-visible="false" data-formatter="columimg">{$smarty.const.ADMIN_PAGE_PICTURE}</th>
+             <th data-switchable="false" data-halign="right" data-align="right" data-formatter="operateactions">{$smarty.const.STRING_ACTIONS}</th>
+         </tr>
+         </thead>
+     </table>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<p><input type="button" onclick="location='./{$smarty.const.CONF_ADMIN_FILE}?dpt=catalog&amp;sub=products_edit&amp;categoryID={$categoryID}';" class="button-primary" value="{$smarty.const.ADD_BUTTON}" />&nbsp;&nbsp;<input type="submit" name="submit" class="button-primary" value="{$smarty.const.SAVE_BUTTON}" /></p>
+</form>
+<script src="./core/admin_tmpl/bootstrap-table/bootstrap-table.min.js"></script>
+<script src="./core/admin_tmpl/bootstrap-table/locale/bootstrap-table-ru-RU.js"></script>
+<script src="./core/admin_tmpl/bootstrap-table/extensions/cookie/bootstrap-table-cookie.js"></script>
+<script src="./core/admin_tmpl/js/table.js"></script>
+<link rel="stylesheet" href="./core/admin_tmpl/bootstrap-table/bootstrap-table.min.css">

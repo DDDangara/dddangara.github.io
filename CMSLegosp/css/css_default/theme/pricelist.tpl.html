@@ -1,0 +1,52 @@
+{*********************************************************************************
+*                                                                                *
+*   shop-script Legosp - legosp.net                                              *
+*   Skype: legoedition                                                           *
+*   Email: legoedition@gmail.com                                                 *
+*   Лицензионное соглашение: https://legosp.net/info/litsenzionnoe_soglashenie/  *
+*   Copyright (c) 2010-2019  All rights reserved.                                *
+*                                                                                *
+*********************************************************************************}
+ 
+{* show pricelist *}
+<div class="box">
+<h1 class="page-title">{$smarty.const.STRING_PRICELIST} {$smarty.const.CONF_SHOP_NAME}</h1>
+<div class="middle">
+
+<div class="row">
+	<div class="col-sm-3 hidden-xs">
+	<a style="display: block;width: 150px;" href="./price.xls">
+		<img src="./images/excel.png" alt="Скачать прайс в формате MS Excel" />
+		<span style="padding-left: 10px;">Скачать</span>
+	</a></div>
+	<div class="col-sm-9 text-right">
+	 {section name=num loop=$pricelist_cnf[1]}
+	 <ul class="pagination margin-0">
+	    {if $pricelist_cnf[2] eq  $smarty.section.num.index}
+	    	<li class="disabled"><a href="./pricelist/">{$smarty.section.num.index+1}</a></li>
+	    {else}
+	    	<li><a href="./pricelist/{$smarty.section.num.index}/">{$smarty.section.num.index+1}</a></li>
+	    {/if}
+	 </ul>
+	 {/section}
+	</div>
+</div>
+<div class="space10"></div>
+
+	<table class="table">
+
+{section name=i start=$pricelist_cnf[3] loop=$pricelist_elements max=$pricelist_cnf[0]}
+	  <tr>
+	    <td {if $pricelist_elements[i][4] ne 1}colspan="2"{/if} style="background: #{$pricelist_elements[i][3]}">
+	      <a href="./{$pricelist_elements[i][6]}" {if ($pricelist_elements[i][4] eq 1)}{else}class="h4"{/if}>{$pricelist_elements[i][1]}</a>
+	    </td>
+{if ($pricelist_elements[i][4] eq 1)}
+	    <td width="100px" align="center" bgcolor="#{$pricelist_elements[i][3]}"><span class="price">{$pricelist_elements[i][5]}</span></td>
+{/if}
+	  </tr>
+{/section}
+	</table>
+
+
+</div>
+</div>

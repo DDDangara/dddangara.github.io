@@ -1,0 +1,88 @@
+{*********************************************************************************
+*                                                                                *
+*   shop-script Legosp - legosp.net                                              *
+*   Skype: legoedition                                                           *
+*   Email: legoedition@gmail.com                                                 *
+*   Лицензионное соглашение: https://legosp.net/info/litsenzionnoe_soglashenie/  *
+*   Copyright (c) 2010-2019  All rights reserved.                                *
+*                                                                                *
+*********************************************************************************}
+ 
+{* front-end homepage*}
+
+{include file="slideshow.tpl.html"}
+
+<div id="featured" class="box">
+	<a class="next" href="#owl-featured" id="owl-featured_next"><span></span></a>
+	<a class="prev" href="#owl-featured" id="owl-featured_prev"><span></span></a>
+
+	<div class="box-heading">{$smarty.const.ADMIN_SPECIAL_OFFERS}</div>
+	<div class="box-content">
+		<div class="box-product">
+		<div class="row">
+			<div id="owl-featured" class="owl-carousel">
+				{foreach name=special from=$special_offers item=special_offer}
+				<div class="item">
+					<div class="product-grid col-xs-12">
+
+						<div class="product clearfix product-hover">
+							<div class="left">
+								{if $special_offer.you_save_val > 0}<div class="sale">-{$special_offer.you_save_val_p}%</div>{/if}
+								<div class="image ">
+									<a href="./{$special_offer.hurl}"><img src="./products_pictures/{$special_offer.picture}" alt="{$special_offer.name}" class="zoom-image-effect"></a>
+								</div>
+							</div>
+							<div class="right">
+								<div class="name"><a href="./{$special_offer.hurl}">{$special_offer.name}</a></div>
+								<div class="price">
+									{if $special_offer.list_price > 0}<span class="price-old">{$special_offer.list_price_letters}</span> <span class="price-new">{$special_offer.Price_letters}</span>{else}{$special_offer.Price_letters}{/if}
+								</div>
+								<div class="rating">{section name=i loop=5}{if $smarty.section.i.index < $special_offer.customers_rating}<i class="fa fa-star active"></i>{else}<i class="fa fa-star"></i>{/if}{/section}</div>
+								<div class="only-hover">
+									<a href="./{$special_offer.hurl}" class="button"><span>{$smarty.const.MORE_ABOUT_PRODUCT}</span></a>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+				{/foreach}
+			</div>
+		</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+
+  var owl = $("#owl-featured");
+
+  owl.owlCarousel({
+      items : 4,
+      itemsDesktop : [1199,3],
+      itemsDesktopSmall : [979,2],
+      itemsTablet: [768,2],
+      itemsMobile : [479,1],
+      slideSpeed : 500,
+      pagination: false
+  });
+
+  $("#owl-featured_next").click(function(){
+    owl.trigger('owl.next');
+    return false;
+  })
+  $("#owl-featured_prev").click(function(){
+    owl.trigger('owl.prev');
+    return false;
+  })
+
+});
+--></script>
+
+{if $index ne NULL}
+<div class="box">
+	<div class="box-heading">Добро пожаловать в {$smarty.const.COMPANY_NAME}</div>
+	{$index}
+</div>
+{/if}

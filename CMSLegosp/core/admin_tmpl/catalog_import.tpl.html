@@ -1,0 +1,144 @@
+
+{*********************************************************************************
+*                                                                                *
+*   shop-script Legosp - legosp.net                                              *
+*   Skype: legoedition                                                           *
+*   Email: legoedition@gmail.com                                                 *
+*   Лицензионное соглашение: https://legosp.net/info/litsenzionnoe_soglashenie/  *
+*   Copyright (c) 2010-2019  All rights reserved.                                *
+*                                                                                *
+*********************************************************************************}
+ 
+ 
+
+{* special offers on the homepage *}
+<div id="icon-link-manager" class="icon32"><br /></div><h2>{$smarty.const.ADMIN_IMPORT}</h2>
+<br class="clear" />
+
+<form action="./{$smarty.const.CONF_ADMIN_FILE}" method="post" id="form_export">
+	<input type="hidden" name="dpt" value="catalog">
+	<input type="hidden" name="sub" value="import">
+	<input type="hidden" name="export" value="yes">
+	<input type="hidden" name="type" value="xls">
+</form>
+<form action="./{$smarty.const.CONF_ADMIN_FILE}" method="post" id="form" enctype="multipart/form-data">
+	<input type="hidden" name="dpt" value="catalog">
+	<input type="hidden" name="sub" value="import">
+	<input type="hidden" name="save_import" value="yes">
+	<table class="widefat" cellspacing="0">
+		<thead>
+			<tr><th colspan="2"><a><span><strong>{$smarty.const.ADMIN_IMPORT_TITLE}</strong></span></a></th></tr>
+		</thead>
+		<tbody>
+			{if $sql_result}
+			<tr class="alternate">
+				<td colspan="2"><font style="color: green;"><strong>{$smarty.const.ADMIN_IMPORT_RESULT}{$sql_result}</strong></font></td>
+			</tr>
+			{/if}
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_IMPORT_FILE}:</td>
+				<td><input type="file" name="csv_file" style="width: 220px;" size="22" /></td>
+			</tr>
+			{if $import_files}
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_CATEGORY_IMPORT_DIR}:</td>
+				<td><select name="file_import"><option value="0">Не выбрано</option>{html_options values=$import_files output=$import_files}</select></td>
+			</tr>
+			{/if} 
+		</tbody>
+	</table>
+	<br class="clear" />
+
+	<table class="widefat" cellspacing="0">
+		<thead>
+			<tr>
+				<th colspan="2"><a><span><strong>Метод импорта</strong></span></a></th>
+			</tr>
+		</thead>
+		<tbody>
+			{if $sql_result}
+			<tr class="alternate">
+				<td colspan="2"><font style="color: green;"><strong>{$smarty.const.ADMIN_IMPORT_RESULT}{$sql_result}</strong></font></td>
+			</tr>
+			{/if}
+			<tr class="alternate">
+				<td style="width: 50px;text-align:center;"><input type="radio" name="insert_type" value="0" checked="checked" /></td><td>Добавить только новые товары в каталог</td>
+			</tr>
+			<tr class="alternate">
+				<td style="text-align:center;"><input type="radio" name="insert_type" value="1" /></td><td>Обновить все товары в каталоге</td>
+			</tr>
+			<tr class="alternate">
+				<td style="text-align:center;"><input type="radio" name="insert_type" value="2" /></td><td>Обновить поля у существующих товаров (Отметьте поля, которые требуют обновления)</td>
+			</tr>
+		</tbody>
+	</table>
+	<br class="clear" />
+
+	<table id="pamans_update" style="display: none;width: 100%;"><tr><td style="width: 50%;">
+		<table class="widefat" cellspacing="0">
+			<thead>
+				<tr><th><a><span><strong>Состояние товара</strong></span></a></th></tr>
+			</thead>
+			<tbody>
+				<tr class="alternate">
+					<td>
+						<input type="checkbox" name="Price" checked="checked">&nbsp;Цена (Price)<br />
+						<input type="checkbox" name="in_stock">&nbsp;Наличие продукта (in_stock)<br />
+						<input type="checkbox" name="list_price">&nbsp;Цена старая (list_price)<br />
+						<input type="checkbox" name="enabled">&nbsp;Вкл. продукта в показ каталога Интернет Магазина&nbsp;(enabled)
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</td><td style="width: 50%;">
+		<table class="widefat" cellspacing="0">
+			<thead>
+				<tr><th><a><span><strong>Описание товара</strong></span></a></th></tr>
+			</thead>
+			<tbody>
+				<tr class="alternate">
+					<td>
+						<input type="checkbox" name="name">&nbsp;Название (name)<br />
+						<input type="checkbox" name="description">&nbsp;Описание (description)<br />
+						<input type="checkbox" name="brief_description">&nbsp;Краткое описание (brief_description)<br />
+						<input type="checkbox" name="product_code">&nbsp;Артикул (product_code)<br />
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</td></tr><tr><td>
+		<table class="widefat" cellspacing="0">
+			<thead>
+				<tr><th><a><span><strong>Параметры товара</strong></span></a></th></tr>
+			</thead>
+			<tbody>
+				<tr class="alternate">
+					<td>
+						<input type="checkbox" name="categoryID">&nbsp;ID Kатегории (categoryID)<br />
+						<input type="checkbox" name="customers_rating">&nbsp;Оценка клиента (customers_rating)<br />
+						<input type="checkbox" name="customer_votes">&nbsp;Голосов клиента (customer_votes)<br />
+						<input type="checkbox" name="items_sold">&nbsp;Продано (items_sold)<br />
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</td><td style="vertical-align:top;">
+		<table class="widefat" cellspacing="0">
+			<thead>
+				<tr><th><a><span><strong>Картинки товара</strong></span></a></th></tr>
+			</thead>
+			<tbody>
+				<tr class="alternate">
+					<td>
+						<input type="checkbox" name="picture">&nbsp;Картинка (picture)<br />
+						<input type="checkbox" name="thumbnail">&nbsp;Маленькая картинка (thumbnail)<br />
+						<input type="checkbox" name="big_picture">&nbsp;Большая картинка (big_picture)<br />
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</td></tr></table>
+
+</form>
+
+<p><input type="submit" name="submit" class="button-primary" onclick="$('#form').submit();" value="Import" />&nbsp;&nbsp;<input type="submit" onclick="$('#form_export').submit();" name="submit" class="button" value="Export" /></p>

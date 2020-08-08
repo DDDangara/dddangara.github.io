@@ -1,0 +1,30 @@
+{*********************************************************************************
+*                                                                                *
+*   shop-script Legosp - legosp.net                                              *
+*   Skype: legoedition                                                           *
+*   Email: legoedition@gmail.com                                                 *
+*   Лицензионное соглашение: https://legosp.net/info/litsenzionnoe_soglashenie/  *
+*   Copyright (c) 2010-2019  All rights reserved.                                *
+*                                                                                *
+*********************************************************************************}
+ 
+<div class="box hidden-xs">
+<div id="slideshow" class="owl-carousel" style="opacity: 1;">
+    <div class="item"><img src="./css/css_{$smarty.const.CONF_COLOR_SCHEME}/image/slider-1.jpg" class="img-responsive" /></div>
+    <div class="item"><img src="./css/css_{$smarty.const.CONF_COLOR_SCHEME}/image/slider-2.jpg" class="img-responsive" /></div>
+    <div class="item"><img src="./css/css_{$smarty.const.CONF_COLOR_SCHEME}/image/slider-3.jpg" class="img-responsive" /></div>
+</div>
+<script type="text/javascript"><!--
+$('#slideshow').owlCarousel({
+    items: 6,
+    autoPlay: 5000,
+    slideSpeed : 600,
+    singleItem: true,
+    navigation: true,
+    navigationText: ['<i class="fa fa-chevron-left fa-5x"></i>', '<i class="fa fa-chevron-right fa-5x"></i>'],
+    pagination: false,
+    stopOnHover: true,
+    transitionStyle : "fadeUp"
+});
+--></script>
+</div>

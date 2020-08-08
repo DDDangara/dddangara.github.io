@@ -1,0 +1,167 @@
+
+{*********************************************************************************
+*                                                                                *
+*   shop-script Legosp - legosp.net                                              *
+*   Skype: legoedition                                                           *
+*   Email: legoedition@gmail.com                                                 *
+*   Лицензионное соглашение: https://legosp.net/info/litsenzionnoe_soglashenie/  *
+*   Copyright (c) 2010-2019  All rights reserved.                                *
+*                                                                                *
+*********************************************************************************}
+ 
+ 
+
+{* categorie edit *}
+<script type="text/javascript">
+{literal}
+function checkautores() {
+	if (document.getElementById('enable_autores').checked) {
+		document.getElementById('thumbnail').disabled="disabled"; document.getElementById('big_picture').disabled="disabled";
+	} else {
+		document.getElementById('thumbnail').disabled=""; document.getElementById('big_picture').disabled="";
+	}
+}
+var tabs = ['tab1','tab2'];
+function hide(){
+for (i in tabs){
+document.getElementById(tabs[i]).style.display='none';
+}
+}
+function show(id){
+hide();
+document.getElementById(id).style.display='block';
+}
+
+function add_file(id, i) {
+ if (document.getElementById(id + '_' + i).innerHTML.search('uploadinputbutton') == -1) {
+ document.getElementById(id + '_' + i).innerHTML = '<input type="file" class="uploadinputbutton" maxsize="" name="' + id + '[]" onchange="return add_file(\'' + id + '\', ' + (i+1) + ');" /><br /><span id="' + id + '_' + (i+1) + '"><\/span>\n';
+ } 
+ if (document.getElementById('thumb_desc_' + i).innerHTML.search('thumb_desc') == -1) { 
+ document.getElementById('thumb_desc_' + i).innerHTML = '<input type="text" name="thumb_desc[]" id="thumb_desc" style="width: 245px;" /><br /><span id="' + 'thumb_desc_' + (i+1) + '"><\/span>\n';
+ 
+ }
+}
+
+function checkmanual() {
+   if (document.getElementById('manual_input_switch').checked)
+	{document.getElementById('manual_input').disabled="";}
+   else 
+	{document.getElementById('manual_input').disabled="disabled";} 
+}
+{/literal}
+</script>
+
+<div id="icon-link-manager" class="icon32"><br /></div><h2>{if $cat_edit}{$cat_edit.name}{else}{$smarty.const.ADMIN_CATEGORY_NEW}{/if}</h2>
+<br class="clear" />
+
+<form action="./{$smarty.const.CONF_ADMIN_FILE}" method="post" enctype="multipart/form-data">
+	<input type="hidden" name="dpt" value="catalog">
+	<input type="hidden" name="sub" value="categories_edit">
+	<input type="hidden" name="categories_save" value="yes">
+	<input type="hidden" name="c_id" value="{$cat_edit.categoryID}">
+	<table class="widefat" cellspacing="0">
+		<thead>
+			<tr>
+				<th colspan="3"><a><span><strong>{$smarty.const.ADMIN_SETTINGS_APPEARENCE}</strong></span></a></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="alternate">
+				<td>{if $cat_edit}{$smarty.const.ADMIN_CATEGORY_MOVE_TO}{else}{$smarty.const.ADMIN_CATEGORY_PARENT}{/if}</td>
+				<td>
+					<select name="parent" style="width: 250px">
+						<option value="0">{$smarty.const.ADMIN_CATEGORY_ROOT}</option>
+						{section name=i loop=$cats max=$cats_count}
+						<option value="{$cats[i][0]}" {if $cats[i][0]==$cat_edit.parent}selected{/if}>
+						{section name=j loop=$cats[i][5] max=$cats[i][5]}&nbsp;&nbsp;{/section}
+						{$cats[i][1]}
+						</option>
+						{/section}
+					</select>
+				</td>
+				{if $cat_edit}
+					<td>
+						<input type="checkbox" name="manual_input_switch" id="manual_input_switch" onclick="javascript: checkmanual();" />
+						&nbsp;{if $cat_edit}{$smarty.const.ADMIN_CATEGORY_MANUAL_INPUT}:{/if}
+						<input type="text" name="manual_input" id="manual_input" disabled size="10" onkeypress="return testKey(event)" value="{$cat_edit.categoryID}" />
+					</td>
+				{else}
+					<td>&nbsp;</td>
+				{/if}
+			</tr>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_CATEGORY_NAME}</td>
+				<td><input type="text" name="name" value="{$cat_edit.name|escape}" style="width: 245px;"></td>
+				<td><input type="checkbox" name="category_enabled" value="1" {if $cat_edit.enabled}checked="checked"{/if} />&nbsp;{$smarty.const.ADMIN_ON}</td>
+			</tr>
+			<tr class="alternate">
+				<td>URL:</td>
+				<td colspan="2"><input type="text" name="hurl" value="{$cat_edit.hurl}" style="width: 100%;" /></td>
+			</tr>
+			<tr class="alternate">
+				<td>REL CANONICAL:</td>
+				<td colspan="2"><input type="text" name="canonical" value="{$cat_edit.canonical}" style="width: 100%;" /></td>
+			</tr>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_CATEGORY_TITLE_H1}</td>
+				<td colspan="2"><input type="text" name="title_h1" value="{$cat_edit.h1|escape}" style="width: 100%;" /></td>
+			</tr>
+			<tr class="alternate">
+				<td>META-TITLE:</td>
+				<td colspan="2"><input type="text" name="meta_title" value="{$cat_edit.meta_title|escape}" style="width: 100%;" /></td>
+			</tr>
+			<tr class="alternate">
+				<td>META-KEYWORDS:</td>
+				<td colspan="2"><input type="text" name="meta_keywords" value="{$cat_edit.meta_keywords|escape}" style="width: 100%;" /></td>
+			</tr>
+			<tr class="alternate">
+				<td>META-DESCRIPTION:</td>
+				<td colspan="2"><input type="text" name="meta_desc" value="{$cat_edit.meta_desc|escape}" style="width: 100%;" /></td>
+			</tr>
+			<tr class="alternate">
+				<td>{$smarty.const.hidden}:</td>
+				<td colspan="2">
+					<input type="radio" name="catgegory_edit_array[hidden]" value="0" {if $cat_edit.hidden==0}checked="checked"{/if} /> {$smarty.const.not_hidden}<br />
+					<input type="radio" name="catgegory_edit_array[hidden]" value="1" {if $cat_edit.hidden==1}checked="checked"{/if} /> {$smarty.const.not_hidden_avtor}<br />
+					<input type="radio" name="catgegory_edit_array[hidden]" value="2" {if $cat_edit.hidden==2}checked="checked"{/if} /> {$smarty.const.not_hidden_user}
+				</td>
+			</tr>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_CATEGORY_LOGO}:</td>
+				<td><input type="file" name="picture" style="width: 300px;" /></td>
+				<td style="text-align:right;">
+				{if $cat_edit.picture != ""}
+					<img src="./products_pictures/{$cat_edit.picture}" alt="" style="width: 150px;padding: 5px;float:right;"/>
+					<a href="javascript:confirmDelete('{$smarty.const.QUESTION_DELETE_PICTURE}','{$smarty.const.CONF_ADMIN_FILE}?dpt=catalog&sub=categories_edit&c_id={$cat_edit.categoryID}&picture_remove=')"><img src="./images/backend/delete.png" title="Удалить текущее изображение!" alt="Удалить!" /></a>
+				{else}
+					<img src="./products_pictures/nophoto.jpg" alt="" style="width: 50px;border: #CCC solid 1px;float:right;"/>
+				{/if}
+				</td>
+			</tr>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_CATEGORY_DESC}</td>
+				<td colspan="2"><textarea id="desc" name="desc" rows="7" cols="100">{$cat_edit.description|escape:'htmlall'}</textarea></td>
+			</tr>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_MORE_ABOUT}</td>
+				<td colspan="2"><textarea id="about" name="about" rows="7" cols="100">{$cat_edit.about|escape:'htmlall'}</textarea></td>
+			</tr>
+		</tbody>
+	</table>
+
+	<p><input type="submit" name="submit" class="button-primary" value="{$smarty.const.SAVE_BUTTON}" /></p>
+</form>
+
+{literal}
+<script type="text/javascript">
+	CKEDITOR.replace( 'desc', {
+		"filebrowserBrowseUrl": '/core/ckeditor/plugins/elfinder/elfinder.html',
+		"contentsCss" : '/css/css_mobilnik/stylesheet/stylesheet.css',
+		"scayt_autoStartup": false        
+	});
+	CKEDITOR.replace( 'about', {
+		filebrowserBrowseUrl : '/core/ckeditor/plugins/elfinder/elfinder.html',
+		contentsCss : '/css/css_mobilnik/stylesheet/stylesheet.css'
+	});	
+</script>
+{/literal}

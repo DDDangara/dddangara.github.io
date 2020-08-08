@@ -1,0 +1,53 @@
+
+
+{*********************************************************************************
+*                                                                                *
+*   shop-script Legosp - legosp.net                                              *
+*   Skype: legoedition                                                           *
+*   Email: legoedition@gmail.com                                                 *
+*   Лицензионное соглашение: https://legosp.net/info/litsenzionnoe_soglashenie/  *
+*   Copyright (c) 2010-2019  All rights reserved.                                *
+*                                                                                *
+*********************************************************************************}
+ 
+ 
+
+<div id="icon-link-manager" class="icon32"><br /></div><h2>{$smarty.const.ADMIN_PRODUCTS_VARIANTS_GROUPS}</h2>
+<br class="clear" />
+
+<form method="post" action="./{$smarty.const.CONF_ADMIN_FILE}" name="form">
+	<input type="hidden" value="catalog" name="dpt">
+	<input type="hidden" value="1" name="variant_edit"> 
+	<input type="hidden" value="products_variants" name="sub">
+	<table class="widefat" cellspacing="0">
+		<thead>
+			<tr>
+				<th><a><span><strong>{$smarty.const.ADMIN_PRODUCTS_VARIANTS_GROUPS}</strong></span></a></th>
+				<th><a><span><strong>{$smarty.const.ADMIN_SORT_ORDER}</strong></span></a></th>
+				<th><a><span><strong>{$smarty.const.TABLE_PRODUCT_QUANTITY}</strong></span></a></th>
+				<th><a><span><strong>{$smarty.const.STRING_ACTIONS}</strong></span></a></th>
+			</tr>
+		</thead>
+		<tbody>
+			{foreach from=$products_variants item=variant}
+			<tr class="alternate">
+				<td>
+					<input type="text" name="variant[{$variant.optionID}][name]" value="{$variant.name}" style="width: 350px;" />
+				</td>
+				<td>
+					<input type="text" name="variant[{$variant.optionID}][sort_order]" value="{$variant.sort_order}" style="text-align:center;" />
+				</td>
+				<td>
+					({$variant.kol})   
+				</td>
+				<td style="text-align:center;width: 50px;">
+					<a title="{$smarty.const.PRODUCT_ADMIN_REVIEW_EDIT}" href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=catalog&amp;sub=products_variants&amp;edit={$variant.optionID}"><img alt="" src="./images/backend/edit.png"></a>&nbsp;&nbsp;
+					<a title="{$smarty.const.DELETE_BUTTON}" href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=catalog&amp;sub=products_variants&amp;del={$variant.optionID}"><img alt="{$smarty.const.DELETE_BUTTON}" src="images/backend/delete.png"></a>
+				</td>
+			</tr>
+			{/foreach}
+		</tbody>
+	</table>
+
+	<p><input type="button" onclick="location='./{$smarty.const.CONF_ADMIN_FILE}?dpt=catalog&amp;sub=products_variants&amp;add=1';" class="button-primary" value="{$smarty.const.ADD_BUTTON}" />&nbsp;&nbsp;<input type="submit" name="submit" class="button-primary" value="{$smarty.const.SAVE_BUTTON}" /></p>
+</form>

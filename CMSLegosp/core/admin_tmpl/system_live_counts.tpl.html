@@ -1,0 +1,38 @@
+
+{*********************************************************************************
+*                                                                                *
+*   shop-script Legosp - legosp.net                                              *
+*   Skype: legoedition                                                           *
+*   Email: legoedition@gmail.com                                                 *
+*   Лицензионное соглашение: https://legosp.net/info/litsenzionnoe_soglashenie/  *
+*   Copyright (c) 2010-2019  All rights reserved.                                *
+*                                                                                *
+*********************************************************************************}
+ 
+ 
+
+{* general configurations template *}
+<div id="icon-plugins" class="icon32"><br /></div><h2>{$smarty.const.ADMIN_LIVE_COUNTS}</h2>
+<br class="clear" />
+
+<form action="./{$smarty.const.CONF_ADMIN_FILE}" method="post">
+	<input type="hidden" name="dpt" value="system" />
+	<input type="hidden" name="sub" value="live_counts" />
+	<input type="hidden" name="save_counts" value="1" />
+	<table class="widefat" cellspacing="0">
+		<thead>
+			<tr>
+				<th><a><span><strong>Счетчики</strong></span></a> {if $configuration_saved eq 1}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>{$smarty.const.ADMIN_UPDATE_SUCCESSFUL}</strong>{/if}</th>
+			</tr>
+		</thead>
+		<tbody>
+			{*<tr>
+				<td style="background: #FFF; padding: 5px; border: #CCC solid 1px">{$smarty.const.ADMIN_LIVE_COUNTS_WARNING}</td>
+			</tr>*}
+			<tr class="alternate">
+				<td><textarea name="live_counts_text" style="width: 100%; height: 300px;">{$live_counts_text}</textarea></td>
+			</tr>
+		</tbody>
+	</table>
+	<p><input type="submit" name="submit" class="button-primary" value="{$smarty.const.SAVE_BUTTON}" /></p>
+</form>

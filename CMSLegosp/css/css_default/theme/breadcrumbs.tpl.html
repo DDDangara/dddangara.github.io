@@ -1,0 +1,20 @@
+{*********************************************************************************
+*                                                                                *
+*   shop-script Legosp - legosp.net                                              *
+*   Skype: legoedition                                                           *
+*   Email: legoedition@gmail.com                                                 *
+*   Лицензионное соглашение: https://legosp.net/info/litsenzionnoe_soglashenie/  *
+*   Copyright (c) 2010-2019  All rights reserved.                                *
+*                                                                                *
+*********************************************************************************}
+ 
+<div class="breadcrumbs">
+	<div class="container">
+		<ul class="breadcrumb">
+			<li><a href="./">{$smarty.const.LINK_TO_HOMEPAGE}</a></li>
+		    {section name=i loop=$product_category_path}
+		   	<li><a href="./{$product_category_path[i][0]}">{$product_category_path[i][1]}</a></li>
+		    {/section}
+		</ul>
+	</div>
+</div>

@@ -1,0 +1,64 @@
+
+{*********************************************************************************
+*                                                                                *
+*   shop-script Legosp - legosp.net                                              *
+*   Skype: legoedition                                                           *
+*   Email: legoedition@gmail.com                                                 *
+*   Лицензионное соглашение: https://legosp.net/info/litsenzionnoe_soglashenie/  *
+*   Copyright (c) 2010-2019  All rights reserved.                                *
+*                                                                                *
+*********************************************************************************}
+ 
+ 
+
+{* admin login/pass : template *}
+<div id="icon-plugins" class="icon32"><br /></div><h2>{$smarty.const.ADMIN_REDIRECT}</h2>
+<br class="clear" />
+<div style="padding: 5px; border: #CCC solid 1px;">{$smarty.const.ADMIN_MYSQL_DB_WARNING}</div>
+<br class="clear" />
+
+<form action="./{$smarty.const.CONF_ADMIN_FILE}" method="post">
+	<input type="hidden" name="dpt" value="system" />
+	<input type="hidden" name="sub" value="redirect" />
+	<input type="hidden" name="save_redirect" value="1" />
+
+	<table class="widefat" cellspacing="0">
+		<thead>
+			<tr>
+				<th style="width: 300px;"><a><span><strong>{$smarty.const.ADMIN_REDIRECT_SETTINGS}</strong></span></a></th>
+				<th>{if $configuration_saved eq 1}<strong>{$smarty.const.ADMIN_UPDATE_SUCCESSFUL}</strong>{/if}</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_REDIRECT_CATEGORY}:</td>
+				<td><input style="width: 150px;" type="text" name="redir_catalog" value="{$smarty.const.REDIRECT_CATALOG}" /></td>
+			</tr>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_REDIRECT_PRODUCTS}:</td>
+				<td><input style="width: 150px;" type="text" name="redir_product" value="{$smarty.const.REDIRECT_PRODUCT}" /></td>
+			</tr>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_REDIRECT_BRANDS}:</td>
+				<td><input style="width: 150px;" type="text" name="redir_brand" value="{$smarty.const.REDIRECT_BRAND}" /></td>
+			</tr>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_REDIRECT_NEWS}:</td>
+				<td><input style="width: 150px;" type="text" name="redir_news" value="{$smarty.const.REDIRECT_NEWS}" /></td>
+			</tr>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_REDIRECT_PAGES}:</td>
+				<td><input style="width: 150px;" type="text" name="redir_pages" value="{$smarty.const.REDIRECT_PAGES}" /></td>
+			</tr>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_REDIRECT_TAGS}:</td>
+				<td><input style="width: 150px;" type="text" name="redir_tags" value="{$smarty.const.REDIRECT_TAGS}" /></td>
+			</tr>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_REDIRECT_INFO}:</td>
+				<td><input style="width: 150px;" type="text" name="redir_info" value="{$smarty.const.REDIRECT_INFO}" /></td>
+			</tr>
+		</tbody>
+	</table>
+	<p><input type="submit" name="submit" class="button-primary" value="{$smarty.const.SAVE_BUTTON}" /></p>
+</form>

@@ -1,0 +1,227 @@
+{*********************************************************************************
+*                                                                                *
+*   shop-script Legosp - legosp.net                                              *
+*   Skype: legoedition                                                           *
+*   Email: legoedition@gmail.com                                                 *
+*   Лицензионное соглашение: https://legosp.net/info/litsenzionnoe_soglashenie/  *
+*   Copyright (c) 2010-2019  All rights reserved.                                *
+*                                                                                *
+*********************************************************************************}
+ 
+<!DOCTYPE html>
+<html lang="en">
+
+  {include file="head.tpl.html"}
+
+  <body>
+
+<div id="header-top">
+	<div class="container">
+		<div class="header-top-left pull-left">
+			<ul class="list-inline">
+				<li class="hidden-xs hidden-sm"><a href="./">{$smarty.const.LINK_TO_HOMEPAGE}</a></li>
+				<li class="hidden-xs hidden-sm"><a href="./{if $smarty.const.CONF_CHPU}about/{else}index.php?aux_page=aux1{/if}">{$smarty.const.ADMIN_ABOUT_PAGE}</a></li>
+				{if $smarty.const.CONF_NEWS_ONHOME ne 0}<li class="hidden-xs hidden-sm"><a href="./{if $smarty.const.CONF_CHPU}{$smarty.const.REDIRECT_NEWS}/{else}index.php?news&news={/if}">{$smarty.const.ADMIN_NEWS}</a></li>{/if}
+				{if $smarty.const.CONF_PAGES_ONHOME ne 0}<li class="hidden-xs hidden-sm"><a href="./{if $smarty.const.CONF_CHPU}{$smarty.const.REDIRECT_PAGES}/{else}index.php?pages&pages={/if}">{$smarty.const.ADMIN_PAGES}</a></li>{/if}
+				<li class="hidden-xs hidden-sm"><a href="./{if $smarty.const.CONF_CHPU}pricelist/{else}index.php?show_price=yes{/if}">{$smarty.const.STRING_PRICELIST}</a></li>
+				<li class="hidden-xs hidden-sm"><a href="./{if $smarty.const.CONF_CHPU}service/{else}index.php?aux_page=aux1{/if}">{$smarty.const.STRING_SHIPPING}</a></li>
+				<li class="hidden-xs hidden-sm"><a href="./{if $smarty.const.CONF_CHPU}contact/{else}index.php?contact{/if}">{$smarty.const.STRING_CONTACT_INFORMATION}</a></li>
+				<li class="dropdown hidden-md hidden-lg">
+					<a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-bars"></i> Меню</a>
+					<ul class="dropdown-menu">
+						<li><a href="./">{$smarty.const.LINK_TO_HOMEPAGE}</a></li>
+						<li><a href="./{if $smarty.const.CONF_CHPU}about/{else}index.php?aux_page=aux1{/if}">{$smarty.const.ADMIN_ABOUT_PAGE}</a></li>
+						<li>{if $smarty.const.CONF_NEWS_ONHOME ne 0}<a href="./{if $smarty.const.CONF_CHPU}{$smarty.const.REDIRECT_NEWS}/{else}index.php?news&news={/if}">{$smarty.const.ADMIN_NEWS}</a>{/if}</li>
+						<li>{if $smarty.const.CONF_PAGES_ONHOME ne 0}<a href="./{if $smarty.const.CONF_CHPU}{$smarty.const.REDIRECT_PAGES}/{else}index.php?pages&pages={/if}">{$smarty.const.ADMIN_PAGES}</a>{/if}</li>
+						<li><a href="./{if $smarty.const.CONF_CHPU}pricelist/{else}index.php?show_price=yes{/if}">{$smarty.const.STRING_PRICELIST}</a></li>
+						<li><a href="#">Доставка и оплата</a></li>
+						<li><a href="./{if $smarty.const.CONF_CHPU}contact/{else}index.php?contact{/if}">{$smarty.const.STRING_CONTACT_INFORMATION}</a></li>
+					</ul>
+				</li>
+			</ul>
+
+		</div>
+		<div class="header-top-right pull-right">
+			<ul class="list-inline">
+				<li class="dropdown">
+					<a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-user"></i> Личный кабинет <span class="caret"></span></a>
+					<ul class="dropdown-menu dropdown-menu-right">
+						{if isset($user_identification)}
+							<li><a href="./index.php?order_history=1">История заказов</a></li>
+							<li><a href="./index.php?cust_logout=yes">Выход</a></li>
+						{else} 
+						 	<li><a href="./index.php?cust_login=yes"><i class="fa fa-sign-in"></i> {$smarty.const.STRING_LOGIN_INFORMATION}</a></li>
+							<li><a href="./index.php?cust_register=yes"><i class="fa fa-pencil-square-o"></i> {$smarty.const.STRING_REGISTER}</a></li>
+						{/if}
+					</ul>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+
+<div id="header">
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12 col-sm-5 col-md-6 col-lg-6 header-left">
+				<div class="row">
+					<div class="col-sm-12 col-md-7"><div class="logo center-sm"><a href="./"><img src="./css/css_{$smarty.const.CONF_COLOR_SCHEME}/image/logo.png" title="{$page_title}" alt="{$page_title}"></a></div></div>
+					<div class="col-sm-12 col-md-5">
+						<div class="header-contacts">
+							<div class="dropdown">
+								<a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-lg fa-mobile"></i> <span>{$smarty.const.COMPANY_PHONE}</span><span class="caret"></span></a>
+								<ul class="dropdown-menu">
+									<li><span><i class="fa fa-map-marker"></i> {$smarty.const.COMPANY_ADDRESS}</span></li>
+									<li><span><i class="fa fa-lg fa-mobile"></i> {$smarty.const.COMPANY_PHONE}</span></li>
+								</ul>
+							</div>
+							<div class="hidden-xs"><a data-toggle="modal" data-target="#myModal"><i class="fa fa-chevron-circle-right"></i> Перезвоните мне!</a></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 header-center">
+				<div class="search_form">
+					<form method="get" action="./" id="search">
+						<input type="search" value="{$smarty.get.searchstring}" placeholder="{$smarty.const.STRING_SEARCH}" name="searchstring" class="search-input" />
+						<button type="submit" class="btn-search"><i class="fa fa-search"></i></button>
+					</form>
+				</div>
+			</div>
+			<div class="col-xs-12 col-sm-4 col-md-3 col-lg-3 header-right">
+				<div id="module_cart" class="center-sm">
+					{include file="shopping_cart_info.tpl.html"}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="container">
+	<div id="nav-menu" class="nav-menu clearfix">
+		<ul class="sf-menu2">
+			{include file="category_tree_top.tpl.html"}
+		</ul>
+	</div>
+	<div id="nav-phone" class="nav-menu clearfix">
+		<ul class="men">
+			<li class="home"><a href="./"><i class="fa fa-home"></i></a></li>
+			<div id="menu-icon"><i class="fa fa-bars"></i> {$smarty.const.ADMIN_CATEGORY_TITLE}</div>
+		</ul>
+		<ul class="sf-menu-phone">
+			{include file="category_tree_top.tpl.html"}
+		</ul>
+	</div>
+</div>
+
+{if $main_content_template != 'home.tpl.html'}{include file="breadcrumbs.tpl.html"}{/if}
+
+<div class="main-content">
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-3 sidebar hidden-xs" id="column-left">
+
+				{include file="category_tree.tpl.html"}
+
+				{include file="new_products.tpl.html"}
+
+
+			</div>
+			<div class="col-sm-9 center-column">
+				{include file="$main_content_template"}
+			</div>
+		</div>
+	</div>
+</div>
+<div class="space30"></div>
+<div id="footer" >
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-3 col-xs-12 footer-panel">
+				<h4>{$smarty.const.ADMIN_INFORMATION}</h4>
+				<ul>
+					<li><a href="./{if $smarty.const.CONF_CHPU}about/{else}index.php?aux_page=aux1{/if}">{$smarty.const.ADMIN_ABOUT_PAGE}</a></li>
+					 <li><a href="./{if $smarty.const.CONF_CHPU}grafik/{else}index.php?aux_page=aux1{/if}">{$smarty.const.ADMIN_TIMES}</a></li>
+					<li><a href="./{if $smarty.const.CONF_CHPU}service/{else}index.php?aux_page=aux1{/if}">{$smarty.const.STRING_SHIPPING}</a></li>
+					<li><a href="./{if $smarty.const.CONF_CHPU}adress/{else}index.php?aux_page=aux1{/if}">{$smarty.const.STRING_ADRESS_INFORMATION}</a></li>
+				</ul>
+			</div>
+			<div class="col-sm-3 col-xs-12 footer-panel">
+				<h4>{$smarty.const.ADMIN_PRICING_OPTION}</h4>
+				<ul>
+					<li><a href="./search_expanded/">{$smarty.const.ADVANCED_SEARCH_LINK}</a></li>
+					<li><a href="./{if $smarty.const.CONF_CHPU}{$smarty.const.REDIRECT_NEWS}/{else}index.php?news&news={/if}">{$smarty.const.ADMIN_NEWS}</a></li>
+					<li><a href="./{if $smarty.const.CONF_CHPU}{$smarty.const.REDIRECT_PAGES}/{else}index.php?pages&pages={/if}">{$smarty.const.ADMIN_PAGES}</a></li>
+					<li><a href="./{if $smarty.const.CONF_CHPU}sitemap/{else}index.php?sitemap{/if}">{$smarty.const.ADMIN_SITE_MAP}</a></li>
+				</ul>
+			</div>
+			<div class="col-sm-3 col-xs-12 footer-panel">
+				
+			</div>
+			<div class="col-sm-3 col-xs-12 footer-panel">
+				<h4>{$smarty.const.STRING_CONTACT_INFORMATION}</h4>
+				<p>{$smarty.const.COMPANY_WORK}</p>
+				<div class="box-addres">
+					<div><i class="fa fa-map-marker"></i>{$smarty.const.COMPANY_ADDRESS}</div>
+					<div><i class="fa fa-phone"></i>{$smarty.const.COMPANY_PHONE}</div>
+					<div><i class="fa fa-envelope"></i>{$smarty.const.COMPANY_MAIL}</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+						  <div class="modal-dialog mod_max" role="document">
+						    <div class="modal-content">
+						      <div class="modal-header">
+						        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						          <i class="fa fa-times"></i>
+						        </button>
+						        <h4 class="modal-title modal-title_new">Оставьте номер и мы перезвоним</h4>
+						      </div>
+						      <div class="modal-body modal-body2">
+						        <form class='wufoo' action="index.php" name="contact_form" id="custinfo_form" method="post">
+									<div style="margin: 0;" class="row">
+										<div class='large'>
+											<input placeholder="Ваше имя" required type="text" name="send_name" id="first_name" value="{$smarty.post.send_name|escape}" />
+										</div>
+										<div class='large'>
+											<input placeholder="Телефон" required type="text" name="send_email" value="{$smarty.post.send_email|escape}"/>
+										</div>
+										<div class="textarea">
+											<textarea placeholder="Пожелания по времени звонка" required name="send_text" id="send_text" rows='8' cols='20'></textarea>
+										</div>
+									</div>
+										<div class="co_new">
+											<img id="cap" src="./core/core_captcha.php?bg=F7F7F7" alt="{$smarty.const.STRING_SEND_CAPCHA}" onclick="go_cap()" style="cursor:pointer;" title="Обновить капчу"/>
+											<input maxlength='6' minlength='3' required type="text" name="captcha" id="captcha" />
+											<div style="color: #f36909;" id="results"></div>
+										</div>
+									<div class="buttons" style="margin-bottom: 0px;">
+										<div class="right cent_b">
+											<input type="hidden" name="send_mail" value="1" />
+											<input type="hidden" name="last_name" id="last_name" value="none" />
+											<input type="hidden" name="phone" id="phone" value="8 (000) 000-00-00" />
+										    <input onclick="if (!$('#custinfo_form').validate()) return false;" class="button" type="submit" value="Заказать звонок"/>
+										</div>
+									</div>
+								</form>
+						      </div>
+						    </div>
+						  </div>
+						</div>
+
+
+<div id="copyright">
+	<div class="container">
+		<p>Powered By <a href="http://legosp.net">Legosp</a><br> {$smarty.const.COMPANY_NAME} &copy; {$smarty.now|date_format:"%Y"}</p>
+	</div>
+</div>
+
+  <a href="#" class="scrollup"><i class="fa fa-chevron-up"></i></a>
+
+  </body>
+</html>

@@ -1,0 +1,191 @@
+{*********************************************************************************
+*                                                                                *
+*   shop-script Legosp - legosp.net                                              *
+*   Skype: legoedition                                                           *
+*   Email: legoedition@gmail.com                                                 *
+*   Лицензионное соглашение: https://legosp.net/info/litsenzionnoe_soglashenie/  *
+*   Copyright (c) 2010-2019  All rights reserved.                                *
+*                                                                                *
+*********************************************************************************}
+ 
+
+{literal}
+<script type="text/javascript">
+function testKey(e)
+{
+  // Make sure to use event.charCode if available
+  var key = (typeof e.charCode == 'undefined' ? e.keyCode : e.charCode);
+
+  // Ignore special keys
+  if (e.ctrlKey || e.altKey || key < 32)
+    return true;
+
+  key = String.fromCharCode(key);
+  return /[\d\.]/.test(key);
+}
+function cheksub(e)
+{
+
+        var str = "";
+        var searchString    = $(".search_button").val();
+        // получаем то, что написал пользователь
+        subcat=0;
+        if ($("#subcat").attr('checked'))
+        subcat=1;
+        // формируем строку запроса
+        var data            = 'search='+ searchString+'&sub='+subcat;
+
+        // если searchString не пустая
+        if(searchString) {
+            // делаем ajax запрос
+            $.ajax({
+                type: "POST",
+                url: "http://{/literal}{$smarty.const.CONF_SHOP_URL}{literal}/includes/search_simple.php?search_expanded_ajax=1",
+                data: data,
+               beforeSend: function(html) { // запустится до вызова запроса
+                    $("#results").html('');
+               },
+               success: function(html){ // запустится после получения резуотатов
+                    $("#results").show();
+                    $("#results").append(html);
+              }
+            });
+        }
+}
+
+</script>
+{/literal}
+
+<script>
+{literal}
+
+$(document).ready(function() {
+
+    $(".search_button").change(function() {
+        var str = "";
+        var searchString    = $(this).val();
+        // получаем то, что написал пользователь
+        subcat=0;
+        if ($("#subcat").attr('checked'))
+        subcat=1;
+        // формируем строку запроса
+        var data            = 'search='+ searchString+'&sub='+subcat;
+
+        // если searchString не пустая
+        if(searchString) {
+            // делаем ajax запрос
+            $.ajax({
+                type: "POST",
+                url: "http://{/literal}{$smarty.const.CONF_SHOP_URL}{literal}/includes/search_simple.php?search_expanded_ajax=1",
+                data: data,
+               beforeSend: function(html) { // запустится до вызова запроса
+                    $("#results").html('');
+               },
+               success: function(html){ // запустится после получения резуотатов
+                    $("#results").show();
+                    $("#results").append(html);
+              }
+            });
+        }
+        return false;
+    });
+
+
+});
+{/literal}
+</script>
+
+<div class="box">
+<h1 class="page-title">{$smarty.const.STRING_ADVANCED_SEACH_TITLE}</h1>
+
+
+{if $products_to_show_count>$smarty.const.CONF_PRODUCTS_PER_PAGE}
+<p style="text-align: right;">
+{section name=foo start=1 loop=$products_to_show_count step=$smarty.const.CONF_PRODUCTS_PER_PAGE}
+ <a onclick="document.getElementById('page').value='{$smarty.section.foo.iteration}'; $('#search_form').submit();">{$smarty.section.foo.iteration}</a>
+{/section}
+</p>
+{/if}
+ <form method="POST" action="./search_expanded/" id="search_form" class="form-horizontal">
+
+  <div class="form-group">
+    <label for="search_button" class="col-sm-3 control-label">{$smarty.const.ADMIN_CATEGORY_TITLE_PR}:</label>
+    <div class="col-sm-9">
+     <select name="categorySelect" class="search_button" id="search_button" style="width: 100%">
+      <option value="0">{$smarty.const.STRING_UNIMPORTANT}</option>
+      {foreach from=$search_categories item=cat key=key}
+       <option  {if $post.categorySelect==$cat.categoryID}selected{/if} value="{$cat.categoryID}">{section name=foo loop=$cat.level}&nbsp;&nbsp;&nbsp;{/section}{$cat.name}</option>
+      {/foreach}
+     </select><br/>
+     <input type="checkbox" id="subcat" onclick="cheksub('e')" name="search_in_subcategory" {if $post.search_in_subcategory} CHECKED {/if} value="1"> {$smarty.const.STRING_SEARCH_IN_SUBCATEGORIES}
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="keyword" class="col-sm-3 control-label">{$smarty.const.STRING_phrase_SEARCH}:</label>
+    <div class="col-sm-9">
+      <input type="text" id="keyword" name="keyword"  value="{if $post.keyword}{$post.keyword}{/if}" placeholder="{$smarty.const.STRING_SEARCH}" style="width: 100%">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="search_price_from" class="col-sm-3 control-label">{$smarty.const.TABLE_PRODUCT_COST}:</label>
+    <div class="col-sm-9">
+      <input type="text" id="search_price_from" placeholder="{$smarty.const.STRING_PRICE_FROM}" value="{if $post.search_price_from}{$post.search_price_from}{/if}" onkeypress="return testKey(event)" name="search_price_from" size="10">
+      <input type="text" value="{if $post.search_price_to}{$post.search_price_to}{/if}" onkeypress="return testKey(event)" size="10" name="search_price_to" placeholder="{$smarty.const.STRING_PRICE_TO}">
+     <input type="hidden" value="yes" name="search">
+     <input type="hidden" value="1" id="page" name="page">
+    </div>
+  </div>
+
+<div id="results">
+   {foreach from=$options_search item=option key=key}
+
+  <div class="form-group">
+    <label for="variant[{$key}]" class="col-sm-3 control-label">{$option.name}</label>
+    <div class="col-sm-9">
+
+     {if (count($option.variant)>1)}
+     <select name="variant[{$key}]" id="variant[{$key}]" style="width: 100%">
+       <option value="0">{$smarty.const.STRING_UNIMPORTANT}</option>
+     {foreach from=$option.variant item=variant}
+       <option {if $post.variant[$key]==$variant.variantID}selected{/if} value="{$variant.variantID}">{$variant.name}</option>
+     {/foreach}
+     </select>
+     {else}
+         {$option.variant[0].name} <input type="checkbox" {if $post.variant_chek[$key]==$option.variant[0].variantID}CHECKED{/if} id="description" name="variant_chek[{$key}]" value="{$option.variant[0].variantID}">
+     {/if}
+    </div>
+  </div>
+   {/foreach}
+</div>
+
+
+
+
+<div class="buttons">
+  <div class="left"><button type="reset" onclick="$('#clear_form').submit();" class="button">{$smarty.const.CART_CLEAR}</button></div>
+  <div class="right"><input type="submit" name="advanced_search_in_category" value="{$smarty.const.STRING_GO_SEARCH}" class="button"></div>
+</div>
+
+ </form>
+
+{if isset($products_to_show_count)}
+<div class="product-filter clearfix">
+              <div class="options">
+                <label class="hidden-xx">Вид:</label>
+                <div class="button-group display" data-toggle="buttons-radio">
+                  <button id="grid"  rel="tooltip" title="Grid" onclick="display('grid');"><i class="fa fa-th-large"></i></button>
+                  <button id="list" class="active" rel="tooltip" title="List" onclick="display('list');"><i class="fa fa-th-list"></i></button>
+                </div>
+              </div>
+</div>
+	<p style="text-align: right;">{$catalog_navigator}</p><br />
+	{include file="products_list.tpl.html"}
+{/if}
+
+
+<form method="POST" action="./search_expanded/" id="clear_form">
+</form>
+
+</div>

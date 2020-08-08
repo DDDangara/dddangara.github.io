@@ -1,0 +1,135 @@
+
+{*********************************************************************************
+*                                                                                *
+*   shop-script Legosp - legosp.net                                              *
+*   Skype: legoedition                                                           *
+*   Email: legoedition@gmail.com                                                 *
+*   Лицензионное соглашение: https://legosp.net/info/litsenzionnoe_soglashenie/  *
+*   Copyright (c) 2010-2019  All rights reserved.                                *
+*                                                                                *
+*********************************************************************************}
+ 
+ 
+
+{* aux pages *}
+<div id="icon-edit-pages" class="icon32"><br /></div><h2>{$smarty.const.ADMIN_MAIN_PAGES}</h2>
+<br class="clear" />
+
+<div class="tabs_a">
+	<a rel="#tab_index" class="button">{$smarty.const.ADMIN_INDEX_PAGE}</a>
+	<a rel="#tab_contact" class="button">{$smarty.const.ADMIN_CONTACT_PAGE}</a>
+	<a rel="#tab_about" class="button">{$smarty.const.ADMIN_ABOUT_PAGE}</a>
+	<a rel="#tab_shipping" class="button">{$smarty.const.ADMIN_SHIPPING_PAGE}</a>
+</div>
+<br class="clear" />
+
+<form action="./{$smarty.const.CONF_ADMIN_FILE}" method="post">
+	<input type="hidden" name="dpt" value="inform">
+	<input type="hidden" name="sub" value="aux">
+	<input type="hidden" name="save_aux" value="1">
+	<table class="widefat" cellspacing="0" id="tab_index">
+		<thead>
+			<tr>
+				<th style="width: 100%;"><a><span><strong>{$smarty.const.ADMIN_INDEX_PAGE}</strong></span></a></th>
+				<th>&nbsp;</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="alternate">
+				<td colspan="2"><textarea name="index_page" style="width: 100%; height: 400px;">{$index_page}</textarea></td>
+			</tr>
+		</tbody>
+	</table>
+	
+	<table class="widefat" cellspacing="0" id="tab_contact">
+		<thead>
+			<tr>
+				<th style="width: 100%;"><a><span><strong>{$smarty.const.ADMIN_CONTACT_PAGE}</strong></span></a></th>
+				<th>&nbsp;</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="alternate">
+				<td colspan="2"><textarea name="contact_page" style="width: 946px; height: 400px;">{$contact_page}</textarea></td>
+			</tr>
+		</tbody>
+	</table>
+
+	<table class="widefat" cellspacing="0" id="tab_about">
+		<thead>
+			<tr>
+				<th style="width: 100%;"><a><span><strong>{$smarty.const.ADMIN_ABOUT_PAGE}</strong></span></a></th>
+				<th>&nbsp;</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_NEWS_TITLE}</td>
+				<td><input type="text" name="title_1" value="{$aux_head[1][0]}" style="width: 650px;" /></td>
+			</tr>
+			<tr class="alternate">
+				<td>META-TITLE:</td>
+				<td><input type="text" name="meta_title_1" value="{$aux_head[1][1]}" style="width: 650px;" /></td>
+			</tr>
+			<tr class="alternate">
+				<td>META-KEYWORDS:</td>
+				<td><input type="text" name="meta_keywords_1" value="{$aux_head[1][2]}" style="width: 650px;" /></td>
+			</tr>
+			<tr class="alternate">
+				<td>META-DESCRIPTION:</td>
+				<td><input type="text" name="meta_desc_1" value="{$aux_head[1][3]}" style="width: 650px;" /></td>
+			</tr>
+			<tr class="alternate">
+				<td colspan="2">
+					<textarea name="about_page" style="width: 100%; height: 400px;">{$about_page[0]}</textarea>
+				</td>
+			</tr>
+
+
+			
+		</tbody>
+	</table>
+
+	<table class="widefat" cellspacing="0" id="tab_shipping">
+		<thead>
+			<tr>
+				<th style="width: 100%;"><a><span><strong>{$smarty.const.ADMIN_SHIPPING_PAGE}</strong></span></a></th>
+				<th>&nbsp;</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_NEWS_TITLE}</td>
+				<td><input type="text" name="title_2" value="{$aux_head[2][0]}" style="width: 650px" /></td>
+			</tr>
+			<tr class="alternate">
+				<td>META-TITLE:</td>
+				<td><input type="text" name="meta_title_2" value="{$aux_head[2][1]}" style="width: 650px" /></td>
+			</tr>
+			<tr class="alternate">
+				<td>META-KEYWORDS:</td>
+				<td><input type="text" name="meta_keywords_2" value="{$aux_head[2][2]}" style="width: 650px" /></td>
+			</tr>
+			<tr class="alternate">
+				<td>META-DESCRIPTION:</td>
+				<td><input type="text" name="meta_desc_2" value="{$aux_head[2][3]}" style="width: 650px" /></td>
+			</tr>
+			<tr class="alternate">
+				<td colspan="2">
+				  <textarea name="shipping_page" style="width: 100%; height: 400px;">{$shipping_page[0]}</textarea>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<p><input type="submit" name="submit" class="button-primary" value="{$smarty.const.SAVE_BUTTON}" /></p>
+</form>
+
+{literal}
+<script type="text/javascript">
+	CKEDITOR.replace( 'index_page', {filebrowserBrowseUrl : '/core/ckeditor/plugins/elfinder/elfinder.html'});
+	CKEDITOR.replace( 'contact_page', {filebrowserBrowseUrl : '/core/ckeditor/plugins/elfinder/elfinder.html'});
+	CKEDITOR.replace( 'about_page', {filebrowserBrowseUrl : '/core/ckeditor/plugins/elfinder/elfinder.html'});
+	CKEDITOR.replace( 'shipping_page', {filebrowserBrowseUrl : '/core/ckeditor/plugins/elfinder/elfinder.html'});
+</script>
+{/literal}

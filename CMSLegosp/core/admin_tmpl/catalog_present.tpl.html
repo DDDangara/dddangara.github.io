@@ -1,0 +1,51 @@
+
+
+{*********************************************************************************
+*                                                                                *
+*   shop-script Legosp - legosp.net                                              *
+*   Skype: legoedition                                                           *
+*   Email: legoedition@gmail.com                                                 *
+*   Лицензионное соглашение: https://legosp.net/info/litsenzionnoe_soglashenie/  *
+*   Copyright (c) 2010-2019  All rights reserved.                                *
+*                                                                                *
+*********************************************************************************}
+ 
+ 
+
+{* presents *}
+<div id="icon-link-manager" class="icon32"><br /></div><h2>{$smarty.const.ADMIN_PRESENTS}</h2>
+<br class="clear" />
+
+<form action="./{$smarty.const.CONF_ADMIN_FILE}" method="post">
+	<input type="hidden" name="dpt" value="catalog">
+	<input type="hidden" name="sub" value="present">
+	<input type="hidden" name="save_present" value="yes">
+	<table class="widefat" cellspacing="0">
+		<thead>
+			<tr>
+				<th><a><span><strong>{$smarty.const.ADMIN_PRODUCT_NAME}</strong></span></a></th>
+				<th style="width:300px;text-align:center;"><a><span><strong>{$smarty.const.ADMIN_PRESENT_VAL}</strong></span></a></th>
+				<th style="width:50px;"><a><span><strong>Действия</strong></span></a></th>
+			</tr>
+		</thead>
+		<tbody>
+			{if $save_successful ne NULL}
+			<tr class="alternate">
+				<td colspan="3"><strong>{$save_successful}</strong></td>
+			</tr>
+			{/if}
+			{section name=i loop=$present}
+			<tr class="alternate">
+				<td><input type="hidden" name="present_productID_{$present[i][1]}" value="{$present[i][1]}" /><a href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=catalog&sub=products_edit&productID={$present[i][1]}">{$present[i][3]}</a></td>
+				<td style="text-align:center;"><input style="width: 140px;" type="text" name="present_value_{$present[i][1]}" value="{$present[i][2]}" /></td>
+				<td style="text-align:center;"><a href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=catalog&sub=present&delete={$present[i][0]}"><img src="./images/backend/delete.png" border="0" alt="{$smarty.const.DELETE_BUTTON}" /></a></td>
+			</tr>
+			{sectionelse}
+			<tr class="alternate"><td colspan="3"><strong>{$smarty.const.ADMIN_NO_PRESENT}</strong></td></tr>
+			{/section}
+			<tr class="alternate"><td colspan="3" style="padding: 5px;">{$smarty.const.ADMIN_PRESENT_DESC}</td></tr>
+		</tbody>
+	</table>
+
+	<p><input type="submit" name="submit" class="button-primary" value="{$smarty.const.SAVE_BUTTON}" /></p>
+</form>

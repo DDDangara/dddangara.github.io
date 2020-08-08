@@ -1,0 +1,95 @@
+
+
+{*********************************************************************************
+*                                                                                *
+*   shop-script Legosp - legosp.net                                              *
+*   Skype: legoedition                                                           *
+*   Email: legoedition@gmail.com                                                 *
+*   Лицензионное соглашение: https://legosp.net/info/litsenzionnoe_soglashenie/  *
+*   Copyright (c) 2010-2019  All rights reserved.                                *
+*                                                                                *
+*********************************************************************************}
+ 
+ 
+
+{* company configurations template *}
+{literal}
+<script type="text/javascript">
+function testKey(e) {
+  // Make sure to use event.charCode if available
+  var key = (typeof e.charCode == 'undefined' ? e.keyCode : e.charCode);
+
+  // Ignore special keys
+  if (e.ctrlKey || e.altKey || key < 32)
+    return true;
+
+  key = String.fromCharCode(key);
+  //return /\w/.test(key);
+  return /\d/.test(key);
+}
+</script>
+{/literal}
+
+<div id="icon-options-general" class="icon32"><br /></div><h2>{$smarty.const.ADMIN_CURRENCY_TYPES}</h2>
+<br class="clear" />
+
+<form action="./{$smarty.const.CONF_ADMIN_FILE}" method="post">
+	<input type="hidden" name="dpt" value="conf">
+	<input type="hidden" name="sub" value="currency">
+	<input type="hidden" name="save_currency" value="1">
+	<table class="widefat" cellspacing="0">
+		<thead>
+			<tr>
+				<th><a><span><strong>{$smarty.const.ADMIN_CURRENCY_NAME}</strong></span></a></th>
+				<th><a><span><strong>{$smarty.const.ADMIN_CURRENCY_ID}</strong></span></a></th>
+				<th><a><span><strong>{$smarty.const.ADMIN_CURRENCY__ISO3}</strong></span></a></th>
+				<th><a><span><strong>{$smarty.const.ADMIN_CURRENCY_EXCHANGERATE}</strong></span></a></th>
+				<th><a><span><strong>{$smarty.const.ADMIN_SORT_ORDER}</strong></span></a></th>
+				<th>&nbsp;</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="alternate"><td colspan="6"><strong>Добавление новой валюты</strong></td></tr>
+			<tr class="alternate">
+				<td><input style="width: 95%;" type="text" name="curr_add[Name]" /></td>
+				<td><input style="width: 130px;" type="text" name="curr_add[code]" /> <select name="curr[$item.CID][where2show]" title="{$smarty.const.STRING_SHOW} название рядом с ценой"><option value="0">до</option><option value="1"  >после</option></select></td>
+				<td><input style="width: 95%;" type="text" name="curr_add[currency_iso_3]" maxlength="3" /></td> 
+				<td><input style="width: 95%;" type="text" name="curr_add[currency_value]" /></td> 
+				<td><input style="width: 95%;" type="text" name="curr_add[sort_order]" /></td>
+				<td>&nbsp;</td>
+			</tr>
+		</tbody>
+	</table>
+	<br class="clear" />
+	
+	<table class="widefat" cellspacing="0">
+		<thead>
+			<tr>
+				<th><a><span><strong>{$smarty.const.ADMIN_CURRENCY_NAME}</strong></span></a></th>
+				<th><a><span><strong>{$smarty.const.ADMIN_CURRENCY_ID}</strong></span></a></th>
+				<th><a><span><strong>{$smarty.const.ADMIN_CURRENCY__ISO3}</strong></span></a></th>
+				<th><a><span><strong>{$smarty.const.ADMIN_CURRENCY_EXCHANGERATE}</strong></span></a></th>
+				<th><a><span><strong>{$smarty.const.ADMIN_SORT_ORDER}</strong></span></a></th>
+				<th>&nbsp;</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="alternate"><td colspan="6"><strong>Список уже созданых валют</strong></td></tr>
+			{foreach from=$currency item=item}
+			<tr class="alternate">
+				<td><input style="width: 95%;" type="text" name="curr[{$item.CID}][Name]" value="{$item.Name}"></td>
+				<td><input style="width: 130px;" type="text" name="curr[{$item.CID}][code]" value="{$item.code}"><select name="curr[{$item.CID}][where2show]" title="{$smarty.const.STRING_SHOW} название рядом с ценой">
+					<option value="0">до</option>
+					<option value="1" {if $item.where2show==1}selected="selected"{/if}>после</option>
+				</select></td>
+				<td><input style="width: 95%;" type="text" maxlength="3" name="curr[{$item.CID}][currency_iso_3]" value="{$item.currency_iso_3}"></td> 
+				<td><input style="width: 95%;" type="text" name="curr[{$item.CID}][currency_value]" value="{$item.currency_value}"></td> 
+				<td><input style="width: 95%;" type="text" name="curr[{$item.CID}][sort_order]" value="{$item.sort_order}"></td> 
+				<td><a href="javascript:confirmDelete('{$smarty.const.QUESTION_DELETE_CONFIRMATION}','{$smarty.const.CONF_ADMIN_FILE}?dpt=conf&sub=currency&del={$item.CID}');"><img alt="Удалить" src="images/backend/delete.png"></a></td>
+			</tr>
+			{/foreach}
+		</tbody>
+	</table>
+
+	<p><input type="submit" name="submit" class="button-primary" value="{$smarty.const.SAVE_BUTTON}" /></p>
+</form>

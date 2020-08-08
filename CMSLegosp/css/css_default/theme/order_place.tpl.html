@@ -1,0 +1,109 @@
+
+{*********************************************************************************
+*                                                                                *
+*   shop-script Legosp - legosp.net                                              *
+*   Skype: legoedition                                                           *
+*   Email: legoedition@gmail.com                                                 *
+*   Лицензионное соглашение: https://legosp.net/info/litsenzionnoe_soglashenie/  *
+*   Copyright (c) 2010-2019  All rights reserved.                                *
+*                                                                                *
+*********************************************************************************}
+ {* order is placed *}
+<div class="top">
+<h1 class="page-title">{$smarty.const.STRING_ORDER_PLACED}</h1>
+
+
+{* if $order_is_placed ne 0 *}
+
+{if $order}
+<div class="pull-right hidden-sm hidden-xs"><a href="./printorder/" class="btn" title="{$smarty.const.STRING_PRINT_ORDER}"><i class="fa fa-print"></i></a></div>
+<h4 class="text-success"><strong>{$smarty.const.Your_order_number}: {$orderer.orderID}</strong></h4>
+
+
+<div class="order_place_info">
+	<div class="row">
+		<div class="col-xs-3"><b>{$smarty.const.ORDER_ORDERER}:</b></div>
+		<div class="col-xs-9">{$orderer.cust_firstname} {$orderer.cust_lastname}</div>
+	</div>
+	{if $orderer.cust_phone}
+	<div class="row">
+		<div class="col-xs-3"><b>{$smarty.const.ORDER_PHONE}:</b></div>
+		<div class="col-xs-9">{$orderer.cust_phone}</div>
+	</div>
+	{/if}
+	<div class="row">
+		<div class="col-xs-3"><b>{$smarty.const.ORDER_EMAIL}:</b></div>
+		<div class="col-xs-9">{$orderer.cust_email}</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-3"><b>{$smarty.const.ORDER_ADRESS}:</b></div>
+		<div class="col-xs-9">{$orderer.cust_city}<br />{$orderer.cust_address}</div>
+	</div>
+</div>
+
+
+	<table class="table">
+		<thead>
+		  <tr>
+		    <td>{$smarty.const.ADMIN_PRODUCT_NAME}</td>
+		    <td class="text-center">
+		    	<span class="hidden-sm hidden-xs">Кол-во</span>
+		    	<span class="visible-sm visible-xs">Кол-во</span>
+		    </td>
+		    <td class="text-right hidden-xx">{$smarty.const.ADMIN_PRODUCT_PRICE}</td>
+		    <td class="text-right">{$smarty.const.TABLE_PRODUCT_SUMM}</td>
+		  </tr>
+	  	</thead>
+	  	<tbody>
+{section name=i loop=$order}
+	  <tr>
+	    <td>{$order[i][0]}</td>
+	    <td class="text-center">{$order[i][2]}</td>
+	    <td class="text-right hidden-xx">{$order[i][1]}</td>
+	    <td class="text-right">{$order[i][4]}</td>
+	  </tr>
+{/section}
+		</tbody>
+	</table>
+
+	<div class="cart-total">
+	<table>
+		<tr>
+			<td>{$smarty.const.TABLE_TOTAL}</td>
+			<td>{$orderer.total}</td>
+		</tr>
+	</table>
+	</div>
+
+	<div class="space20"></div>
+	<div class="row">
+		<div class="col-sm-3"><strong>{$smarty.const.CUSTOMER_COMMENT}</strong></div>
+		<div class="col-sm-9">{if $orderer.comment}{$orderer.comment}{/if}</div>
+	</div>
+	<div class="space20"></div>
+	{if $orderer.manager}
+	<div class="row">
+		<div class="col-sm-3"><strong>{$smarty.const.ADMIN_MANAGER_NAME_MAIL}:</strong></div>
+		<div class="col-sm-9">{$orderer.manager}</div>
+	</div>
+	<div class="space20"></div>
+	{/if}
+
+	<div class="alert alert-success">{$smarty.const.EMAIL_OUR_MANAGER_WILL_CONTACT_YOU}</div>
+
+	{if $payment_list}
+	<div class="space20"></div>
+	<b>{$smarty.const.STRING_PAYMENT_SELECT}</b><br/>
+	 <form action="./{if $smarty.const.CONF_CHPU}payment/{else}index.php?payment{/if}" name="payment_form" id="payment_form" method="post">
+		      <select name="payment_type" onchange="show_paybutton(this.value)" style="width: 350px">
+			{html_options values=$payment_list.values output=$payment_list.names}
+		      </select>
+	</form>
+	<div class="buttons">
+		<div class="right"><span id="paybutton"><a onclick="$('#payment_form').submit(); return false;" href="./payment/" class="button"><span>{$smarty.const.STRING_GO_PAYMENTS}</span></a></span></div>
+	</div>
+	{/if}
+{else}
+	<div class="alert alert-danger">{$smarty.const.CART_EMPTY}</div>
+{/if}
+</div>

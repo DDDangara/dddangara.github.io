@@ -1,0 +1,88 @@
+
+{*********************************************************************************
+*                                                                                *
+*   shop-script Legosp - legosp.net                                              *
+*   Skype: legoedition                                                           *
+*   Email: legoedition@gmail.com                                                 *
+*   Лицензионное соглашение: https://legosp.net/info/litsenzionnoe_soglashenie/  *
+*   Copyright (c) 2010-2019  All rights reserved.                                *
+*                                                                                *
+*********************************************************************************}
+ 
+{* product new *}
+<div id="newproducts" class="box with-scroll">
+	<!-- Carousel nav -->
+	<a class="next" href="#owl-newproducts" id="owl-newproducts_next"><span></span></a>
+	<a class="prev" href="#owl-newproducts" id="owl-newproducts_prev"><span></span></a>
+
+	<div class="box-heading">{$smarty.const.HOT_NEW}</div>
+	<div class="box-content">
+		<div class="box-product products">
+
+				<div id="owl-newproducts" class="owl-carousel">
+					{foreach from=$new_products item=np name=nps}
+					{if $smarty.foreach.nps.index is div by 4}<div class="item">
+						<div class="product-grid"><div class="row">{/if}
+							<div class="col-sm-3 col-xs-6">
+							<div class="product clearfix product-hover">
+
+								<div class="left">
+									<div class="image ">
+										<a href="{$np.hurl}"><img src="./products_pictures/{$np.picture}" alt="{$np.name|escape}" class="img-responsive zoom-image-effect"></a>
+									</div>
+								</div>
+								<div class="right">
+									<div class="name"><a href="{$np.hurl}">{$np.name}</a></div>
+									<div class="price">
+										{if $np.list_price_letters > 0}<span class="price-old">{$np.list_price_letters}</span> <span class="price-new">{$np.Price_letters}</span>{else}{$np.Price_letters}{/if}
+
+									</div>
+									<div class="rating">{section name=i loop=5}{if $smarty.section.i.index < $np.customers_rating}<i class="fa fa-star active"></i>{else}<i class="fa fa-star"></i>{/if}{/section}</div>
+									<div class="only-hover">
+										<a href="{$np.hurl}" class="button"><span>{$smarty.const.MORE_ABOUT_PRODUCT}</span></a>
+									</div>
+								</div>
+
+							</div>
+							</div>
+					{if ($smarty.foreach.nps.index+1) is div by 4}</div></div>
+					</div>{/if}
+					{/foreach}
+					{if $new_products|@count is not div by 4}</div></div></div>{/if}
+				</div>
+
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript"><!--
+  $(document).ready(function() {
+
+  var owl = $("#owl-newproducts");
+
+  owl.owlCarousel({
+      items : 1,
+      itemsDesktop : [1199,1],
+      itemsDesktopSmall : [979,1],
+      itemsTablet: [768,1],
+      itemsMobile : [479,1],
+      // itemsDesktop : [1000,3],
+      // itemsDesktopSmall : [900,2],
+      // itemsTablet: [600,2],
+      // itemsMobile : [479,1],
+      slideSpeed : 500,
+      pagination: false
+  });
+
+  // Custom Navigation Events
+  $("#owl-newproducts_next").click(function(){
+    owl.trigger('owl.next');
+    return false;
+  })
+  $("#owl-newproducts_prev").click(function(){
+    owl.trigger('owl.prev');
+    return false;
+  })
+
+});
+--></script>

@@ -1,0 +1,40 @@
+
+
+{*********************************************************************************
+*                                                                                *
+*   shop-script Legosp - legosp.net                                              *
+*   Skype: legoedition                                                           *
+*   Email: legoedition@gmail.com                                                 *
+*   Лицензионное соглашение: https://legosp.net/info/litsenzionnoe_soglashenie/  *
+*   Copyright (c) 2010-2019  All rights reserved.                                *
+*                                                                                *
+*********************************************************************************}
+ 
+ 
+
+{* new orders list *}
+<div id="icon-edit-pages" class="icon32"><br /></div><h2>{$h1}</h2>
+	<p><font color="#f00">*</font>{$smarty.const.ADMIN_ABOUT_PRICES}</p>
+
+<table data-state-save="true" data-state-save-id-table="orders" class="bootstraptable" data-toggle="table" data-sort-name="orderID" data-sort-order="DESC" data-pagination="true" data-side-pagination="server" data-url="./{$smarty.const.CONF_ADMIN_FILE}?dpt=custord&sub=orders&status={$smarty.get.status}&json">
+    <thead>
+    <tr>
+        <th data-field="orderID" data-sortable="true" width="16">&#8470;</th>
+        <th data-field="cust_user">{$smarty.const.TABLE_CUSTOMER}</th>
+        <th data-formatter="ordercontact">{$smarty.const.STRING_CONTACT_INFORMATION}</th>
+        <th data-formatter="orderproducts">{$smarty.const.TABLE_ORDERED_PRODUCTS}</th>
+        <th data-sortable="true" data-field="price_summ">{$smarty.const.TABLE_PRODUCT_SUMM}</th>
+        <th data-field="order_time" data-sortable="true">{$smarty.const.TABLE_ORDER_TIME}</th>
+        <th data-formatter="orderactive" class="w150">{$smarty.const.STRING_ACTIONS}</th>
+    </tr>
+    </thead>
+</table>
+	<div class="tablenav bottom">
+		<div class='tablenav-pages one-page'><span class="displaying-num">{$new_order_count} {$smarty.const.STRING_couple}</span></div>
+		<br class="clear" />
+	</div>
+<script src="./core/admin_tmpl/bootstrap-table/bootstrap-table.min.js"></script>
+<script src="./core/admin_tmpl/bootstrap-table/locale/bootstrap-table-ru-RU.js"></script>
+<script src="./core/admin_tmpl/bootstrap-table/extensions/cookie/bootstrap-table-cookie.js"></script>
+<script src="./core/admin_tmpl/js/table.js"></script>
+<link rel="stylesheet" href="./core/admin_tmpl/bootstrap-table/bootstrap-table.min.css">

@@ -1,0 +1,112 @@
+
+
+{*********************************************************************************
+*                                                                                *
+*   shop-script Legosp - legosp.net                                              *
+*   Skype: legoedition                                                           *
+*   Email: legoedition@gmail.com                                                 *
+*   Лицензионное соглашение: https://legosp.net/info/litsenzionnoe_soglashenie/  *
+*   Copyright (c) 2010-2019  All rights reserved.                                *
+*                                                                                *
+*********************************************************************************}
+ 
+ 
+
+{* general configurations template *}
+<div id="icon-plugins" class="icon32"><br /></div><h2>{$smarty.const.ADMIN_MANAGER}</h2>
+<br class="clear" />
+<form action="./{$smarty.const.CONF_ADMIN_FILE}" method="post" name="add">
+	<input type="hidden" name="dpt" value="system" />
+	<input type="hidden" name="sub" value="manager" />
+	<table class="widefat" cellspacing="0">
+		<thead>
+			<tr>
+				<th><a><span>{$smarty.const.ADMIN_MANAGER_NAME}</span></a></th>
+				<th><a><span>{$smarty.const.ADMIN_MANAGER_LOGIN}</span></a></th>
+				<th><a><span>{$smarty.const.ADMIN_MANAGER_PASS}</span></a></th>
+				<th><a><span>{$smarty.const.ADMIN_MANAGER_ACCESS}</span></a></th>
+				<th><a><span>{$smarty.const.ADMIN_MANAGER_EMAIL}</span></a></th>
+				<th><a><span>{$smarty.const.ADMIN_ONLINE_TYPE}</span></a></th>
+				<th><a><span>{$smarty.const.ADMIN_ONLINE}</span></a></th>
+				<th>&nbsp;</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="alternate">
+				<td><input type="text" name="manager[online_name]" value="" style="width: 95%;" /></td>
+				<td><input type="text" name="manager[manager]" value="" style="width: 95%;" /></td>
+				<td><input type="text" name="manager[password]" value="" style="width: 95%;" /></td>
+				<td>
+					<select name="manager[access]" style="width: 95%;">
+					  <option value="1">{$smarty.const.ADMIN_MANAGER_ACCESS_1}</option>
+					  <option value="2">{$smarty.const.ADMIN_MANAGER_ACCESS_2}</option>
+					  <option value="3">{$smarty.const.ADMIN_MANAGER_ACCESS_3}</option>
+					</select>
+				</td>
+				<td><input type="text" name="manager[email]" value="" style="width: 95%;" /></td>
+				<td>
+					<select name="manager[online_type]" style="width: 95%;">
+					  <option value="0"> -- {$smarty.const.ANSWER_NO} -- </option>
+					  <option value="1">ICQ</option>
+					  <option value="2">Mail agent</option>
+					  <option value="3">Skype</option>
+					</select>
+				</td>
+				<td><input type="text" name="manager[online_num]" value="" style="width: 95%;" /></td>
+				<td>&nbsp;</td>
+			</tr>
+		</tbody>
+	</table>
+	<p><input type="submit" name="submit" class="button-primary" value="{$smarty.const.ADMIN_NEWS_ADD}" /></p>
+</form>
+	
+<form action="./{$smarty.const.CONF_ADMIN_FILE}" method="post" name="save">
+	<input type="hidden" name="dpt" value="system" />
+	<input type="hidden" name="sub" value="manager" />
+	<input type="hidden" name="update_manager" value="1" />	
+	<table class="widefat" cellspacing="0">
+		<thead>
+			<tr>
+				<th><a><span>{$smarty.const.ADMIN_MANAGER_NAME}</span></a></th>
+				<th><a><span>{$smarty.const.ADMIN_MANAGER_LOGIN}</span></a></th>
+				<th><a><span>{$smarty.const.ADMIN_MANAGER_PASS}</span></a></th>
+				<th><a><span>{$smarty.const.ADMIN_MANAGER_ACCESS}</span></a></th>
+				<th><a><span>{$smarty.const.ADMIN_MANAGER_EMAIL}</span></a></th>
+				<th><a><span>{$smarty.const.ADMIN_ONLINE_TYPE}</span></a></th>
+				<th><a><span>{$smarty.const.ADMIN_ONLINE}</span></a></th>
+				<th style="width: 50px;">&nbsp;</th>
+			</tr>
+		</thead>
+		<tbody>
+			{foreach from=$managers item=manager}
+			<tr class="alternate">
+				<td><input type="text" name="update_manager[{$manager.ID}][online_name]" value="{$manager.online_name}" style="width: 95%;" /></td>
+				<td><input type="text" name="update_manager[{$manager.ID}][manager]" value="{$manager.manager}" style="width: 95%;" /></td>
+				<td><input type="text" name="update_manager[{$manager.ID}][password]" value="{$manager.password}" style="width: 95%;" /></td>
+				<td>
+					<select name="update_manager[{$manager.ID}][access]}" style="width: 95%;">
+						<option value="1" {if $manager.access == 1}selected{/if}>{$smarty.const.ADMIN_MANAGER_ACCESS_1}</option>
+						<option value="2" {if $manager.access == 2}selected{/if}>{$smarty.const.ADMIN_MANAGER_ACCESS_2}</option>
+						<option value="3" {if $manager.access == 3}selected{/if}>{$smarty.const.ADMIN_MANAGER_ACCESS_3}</option>
+					</select>
+				</td>
+				<td><input type="text" name="update_manager[{$manager.ID}][email]" value="{$manager.email}" style="width: 95%;" /></td>
+				<td>
+					<select name="update_manager[{$manager.ID}][online_type]" style="width: 95%;">
+						<option value="0" {if $manager.online_type == 0}selected="selected"{/if}> -- {$smarty.const.ANSWER_NO} -- </option>
+						<option value="1" {if $manager.online_type == 1}selected="selected"{/if}>ICQ</option>
+						<option value="2" {if $manager.online_type == 2}selected="selected"{/if}>Mail agent</option>
+						<option value="3" {if $manager.online_type == 3}selected="selected"{/if}>Skype</option>
+					</select>
+				</td>
+				<td><input type="text" name="update_manager[{$manager.ID}][online_num]" value="{$manager.online_num}" style="width: 95%;" /></td>
+				<td><a href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=system&sub=manager&deny={$manager.ID}">
+					<i class="glyphicon glyphicon-edit fa-2x text-success"></i>
+				</a>&nbsp;&nbsp;&nbsp;<a href="javascript:confirmDelete('{$smarty.const.QUESTION_DELETE_CONFIRMATION}','{$smarty.const.CONF_ADMIN_FILE}?dpt=system&amp;sub=manager&amp;delete={$manager.ID}');">
+					<i class="glyphicon glyphicon-remove fa-2x text-danger"></i></a></td>
+			</tr>
+		{/foreach}
+		</tbody>
+	</table>
+	<p><input type="submit" name="submit" class="button-primary" value="{$smarty.const.SAVE_BUTTON}" /></p>
+</form>

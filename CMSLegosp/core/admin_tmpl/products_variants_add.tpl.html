@@ -1,0 +1,40 @@
+
+{*********************************************************************************
+*                                                                                *
+*   shop-script Legosp - legosp.net                                              *
+*   Skype: legoedition                                                           *
+*   Email: legoedition@gmail.com                                                 *
+*   Лицензионное соглашение: https://legosp.net/info/litsenzionnoe_soglashenie/  *
+*   Copyright (c) 2010-2019  All rights reserved.                                *
+*                                                                                *
+*********************************************************************************}
+ 
+ 
+
+<div id="icon-link-manager" class="icon32"><br /></div><h2>{if isset($val)}{$smarty.const.ADMIN_ADD_VALUE}{else}{$smarty.const.ADMIN_ADD_NEW_OPTION}{/if}</h2>
+<br class="clear" />
+
+<form method="post" action="./{$smarty.const.CONF_ADMIN_FILE}" name="form">
+	<input type="hidden" value="catalog" name="dpt">
+	<input type="hidden" value="1" name="add_variant">
+	{if isset($val)}
+		<input type="hidden" value="{$val}" name="edit">
+	{/if} 
+	<input type="hidden" value="products_variants" name="sub">
+	<table class="widefat" cellspacing="0">
+		<thead>
+			<tr>
+				<th><a><span><strong>{$smarty.const.ADMIN_PRODUCT_NAME}:</strong></span></a></th>
+				<th><a><span><strong>{$smarty.const.ADMIN_SORT_ORDER}:</strong></span></a></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="alternate">
+				<td><input type="text" name="variant[name]" style="width: 350px;" /></td>
+				<td><input type="text" name="variant[sort_order]" value="0" style="text-align:center;" /></td>
+			</tr>
+		</tbody>
+	</table>
+
+	<p><input type="submit" name="submit" class="button-primary" value="{$smarty.const.SAVE_BUTTON}" />&nbsp;&nbsp;<input type="button" onclick="location='./{$smarty.const.CONF_ADMIN_FILE}?dpt=catalog&amp;sub=products_variants';" class="button-primary" value="{$smarty.const.CANCEL_BUTTON}" /></p>
+</form>

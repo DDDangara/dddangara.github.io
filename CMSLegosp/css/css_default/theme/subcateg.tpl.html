@@ -1,0 +1,26 @@
+{*********************************************************************************
+*                                                                                *
+*   shop-script Legosp - legosp.net                                              *
+*   Skype: legoedition                                                           *
+*   Email: legoedition@gmail.com                                                 *
+*   Лицензионное соглашение: https://legosp.net/info/litsenzionnoe_soglashenie/  *
+*   Copyright (c) 2010-2019  All rights reserved.                                *
+*                                                                                *
+*********************************************************************************}
+ 
+{if $subcategories_to_be_shown ne NULL}
+<h2 class="refine_search">Подкатегории</h2>
+<div class="category-list">
+	<div class="row">
+	{foreach from=$subcategories_to_be_shown item=subc name=scat}
+		<div class="col-sm-6 col-xs-6">
+			<a title="{$subc.name}" href="{$subc.hurl}">
+			{if $subc.picture ne NULL}<span style="background-image: url(./products_pictures/{$subc.picture});" class="bag_image"></span>{else}<img src="./css/css_{$smarty.const.CONF_COLOR_SCHEME}/image/no_image-250x250.jpg" class="img-responsive" alt="{$subc.name}" />{/if}
+			</a>
+			<a title="{$subc.name}" href="{$subc.hurl}">{$subc.name}</a>
+		</div>
+		{if ($smarty.foreach.scat.index+1) is div by 6}<div class="clearfix"></div>{/if}
+	{/foreach}
+	</div>
+</div>
+{/if}

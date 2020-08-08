@@ -1,0 +1,64 @@
+{*********************************************************************************
+*                                                                                *
+*   shop-script Legosp - legosp.net                                              *
+*   Skype: legoedition                                                           *
+*   Email: legoedition@gmail.com                                                 *
+*   Лицензионное соглашение: https://legosp.net/info/litsenzionnoe_soglashenie/  *
+*   Copyright (c) 2010-2019  All rights reserved.                                *
+*                                                                                *
+*********************************************************************************}
+ 
+{* category view *}
+<div class="box">
+	<h1 class="page-title">{$selected_category[9]}</h1>
+
+	{if $selected_category[2] || $selected_category[3]}
+	<div class="category-info clearfix">
+		{if $selected_category[3]}
+			<div class="row">
+				<div class="col-sm-12 col-xs-12 img_new">
+					<span style="background-image: url(./products_pictures/{$selected_category[3]});" class="bag_image"></span>
+				</div>
+			</div>
+	{/if}
+            	{$selected_category[2]}
+          </div>
+          {/if}
+
+            {include file="subcateg.tpl.html"}
+
+
+            {if $products_to_show_count ne NULL}
+            <div class="product-filter clearfix">
+            	<div class="options">
+            		<label class="hidden-xx">Вид:</label>
+	  		<div class="button-group display" data-toggle="buttons-radio">
+	  			<button id="grid"  rel="tooltip" title="Grid" onclick="display('grid');"><i class="fa fa-th-large"></i></button>
+	  			<button id="list" class="active" rel="tooltip" title="List" onclick="display('list');"><i class="fa fa-th-list"></i></button>
+	  		</div>
+            	</div>
+            	<div class="sort">
+            		<label class="hidden-xx">{$smarty.const.SORT}:</label>
+			<select name="orderby" onchange="location='http://{$smarty.const.CONF_SHOP_URL}/'+this.value">
+				{html_options values=$sort_options.sort_values output=$sort_options.sort_names selected=$sort_options.sort_selected}
+			</select>
+            	</div>
+            </div>
+
+
+
+		<p style="text-align: right;">
+			{$catalog_navigator}
+		</p>
+
+
+		{include file="products_list.tpl.html"}
+
+		<p style="text-align: right;">
+			{$catalog_navigator}
+		</p>
+		{else}
+			<div class="alert alert-warning">{$smarty.const.STRING_EMPTY_CATEGORY}</div>
+		{/if}
+
+</div>

@@ -1,0 +1,136 @@
+{*********************************************************************************
+*                                                                                *
+*   shop-script Legosp - legosp.net                                              *
+*   Skype: legoedition                                                           *
+*   Email: legoedition@gmail.com                                                 *
+*   Лицензионное соглашение: https://legosp.net/info/litsenzionnoe_soglashenie/  *
+*   Copyright (c) 2010-2019  All rights reserved.                                *
+*                                                                                *
+*********************************************************************************}
+ 
+{* customer information form *}
+<div class="box">
+    <h1 class="page-title">{$smarty.const.STRING_REGISTER_INFORMATION}</h1>
+
+
+        {if $email_already_exists ne NULL}
+                <div  class="alert alert-danger"><b>{$smarty.const.ERROR_EMAIL_ALREADY_EXISTS}</b></div>
+                    {*<a href="">{$smarty.const.REMEMBER_PASSWORD}</a>*}
+        {/if}
+        <div id="results">{$error}</div>
+
+
+        <form action="index.php"  name="custinfo_form" id="custinfo_form" method="post" class="form-horizontal">
+
+                {if isset($openID)}
+                    <h2>{$smarty.const.STRING_OTHE_DATE}</h2>
+                    <input type="HIDDEN" name="openID" value="{$openID}"  />
+                    <input type="HIDDEN" name="provider" value="{$provider}"  />
+                {/if}
+
+                {if trim($email) && isset($openID)}
+                    <input type="HIDDEN" name="email" id="email" value="{$email}"  />
+                {else}
+
+  <div class="form-group">
+    <label for="email" class="col-sm-3 control-label">{$smarty.const.CUSTOMER_EMAIL} <em class="red">*</em></label>
+    <div class="col-sm-9">
+      <input required="" style="width: 100%;" maxlength='50' type="email" name="email" id="email" value="{if $smarty.post.email}{else}{$email}{/if}" />
+    </div>
+  </div>
+                    {/if}
+
+                    {if trim($first_name) && isset($openID)}
+                        <input style="width: 250px" type="HIDDEN" name="first_name" id="first_name" value="{if $smarty.post.first_name}{$smarty.post.first_name|escape}{else}{$first_name}{/if}"  />
+                    {else}
+
+  <div class="form-group">
+    <label for="first_name" class="col-sm-3 control-label">{$smarty.const.CUSTOMER_FIRST_NAME} <em class="red">*</em></label>
+    <div class="col-sm-9">
+      <input required="" style="width: 100%" maxlength='50' type="text" id="first_name" name="first_name" value="{if $smarty.post.first_name}{$smarty.post.first_name|escape}{else}{$first_name}{/if}" />
+    </div>
+  </div>
+
+                {/if}
+
+                {if trim($last_name) && isset($openID)}
+                    <input style="width: 250px" type="HIDDEN" name="last_name" id="last_name" value="{$last_name}" />
+                {else}
+
+  <div class="form-group">
+    <label for="last_name" class="col-sm-3 control-label">{$smarty.const.CUSTOMER_LAST_NAME} <em class="red">*</em></label>
+    <div class="col-sm-9">
+      <input required="" type="text" style="width: 100%" maxlength='50' name="last_name" id="last_name" value="{if $smarty.post.last_name}{$smarty.post.last_name|escape}{else}{$last_name}{/if}" />
+    </div>
+  </div>
+                    {/if}
+
+  <div class="form-group">
+    <label for="phone" class="col-sm-3 control-label">{$smarty.const.CUSTOMER_PHONE_NUMBER}<em class="red">*</em></label>
+    <div class="col-sm-9">
+      <input required="" type="tel" style="width: 100%" maxlength="20" name="phone" id="phone" value="{if $smarty.post.phone}{$smarty.post.phone|escape}{else}{$phone}{/if}" />
+    </div>
+  </div>
+
+ {*<div class="form-group">
+    <label for="country" class="col-sm-3 control-label">{$smarty.const.CUSTOMER_COUNTRY}</label>
+    <div class="col-sm-9">
+      <input class="field text large" type="text" style="width: 100%" name="country" id="country" value="{$country}"  maxlength="20"/>
+    </div>
+  </div>*}
+
+<div class="form-group">
+    <label for="city" class="col-sm-3 control-label">{$smarty.const.CUSTOMER_CITY}<em class="red">*</em></label>
+    <div class="col-sm-9">
+      <input required="" type="text" style="width: 100%" maxlength="25" name="city" id="city" value="{if $smarty.post.city}{$smarty.post.city|escape}{else}{$city}{/if}" />
+    </div>
+</div>
+
+  <div class="form-group">
+    <label for="address" class="col-sm-3 control-label">{$smarty.const.CUSTOMER_ADDRESS}<em class="red">*</em></label>
+    <div class="col-sm-9">
+      <input required=""  type="text" style="width: 100%" maxlength="100" name="address" id="address" value="{if $smarty.post.address}{$smarty.post.address|escape}{else}{$address}{/if}" />
+    </div>
+  </div>
+
+    <div class="form-group">
+    <label for="zip" class="col-sm-3 control-label">{$smarty.const.CUSTOMER_ZIP}</label>
+    <div class="col-sm-9">
+      <input type="number" style="width: 100%" name="zip" id="zip" value="{if $smarty.post.zip}{$smarty.post.zip|escape}{else}{$zip}{/if}"  maxlength=7 />
+    </div>
+  </div>
+
+                {if !isset($openID)}
+  <div class="form-group">
+    <label for="password" class="col-sm-3 control-label">{$smarty.const.CUSTOMER_PASSWORD}<em class="red">*</em></label>
+    <div class="col-sm-9">
+      <input style="width: 100%" type="password" name="password" id="password" value="" maxlength=20 required="" pattern="{literal}[\w]{5,}{/literal}"/>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="password2" class="col-sm-3 control-label">{$smarty.const.CUSTOMER_PASSWORD2}<em class="red">*</em></label>
+    <div class="col-sm-9">
+      <input style="width: 100%" type="password" name="password2" id="password2" value="" maxlength=20 required="" pattern="{literal}[\w]{5,}{/literal}" />
+    </div>
+  </div>
+                {/if}
+
+  <div class="form-group">
+    <label for="captcha" class="col-sm-3 control-label">{$smarty.const.STRING_SEND_CAPCHA}<em class="red">*</em></label>
+    <div class="col-sm-9">
+      <img id="cap" style="vertical-align:bottom;" src="./core/core_captcha.php?bg=F7F7F7" alt="{$smarty.const.STRING_SEND_CAPCHA}" onclick="go_cap()" title="Обновить капчу"/>
+      <input id="captcha" required="" minlength='3' type="text" name="captcha" id="captcha"/>
+    </div>
+  </div>
+
+            <div class="buttons">
+                <div class="right"><input type="submit" value="{$smarty.const.STRING_SEND_REGISTER_FORM}" class="button">
+                {*<a onclick="$('#custinfo_form').submit();" class="button"><span>{$smarty.const.STRING_SEND_REGISTER_FORM}</span></a>*}
+                <input type=hidden name="customer_register" value=1/>
+                </div>
+            </div>
+
+        </form>
+
+</div>

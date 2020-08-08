@@ -1,0 +1,112 @@
+
+{*********************************************************************************
+*                                                                                *
+*   shop-script Legosp - legosp.net                                              *
+*   Skype: legoedition                                                           *
+*   Email: legoedition@gmail.com                                                 *
+*   Лицензионное соглашение: https://legosp.net/info/litsenzionnoe_soglashenie/  *
+*   Copyright (c) 2010-2019  All rights reserved.                                *
+*                                                                                *
+*********************************************************************************}
+ 
+ 
+
+{* reviews *}
+{literal}
+<script type="text/javascript">
+$(document).ready( function() {
+	$("#maincheck").click( function() {
+		$('#suc_info').hide();
+		if($('#maincheck').attr('checked')) {
+				$('.mc').attr('checked', true);
+				$('#action').show();
+			} else {
+				$('.mc').attr('checked', false);
+				$('#action').hide();
+				$('#action').val('0'); 
+		}
+	});
+
+	$(".mc").click(function () {
+		$('#suc_info').hide();
+		if($('.mc:checkbox').is(':checked')==false) { 
+				$('#action').hide();
+				$('#action').val('0'); 
+			} else {
+				$('#action').show();
+		}
+	});
+});
+</script>
+{/literal}
+
+<div id="icon-link-manager" class="icon32"><br /></div><h2>{$smarty.const.ADMIN_REVIEW}</h2>
+<br class="clear" />
+
+<form action="./{$smarty.const.CONF_ADMIN_FILE}" method="post">
+	<input type="hidden" name="dpt" value="catalog" />
+	<input type="hidden" name="sub" value="review" />
+	<input type="hidden" name="save_review" value="{if $savedID}{$savedID}{/if}" />
+
+	<div class="tablenav top">
+		{if $save_successful}<div class="alignleft actions" id="suc_info"><strong>{$save_successful}</strong></div>{/if}
+		<div class="alignleft actions" id="action" style="display: none;">
+			<select name="action" style="width: 200px;">
+				<option selected="selected" value="0">Выберите действие</option>
+				<option value="deletes">Удалить выбранные</option>
+				{if $smarty.const.CONF_REVIEW_MODER}<option value="good_comments">Одобрить выбранные</option>{/if}
+			</select>
+			<input type="submit" name="" id="doaction" class="button-secondary action" value="Применить"  />
+		</div>
+		<div class='tablenav-pages one-page'><span class="displaying-num">{$reviews|count} элемент(ов)</span></div>
+		<br class="clear" />
+	</div>
+
+	<table class="widefat" cellspacing="0">
+		<thead>
+			<tr>
+				<th style="width:16px;"><input type='checkbox' name='checkall' id="maincheck" /></th>
+				<th style="width:200px;"><a><span><strong>{$smarty.const.PRODUCT_ADMIN_REVIEW_NAME}</strong></span></a></th>
+				<th><a><span><strong>{$smarty.const.PRODUCT_REVIEW_MESSAGE}</strong></span></a></th>
+				<th style="width:50px;"><a><span><strong>Действия</strong></span></a></th>
+			</tr>
+		</thead>
+		<tbody>
+			{foreach from=$reviews item=review}
+			<tr class="alternate">
+				<td style="vertical-align: top;">
+					<input type="checkbox" name="reviews[]" class="mc" value="{$review.reviewID}" />
+				</td>
+				<td style="vertical-align: top">
+					<a href="mailto:{$review.email}"><strong>{$review.username}</strong></a><br />
+					<font style="color: #f00; font-size: 10px;">[{$review.date_time}]</font>
+				</td>
+				<td>
+					<div id="read_{$review.reviewID}">
+						<a href="./products_pictures/{$review.products_thumbnail|replace:'S.jpg':'B.jpg'}" class="thickbox" title="{$review.products_name}">
+						<img src="./products_pictures/{$review.products_thumbnail}" alt="" style="float:left;margin-right:5px;width:50px;" />
+						</a>
+						<a href="./product/{$review.products_hurl}" target="_blank" title="Откроется в новом окне">
+						<strong>{$review.products_name}</strong>
+						</a><br />
+						{$review.review}
+					</div>
+					<div id="write_{$review.reviewID}" style="height: 100px; width: 400px;padding-bottom:20px; display: none;">
+						<textarea wrap name="review_{$review.reviewID}" style="height: 80px; width: 400px">{$review.review}</textarea>
+						<p><input type="submit" name="submit" class="button-primary" value="{$smarty.const.SAVE_BUTTON}" /></p>
+					</div>
+				</td>
+				<td style="vertical-align: top;text-align:center;">
+					{if $smarty.const.CONF_REVIEW_MODER}
+						{if $review.moder eq 0}
+							<a href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=catalog&amp;sub=review&amp;approved={$review.reviewID}"><img src="./images/backend/complite.png" alt="{$smarty.const.ADMIN_REVIEW_GOOD}" title="{$smarty.const.ADMIN_REVIEW_GOOD}" /></a>&nbsp;&nbsp;
+						{/if}
+					{/if}
+					<a onclick="{literal}document.getElementById('read_{/literal}{$review.reviewID}{literal}').style.display='none'; document.getElementById('write_{/literal}{$review.reviewID}{literal}').style.display='inline-block';{/literal}"><img src="./images/backend/edit.png" alt="{$smarty.const.PRODUCT_ADMIN_REVIEW_EDIT}" style="cursor:pointer;" /></a>&nbsp;&nbsp;
+					<a href="./{$smarty.const.CONF_ADMIN_FILE}?dpt=catalog&amp;sub=review&amp;delete={$review.reviewID}"><img src="./images/backend/delete.png" alt="" /></a>
+				</td>
+			</tr>
+			{/foreach}
+		</tbody>
+	</table>
+</form>

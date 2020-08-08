@@ -1,0 +1,113 @@
+#config
+	DirectoryIndex index.php
+	AddDefaultCharset utf-8
+        AddCharset utf-8 *
+        <IfModule mod_charset.c>
+          CharsetSourceEnc utf-8
+          CharsetDefault utf-8
+        </IfModule>
+        Options -Indexes
+
+#rewrite url's
+	RewriteEngine On
+#www redirect
+	RewriteCond %{HTTP_HOST} ^www.demo.legosp.net$ [NC]
+	RewriteRule ^(.*)$ http://demo.legosp.net/$1 [R=301,L]
+
+#copress js and css
+        RewriteRule ^core_ajaxconst.js$ core/core_ajaxconst.php [L]
+
+
+#payment
+	RewriteRule payment/$ index.php?payment [L]
+
+#about url's
+	RewriteRule ^catalog/(.*)/about/$ index.php?about&category=$1/ [L]
+	RewriteRule ^brand/(.*)/about/$ index.php?about&brands=$1/ [L]
+	
+#sort url's
+	RewriteRule ^(.*)/(.*)/&sort=(name|Price|customers_rating|in_stock|product_code)&order=(ASC|DESC)$ index.php?$1_hurl=$2/&sort=$3&order=$4 [L]
+	RewriteRule ^news/&offset=([0-9]+)$ index.php?news_list&offset=$1 [L]
+	RewriteRule ^pages/&offset=([0-9]+)$ index.php?pages&pages=&offset=$1 [L]
+	RewriteRule (.*)/(.*)/&offset=([0-9]+)$ index.php?$1_hurl=$2/&offset=$3 [L]
+	RewriteRule (.*)/(.*)/&offset=(.*) core/core_404.php?files [L]
+	RewriteRule ^(.*)/(.*)/&show_all=yes$ index.php?$1_hurl=$2/&show_all=yes [L] 
+	
+#404	
+        RewriteRule ^catalog/(.*)[&|\?](.*)$ core/core_404.php?files [L]
+        RewriteRule ^product/(.*)/[&|?](.*)$ core/core_404.php?files [L]
+        RewriteRule ^news/[&|?](.*)$ core/core_404.php?files [L]
+
+#catalog url's
+	RewriteRule ^catalog/(.*)$ index.php?catalog_hurl=$1 [L]
+	RewriteRule ^product/(.*)/$ index.php?product_hurl=$1/ [L]
+	RewriteRule ^news/(.*)/$ index.php?news=$1/ [L]       
+
+	RewriteRule ^news/$ index.php?news_list [L]
+	RewriteRule ^pages/$ index.php?pages&pages= [L]
+	RewriteRule ^pages/(.*)/$ index.php?pages&pages=$1/ [L]
+	RewriteRule ^tags/(.*)/$ index.php?tags_hurl=$1/ [L]
+	RewriteRule ^brand/(.*)/(.*) index.php?brand=$1/$2 [L]
+
+
+
+#lang url's
+	RewriteRule ru/$ index.php?new_language=0 [L]
+	RewriteRule en/$ index.php?new_language=1 [L]
+
+#information url's
+	RewriteRule info/(.*)$ index.php?aux_pages=$1 [L]
+	RewriteRule contact/&send_result=(.*)$ index.php?contact&send_result=$1 [L]
+	RewriteRule contact/$ index.php?contact [L]
+	RewriteRule service/$ index.php?aux_page=aux2 [L]
+	RewriteRule pricelist/([0-9]*)/$ index.php?show_price=$1 [L]
+	RewriteRule pricelist/$ index.php?show_price=yes [L]
+	RewriteRule ^price.xls$ core/core_xls.php [L]
+	RewriteRule feed.xml$ core/core_rss.php [L]
+	RewriteRule ^about/$ index.php?aux_page=aux1 [L]
+	RewriteRule grafik/$ index.php?aux_page=aux1 [L]
+	RewriteRule adress/$ index.php?aux_page=aux1 [L]
+	RewriteRule sitemap\.xml$ core/sitemap.php [L]
+	RewriteRule sitemap/$ index.php?sitemap [L]
+
+#administration url's
+	RewriteRule ^admin/$ admin [R=301]
+	RewriteRule ^admin$ access_admin.php [L]
+	
+
+#cart url's
+	RewriteRule add2cart/(.*)$ index.php?shopping_cart&add2cart=$1 [L]
+	RewriteRule cart/$ index.php?shopping_cart=yes [L]
+	RewriteRule cart/&remove=(.*)$ index.php?shopping_cart=yes&remove=$1 [L]
+	RewriteRule cart/&clear$ index.php?shopping_cart=yes&clear_cart=yes [L]
+	RewriteRule cart/order/$ index.php?order_custinfo=yes [L]
+	RewriteRule cart/order_placed/$ index.php?order_placement_result=1 [L]
+	RewriteRule printorder/$ core/core_printorder.php [L]
+	RewriteRule pd4/$ core/print_pd4.php [L]
+
+#yandex url's
+	RewriteRule yandex\.(xml|yml)$ core/core_yml.php [L]
+        RewriteRule metamarket\.xml$ core/core_metamarket.php [L]
+        
+
+#search_expanded url's
+    RewriteRule search_expanded/ index.php?search_expanded=1 [L]
+
+#watermark
+    #RewriteRule ^(products_pictures|products_thumb|userfiles)/(.*\.(gif|jpg|jpeg|png))  core/watermark.php?dir=$1&img_path=$2 [L] # All image
+    #RewriteRule ^(products_pictures)/(.*\.(gif|jpg|jpeg|png))  core/watermark.php?dir=$1&img_path=$2 [L] # All products_pictures 
+    #RewriteRule ^(products_pictures)/(.*-B\.(gif|jpg|jpeg|png))  core/watermark.php?dir=$1&img_path=$2 [L] # only big products_pictures 
+    #RewriteRule ^(products_pictures)/(.*-H\.(gif|jpg|jpeg|png))  core/watermark.php?dir=$1&img_path=$2 [L] # only smal products_pictures  
+    #RewriteRule ^(products_thumb)/(.*\.(gif|jpg|jpeg|png))  core/watermark.php?dir=$1&img_path=$2 [L] # All products_thumb  
+
+
+#errors
+	RewriteRule 404/$ core/core_404.php?files [L]
+
+	ErrorDocument 403 /core/core_404.php?files
+	ErrorDocument 404 /core/core_404.php?files
+
+#Remove duplicate slashes
+RewriteCond %{THE_REQUEST} ([^\s]*)\/{2,}(\?[^\s]*)?
+RewriteRule (.*) %1 [R=301,L]
+

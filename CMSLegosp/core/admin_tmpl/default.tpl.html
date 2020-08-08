@@ -1,0 +1,129 @@
+
+{*********************************************************************************
+*                                                                                *
+*   shop-script Legosp - legosp.net                                              *
+*   Skype: legoedition                                                           *
+*   Email: legoedition@gmail.com                                                 *
+*   Лицензионное соглашение: https://legosp.net/info/litsenzionnoe_soglashenie/  *
+*   Copyright (c) 2010-2019  All rights reserved.                                *
+*                                                                                *
+*********************************************************************************}
+ 
+ 
+
+{* default admin page*}
+{if $totals}
+    <div id="icon-index" class="icon32"><br/></div>
+    <h2>{$smarty.const.LINK_TO_HOMEPAGE}</h2>
+    {$smarty.const.ADMIN_WELCOME}
+    <div class="panel panel-default">
+        <div class="panel-heading">{$smarty.const.ADMIN_STAT_SHOP}</div>
+        <div class="panel-body">
+            <div class="col-sm-6">
+                <table class="widefat" cellspacing="0">
+                    <thead>
+                    <tr>
+                        <th colspan="2"><a><span><strong>{$smarty.const.ADMIN_ORDERS}</strong></span></a></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="alternate">
+                        <td width="120">{$smarty.const.ADMIN_today}:</td>
+                        <td>{if $totals.orders_today>0}<strong>{/if}{$totals.orders_today} {$smarty.const.ADMIN_ORDER_ov} ({$totals.revenue_today|print_price}){if $totals.orders_today>0}</strong>{/if}</td>
+                    </tr>
+                    <tr class="alternate">
+                        <td>{$smarty.const.ADMIN_yesterday}:</td>
+                        <td><strong>{$totals.orders_yesterday}</strong> {$smarty.const.ADMIN_ORDER_ov} ({$totals.revenue_yesterday|print_price})</td>
+                    </tr>
+                    <tr class="alternate">
+                        <td>{$smarty.const.ADMIN_This_month}:</td>
+                        <td><strong>{$totals.orders_thismonth}</strong> {$smarty.const.ADMIN_ORDER_ov} ({$totals.revenue_thismonth|print_price})</td>
+                    </tr>
+                    <tr class="alternate">
+                        <td>{$smarty.const.ADMIN_only}:</td>
+                        <td><strong>{$totals.orders}</strong> {$smarty.const.ADMIN_ORDER_ov} ({$totals.revenue})</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-sm-6">
+                <table class="widefat" cellspacing="0">
+                    <thead>
+                    <tr>
+                        <th colspan="2"><a><span><strong>{$smarty.const.ADMIN_products}</strong></span></a></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="alternate">
+                        <td>{$smarty.const.ADMIN_total_number_products}:</td>
+                        <td width="50"><strong>{$totals.products}</strong></td>
+                    </tr>
+                    <tr class="alternate">
+                        <td>{$smarty.const.ADMIN_products_for_client}:</td>
+                        <td><strong>{$totals.products_enabled}</strong></td>
+                    </tr>
+                    <tr class="alternate">
+                        <td>{$smarty.const.ADMIN_category_products}:</td>
+                        <td><strong>{$totals.categories}</strong></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+    <!--<div class="col-sm-6">
+        <div class="news panel panel-default">
+            <div class="panel-heading">Новости Legosp</div>
+            <div class="panel-body">
+                {$news_text}
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="news panel panel-default">
+            <div class="panel-heading">Шаблоны / Модули</div>
+            <div class="panel-body">
+                {$products_text}
+            </div>
+        </div>
+    </div>-->
+    </div>
+    {*<table class="widefat" cellspacing="0">
+        <thead>
+        <tr>
+            <th colspan="2"><a><span><strong>{$smarty.const.ADMIN_STAT_SHOP}</strong></span></a></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="alternate">
+            <td style="width:50%;">
+
+            </td>
+            <td style="width:50%;vertical-align:top;">
+                <table class="widefat" cellspacing="0">
+                    <thead>
+                    <tr>
+                        <th colspan="2"><a><span><strong>{$smarty.const.ADMIN_products}</strong></span></a></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="alternate">
+                        <td>{$smarty.const.ADMIN_total_number_products}:</td>
+                        <td width="50"><strong>{$totals.products}</strong></td>
+                    </tr>
+                    <tr class="alternate">
+                        <td>{$smarty.const.ADMIN_products_for_client}:</td>
+                        <td><strong>{$totals.products_enabled}</strong></td>
+                    </tr>
+                    <tr class="alternate">
+                        <td>{$smarty.const.ADMIN_category_products}:</td>
+                        <td><strong>{$totals.categories}</strong></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        </tbody>*}
+    </table>
+{/if}

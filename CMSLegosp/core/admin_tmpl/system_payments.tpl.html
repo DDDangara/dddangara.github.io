@@ -1,0 +1,223 @@
+
+{*********************************************************************************
+*                                                                                *
+*   shop-script Legosp - legosp.net                                              *
+*   Skype: legoedition                                                           *
+*   Email: legoedition@gmail.com                                                 *
+*   Лицензионное соглашение: https://legosp.net/info/litsenzionnoe_soglashenie/  *
+*   Copyright (c) 2010-2019  All rights reserved.                                *
+*                                                                                *
+*********************************************************************************}
+ 
+ 
+
+{* general configurations template *}
+<div id="icon-plugins" class="icon32"><br /></div><h2>{$smarty.const.ADMIN_PAYMENTS}</h2>
+<br class="clear" />
+
+<form action="./{$smarty.const.CONF_ADMIN_FILE}" method="post" enctype="multipart/form-data">
+	<input type="hidden" name="dpt" value="system" />
+	<input type="hidden" name="sub" value="payments" />
+	<input type="hidden" name="update_payments" value="1" />
+
+{* QIWI *}
+	<table class="widefat" cellspacing="0">
+		<thead>
+			<tr>
+				<th style="width: 300px;"><a><span><strong>QIWI</strong></span></a></th>
+				<th><input onclick="show_hide('qiwi');" type="checkbox" name="pay_qiwi_enabled" {if $qiwi_enabled == "1"}checked="checked"{/if} />&nbsp;{$smarty.const.ADMIN_PAYMENTS_ON}</th>
+			</tr>
+		</thead>
+		<tbody id="qiwi" {if !$qiwi_enabled}style="display: none;"{/if}>		
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_PAYMENTS_NAME}:</td>
+				<td><input type="text" name="pay_qiwi_name" value="{$qiwi_name}" style="width: 400px;" /></td>
+			</tr>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_PAYMENTS_ADDPRICE}:</td>
+				<td><input type="text" name="pay_qiwi_addprice" value="{$qiwi_addprice}" style="width: 100px;" /></td>
+			</tr>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_PAYMENTS_LOGIN}:</td>
+				<td><input type="text" name="pay_qiwi_login" value="{$qiwi_login}" style="width: 100px;" /></td>
+			</tr>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_PAYMENTS_PASS}:</td>
+				<td><input type="text" name="pay_qiwi_pass" value="{$qiwi_pass}" style="width: 100px;" /></td>
+			</tr>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_QIWI_TIME}:</td>
+				<td><input type="text" name="pay_qiwi_time" value="{$qiwi_time}" style="width: 100px;" /></td>
+			</tr>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_QIWI_CHECKMOBILE}</td>
+				<td><input type="checkbox" name="pay_qiwi_checkmobile" {if $qiwi_checkmobile == "1"}checked="checked"{/if} /></td>
+			</tr>
+		</tbody>
+	</table>
+	<br class="clear" />
+
+{* ROBOX *}
+	<table class="widefat" cellspacing="0">
+		<thead>
+			<tr>
+				<th style="width: 300px;"><a><span><strong>ROBOKASSA</strong></span></a></th>
+				<th><input onclick="show_hide('robokassa');" type="checkbox" name="pay_robox_enabled" {if $robox_enabled == "1"}checked="checked"{/if} />&nbsp;{$smarty.const.ADMIN_PAYMENTS_ON}</th>
+			</tr>
+		</thead>
+		<tbody id="robokassa" {if !$robox_enabled}style="display: none;"{/if}>
+			<tr class="alternate">
+				<td colspan="2" style="border-bottom: #ccc solid 1px;">
+					Интеграция с платежной системой Robokassa (www.robokassa.ru).<br />
+					Модуль работает в режиме автоматической оплаты.<br />
+					Этот модуль можно использовать для автоматической продажи цифровых товаров.<br />
+					Настройки:<br />
+					<strong>Result</strong> Url - http://{$smarty.const.CONF_SHOP_URL}/index.php?robokassa=result (POST method)<br />
+					<strong>Success</strong> Url - http://{$smarty.const.CONF_SHOP_URL}/index.php?transaction_result=success (POST method)<br />
+					<strong>Fail</strong> Url - http://{$smarty.const.CONF_SHOP_URL}/index.php?transaction_result=failure (POST method)
+				</td>
+			</tr>
+			<tr class="alternate">
+				<td>Тестовый режим:<br />Используйте тестовый режим для проверки модуля</td>
+				<td><input type="checkbox" name="pay_robox_testmode" value="1" {if $robox_testmode}checked="checked"{/if} /></td>
+			</tr>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_PAYMENTS_NAME}:</td>
+				<td><input type="text" name="pay_robox_name" value="{$robox_name}" style="width: 400px;" /></td>
+			</tr>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_PAYMENTS_ADDPRICE}:</td>
+				<td><input type="text" name="pay_robox_addprice" value="{$robox_addprice}" style="width: 100px;" /></td>
+			</tr>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_PAYMENTS_LOGIN}:</td>
+				<td><input type="text" name="pay_robox_login" value="{$robox_login}" style="width: 100px;" /></td>    
+			</tr>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_PAYMENTS_PASS}1:</td>
+				<td><input type="text" name="pay_robox_pass" value="{$robox_pass}" style="width: 100px;" /></td>
+			</tr>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_PAYMENTS_PASS}2:</td>
+				<td><input type="text" name="pay_robox_pass2" value="{$robox_pass2}" style="width: 100px;" /></td>
+			</tr>
+			<tr class="alternate">
+				<td>Статус заказа после оплаты:<br />Укажите, какой статус присваивать заказу после совершения платежа.</td>
+				<td><select name="pay_robox_afterpay">
+					<option value="0">--- не важно ---</option>
+					{section name=r loop=$ord_status}
+					<option value="{$ord_status[r].statusID}" {if $robox_afterpay == $ord_status[r].statusID}selected="selected"{/if}>{$ord_status[r].status_name}</option>
+					{/section}
+				</select></td>
+			</tr>
+		</tbody>
+	</table>
+	<br class="clear" />
+
+{* INTERKASSA_2 *}
+	<table class="widefat" cellspacing="0">
+		<thead>
+			<tr>
+				<th style="width: 300px;"><a><span><strong>INTERKASSA</strong></span></a></th>
+				<th><input onclick="show_hide('interkassa');" type="checkbox" name="pay_inter_enabled" {if $inter_enabled == "1"}checked="checked"{/if} />&nbsp;{$smarty.const.ADMIN_PAYMENTS_ON}</th>
+			</tr>
+		</thead>
+		<tbody id="interkassa" {if !$inter_enabled}style="display: none;"{/if}>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_PAYMENTS_NAME}:</td>
+				<td><input type="text" name="pay_inter_name" value="{$inter_name}" style="width: 400px;" /></td>
+			</tr>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_PAYMENTS_ADDPRICE}:</td>
+				<td><input type="text" name="pay_inter_addprice" value="{$inter_addprice}" style="width: 100px;" /></td>
+			</tr>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_INTER_SHOPID}</td>
+				<td><input type="text" name="pay_inter_shopid" value="{$inter_shopid}" style="width: 300px;" /></td>
+			</tr>
+			<tr class="alternate">
+				<td>Секретный или Тестовый ключ</td>
+				<td><input type="text" name="pay_inter_key" value="{$inter_key}" style="width: 300px;" /></td>
+			</tr>
+			
+		</tbody>
+	</table>
+	<br class="clear" />
+
+{* WEBMONEY *}
+	<table class="widefat" cellspacing="0">
+		<thead>
+			<tr>
+				<th style="width: 300px;"><a><span><strong>WEBMONEY</strong></span></a></th>
+				<th><input onclick="show_hide('webmoney');" type="checkbox" name="pay_webmoney_enabled" {if $webmoney_enabled == "1"}checked="checked"{/if} />&nbsp;{$smarty.const.ADMIN_PAYMENTS_ON}</th>
+			</tr>
+		</thead>
+		<tbody id="webmoney" {if !$webmoney_enabled}style="display: none;"{/if}>
+			<tr class="alternate" style="border-bottom: #ccc solid 1px;">
+				<td colspan="2">
+					WebMoney Merchant Interface (www.webmoney.ru). <br />
+					Модуль работает в режиме автоматической оплаты. <br />
+					Настройки:<br />
+					<strong>Result</strong> Url - http://{$smarty.const.CONF_SHOP_URL}/index.php?paywebmoney=yes<br />
+					<strong>Success</strong> Url - http://{$smarty.const.CONF_SHOP_URL}/index.php?transaction_result=success (POST method)<br />
+					<strong>Fail</strong> Url - http://{$smarty.const.CONF_SHOP_URL}/index.php?transaction_result=failure (POST method)<br />
+					Другие настройки: передавать параметры в предварительном запросе, не высылать Secret Key если Result URL обеспечивает безопасность,
+					не позволять использовать URL передаваемые в форме, метод формирования контрольной подписи - MD5.
+				</td>
+			</tr>
+			<tr class="alternate">
+				<td>Тестовый режим:<br />Используйте тестовый режим для проверки модуля</td>
+				<td><input type="checkbox" name="pay_webmoney_testmode" value="1" {if $webmoney_testmode}checked="checked"{/if} /></td>
+			</tr>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_PAYMENTS_NAME}:</td>
+				<td><input type="text" name="pay_webmoney_name" value="{$webmoney_name}" style="width: 400px;" /></td>
+			</tr>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_PAYMENTS_ADDPRICE}:</td>
+				<td><input type="text" name="pay_webmoney_addprice" value="{$webmoney_addprice}" style="width: 100px;" /></td>
+			</tr>
+			<tr class="alternate">
+				<td>Номер кошелька, на который будут приниматься деньги в Вашем магазине:<br />Формат - буква и 12 цифр</td>
+				<td><input type="text" name="pay_webmoney_merchant" value="{$webmoney_merchant}" style="width: 100px;" /></td>
+			</tr>
+			<tr class="alternate">
+				<td>Статус заказа после оплаты:<br />Укажите, какой статус присваивать заказу после совершения платежа.</td>
+				<td><select name="pay_webmoney_afterpay">
+					<option value="0">--- не важно ---</option>
+					{section name=r loop=$ord_status}
+					<option value="{$ord_status[r].statusID}" {if $webmoney_afterpay == $ord_status[r].statusID}selected="selected"{/if}>{$ord_status[r].status_name}</option>
+					{/section}
+				</select></td>
+			</tr>
+		</tbody>
+	</table>
+	<br class="clear" />
+
+{* SBERBANK *}
+	<table class="widefat" cellspacing="0">
+		<thead>
+			<tr>
+				<th style="width: 300px;"><a><span><strong>SBERBANK</strong></span></a></th>
+				<th><input onclick="show_hide('sberbank');" type="checkbox" name="pay_sbrf_enabled" {if $sbrf_enabled == "1"}checked="checked"{/if} />&nbsp;{$smarty.const.ADMIN_PAYMENTS_ON}</th>
+			</tr>
+		</thead>
+		<tbody id="sberbank" {if !$sbrf_enabled}style="display: none;"{/if}>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_PAYMENTS_NAME}:</td>
+				<td><input type="text" name="pay_sbrf_name" value="{$sbrf_name}" style="width: 400px;" /></td>
+			</tr>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_PAYMENTS_ADDPRICE}:</td>
+				<td><input type="text" name="pay_sbrf_addprice" value="{$sbrf_addprice}" style="width: 100px;" /></td>
+			</tr>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_PAYMENTS_COMMENT}</td>
+				<td><textarea name="pay_all_description" rows="5" style="width: 100%;">{$all_description}</textarea></td>
+			</tr>
+		</tbody>
+	</table>
+	<br class="clear" />
+
+	<p><input type="submit" name="submit" class="button-primary" value="{$smarty.const.SAVE_BUTTON}" /></p>
+</form>

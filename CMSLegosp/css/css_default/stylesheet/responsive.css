@@ -1,0 +1,20 @@
+/*********************************************************************************
+*                                                                                *
+*   shop-script Legosp - legosp.net                                              *
+*   Skype: legoedition                                                           *
+*   Email: legoedition@gmail.com                                                 *
+*   Лицензионное соглашение: https://legosp.net/info/litsenzionnoe_soglashenie/  *
+*   Copyright (c) 2010-2019  All rights reserved.                                *
+*                                                                                *
+*********************************************************************************/
+
+@media (max-width:979px){#nav-menu{display:none}#nav-phone{display:block}}@media (max-width:767px){
+	.header-contacts .hidden-xs{display: block !important;}
+	.visible-xs img{
+    max-width: 16px;
+}#header #module_cart,.center-sm{float:none}.product-grid .product .image img{max-width:150px;width:100%}.center-sm{display:table;margin:0 auto;width:auto}.center-column .product-grid,.product-list>div{margin-bottom:20px}.text-center-sm{text-align:center}.text-left-sm{text-align:left}#header .search_form{position:relative;margin-top:20px}#copyright{text-align:center}#copyright ul{padding:5px 0 10px;float:none}.hover-product{display:none!important}.center-column .product-grid,.product-grid{margin-top:-20px}.center-column .product-grid .product,.product-grid .product{margin-top:20px}.product-grid .row>div.col-xs-6:nth-child(odd){clear:both}.box-product .carousel .item .product-grid .row>div{display:none}.box-product .carousel .item .product-grid .row:first-child>div:first-child,.box-product .carousel .item .product-grid .row:first-child>div:nth-child(2){display:block}.product-list .actions>div{padding:15px 0 0;border-top:1px solid #e6e6e6;margin:20px 0 0}.product-list .actions>div:before{display:none}.category-info{padding:0 0 10px}.category-list-text-only{margin-bottom:15px}.category-list .row>div{margin-bottom:16px}.category-list-text-only .row>div{margin-bottom:6px}.product-filter{margin:0 0 20px}}@media (max-width:480px){
+	.hidden-xx{display:none}
+	.visible-xx{display:block!important}
+	.buttons .right {float: none;text-align: center;}
+	.buttons .left {float: none;text-align: center;}
+}

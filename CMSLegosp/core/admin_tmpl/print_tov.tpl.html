@@ -1,0 +1,114 @@
+
+{*********************************************************************************
+*                                                                                *
+*   shop-script Legosp - legosp.net                                              *
+*   Skype: legoedition                                                           *
+*   Email: legoedition@gmail.com                                                 *
+*   Лицензионное соглашение: https://legosp.net/info/litsenzionnoe_soglashenie/  *
+*   Copyright (c) 2010-2019  All rights reserved.                                *
+*                                                                                *
+*********************************************************************************}
+ 
+ 
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>ТОВАРНЫЙ ЧЕК</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="printforms/printforms.css" type="text/css" />
+<script type="text/javascript">
+var lang_strings = {
+	'edit_link':'Корректировка перед печатью',
+	'field_title':'Двойной клик для редактирования',
+	'save_link':'OK'
+}
+var page_url = 'form_id=340';
+</script>
+<script type="text/javascript" src="printforms/inline_edit_printform.js"></script>
+</head>
+<body onLoad="Printform.init('inline_edit');">
+<form action="" class="noprint">
+<input id="print_button" type="button" value="Печать" alt="Печать" title="Печать" onClick="window.print();return false;"/>
+</form>
+<table cellpadding="0" cellspacing="5" border="0" width="640" align="center">
+	<tr>
+    	<td align="right" width="70" valign="top"><strong>Поставщик:</strong></td>
+        <td align="left">
+        {$smarty.const.COMPANY_NAME}<BR>
+		{$smarty.const.COMPANY_ADDRESS}<BR>
+        Тел. {$smarty.const.COMPANY_PHONE}<BR>
+        р/счет №{$smarty.const.COMPANY_RS}<br>
+        в {$smarty.const.COMPANY_BANK}<br>
+        кор/счет: {$smarty.const.COMPANY_BANK_KOR}<br>
+        БИК: {$smarty.const.COMPANY_BANK_BIK}
+        </td>
+	</tr>
+	<tr>
+    	<td align="right" width="70" valign="top"><strong>Плательщик:</strong></td>
+        <td align="left">
+        {$cust_name}<br>
+        {$cust_adress}<br>
+        Телефон: {$cust_numbert}
+        </td>
+	</tr> 
+    <tr align="center">
+    	<td colspan="2">
+        <BR><BR><font size="+1"><strong>ТОВАРНЫЙ ЧЕК №{$ord_num} от {$ord_date|date_format:"%d.%m.%Y"}г</strong></font><BR><BR><BR>
+        </td>
+	</tr>
+</table>
+<table cellpadding="5" cellspacing="0" border="1" width="620" align="center">
+	<tr align="center">
+		<td width="20"><strong>№</strong></td>
+		<td width="440"><strong>Наименование</strong></td>
+		<td width="80"><strong>Количество</strong></td>
+		<td width="80"><strong>Цена</strong></td>
+	</tr>
+        	  {assign var=i value=1} 
+    	  {foreach item=val from=$mmm}
+    	  {if (!strstr($val.name, $smarty.const.ADMIN_SHIPPING))} {assign var=free_shipping value=1} {else} {assign var=free_shipping value=0}{/if}
+    	  {if ((strpos($val.name, $smarty.const.ADMIN_SHIPPING) === false) && (strpos($val.name, $smarty.const.ADMIN_FAST_ORDER) === false))} 
+    	  {assign var="val.Price" value=$val.Price*$disc.val/100}   
+    	  {/if}
+	<tr align="center">
+		<td>{$i++}</td>
+		<td align="left">{$val.name}</td>
+		<td>{math equation=$val.Quantity format="%1.3f"}</td>
+		<td>{math equation=$val.Price format="%01.2f"}</td>
+	</tr>
+    	  {assign var="totalsum" value=$val.Price*$val.Quantity+$totalsum}  
+    	  {assign var="totalq" value=$val.Quantity+$totalq}  
+    	  {/foreach}
+</table>
+
+<table cellpadding="5" cellspacing="0" border="0" width="620" align="center">
+{if $disc.val>0}
+           {math assign="discont" equation="x*y/100" x=$totalsum y=$disc.val format="%1.2f"}
+           {math assign="totalsum" equation="x-y" x=$totalsum y=$discont format="%1.2f"}
+          <tr>
+                <td width="460" align="right"><strong>Скидка:</strong></td>
+      <td width="80" align="center"><strong>{$disc.val}%</strong></td>
+      <td width="80" align="center"><strong>{$discont}</strong></td>
+               
+   </tr>
+        {/if}
+
+	<tr>
+		<td width="460" align="right"><strong>ИТОГО:</strong></td>
+		<td width="80" align="center"><strong>{math equation=$totalq format="%1.3f"}</strong></td>
+		<td width="80" align="center"><strong>{math equation=$totalsum format="%1.2f"}</strong></td>
+	</tr>
+	<tr>
+		<td colspan="3"><strong>Итого прописью:</strong> <u>{num2str inn=$totalsum}</u><BR><BR><BR><BR><BR><BR><BR><BR></td>
+	</tr>
+</table>
+<table cellpadding="5" cellspacing="0" border="0" width="580" align="center">
+	<tr>
+    	<td align="left" width="50%">Выдал: _____________________________</td>
+        <td align="right" width="50%">Получил: _____________________________</td>
+	</tr>
+</table>
+        
+</body>
+</html>

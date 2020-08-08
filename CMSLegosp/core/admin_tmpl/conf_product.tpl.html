@@ -1,0 +1,126 @@
+
+{*********************************************************************************
+*                                                                                *
+*   shop-script Legosp - legosp.net                                              *
+*   Skype: legoedition                                                           *
+*   Email: legoedition@gmail.com                                                 *
+*   Лицензионное соглашение: https://legosp.net/info/litsenzionnoe_soglashenie/  *
+*   Copyright (c) 2010-2019  All rights reserved.                                *
+*                                                                                *
+*********************************************************************************}
+ 
+ 
+
+{* appearence configurations template *}
+<div id="icon-options-general" class="icon32"><br /></div><h2>{$smarty.const.ADMIN_CATALOG_CONF}</h2>
+<br class="clear" />
+
+<form action="./{$smarty.const.CONF_ADMIN_FILE}" method="post">
+	<input type="hidden" name="dpt" value="conf">
+	<input type="hidden" name="sub" value="product">
+	<input type="hidden" name="save_conf" value="1">
+	<table class="widefat" cellspacing="0">
+		<thead>
+			<tr>
+				<th style="width: 500px;"><a><span><strong>{$smarty.const.ADMIN_CATALOG_CONF}</strong></span></a></th>
+				<th>{if $configuration_saved eq 1}<strong>{$smarty.const.ADMIN_UPDATE_SUCCESSFUL}</strong>{/if}</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_SHOW_ADD2CART}:</td>
+				<td><input type="checkbox" name="add2cart" {if $smarty.const.CONF_SHOW_ADD2CART eq 1}checked="checked"{/if} /></td>
+			</tr>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_SHOW_PRODUCT_INSTOCK}:</td>
+				<td><input type="checkbox" name="productInStock" {if $smarty.const.CONF_SHOW_PRODUCT_INSTOCK eq 1}checked="checked"{/if} /></td>
+			</tr>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_SHOW_PRODUCT_VARIANTS_INSTOCK}:</td>
+				<td><input type="checkbox" name="productvarInStock" {if $smarty.const.CONF_SHOW_PRODUCT_VARIANTS_INSTOCK eq 1}checked="checked"{/if} /></td>
+			</tr>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_SHOW_ADD2CART_INSTOCK}:</td>
+				<td><input type="checkbox" name="add2cartInStock" {if $smarty.const.CONF_SHOW_ADD2CART_INSTOCK eq 1}checked="checked"{/if} /></td>
+			</tr>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_PRESENT_SELECT}:</td>
+				<td><input type="checkbox" name="presentselect" {if $smarty.const.CONF_PRESENT_SELECT eq 1}checked="checked"{/if} /></td>
+			</tr>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_FLOAT_QUANTITY}:</td>
+				<td><input type="checkbox" name="float_quantity" {if $smarty.const.CONF_FLOAT_QUANTITY eq 1}checked="checked"{/if} /></td>
+			</tr>
+		</tbody>
+	</table>
+	<br class="clear" />
+	
+	<table class="widefat" cellspacing="0">
+		<thead>
+			<tr>
+				<th style="width: 500px;"><a><span><strong>{$smarty.const.ADMIN_REVIEW}</strong></span></a></th>
+				<th>&nbsp;</th>
+			</tr>
+		</thead>
+		<tbody>
+		    <tr class="alternate">
+				<td>{$smarty.const.ADMIN_REVIEW_WRITE}:</td>
+				<td><input type="checkbox" name="review_write" {if $smarty.const.CONF_REVIEW_WRITE eq 1}checked="checked"{/if} /></td>
+			</tr>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_REVIEW_LINK}:</td>
+				<td><input type="checkbox" name="review_link" {if $smarty.const.CONF_REVIEW_LINK eq 1}checked="checked"{/if} /></td>
+			</tr>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_REVIEW_MODER}:</td>
+				<td><input type="checkbox" name="review_moder" {if $smarty.const.CONF_REVIEW_MODER eq 1}checked="checked"{/if} /></td>
+			</tr>
+		</tbody>
+	</table>
+	<br class="clear" />
+
+	<table class="widefat" cellspacing="0">
+		<thead>
+			<tr>
+				<th style="width: 500px;"><a><span><strong>{$smarty.const.ADMIN_SORT}</strong></span></a></th>
+				<th>&nbsp;</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_SORT_CATEGORY}:</td>
+				<td>
+					<select name="category_sort" style="width: 140px;">
+						<option value="categoryID" {if $smarty.const.CONF_SORT_CATEGORY == "categoryID"}selected="selected"{/if}>{$smarty.const.ADMIN_SORT_BY_CATEGORY}</option>
+						<option value="name"  {if $smarty.const.CONF_SORT_CATEGORY == "name"}selected="selected"{/if}>{$smarty.const.ADMIN_SORT_BY_NAME}</option>
+						<option value="products_count"  {if $smarty.const.CONF_SORT_CATEGORY == "products_count"}selected="selected"{/if}>{$smarty.const.ADMIN_SORT_BY_PRODUCTS_COUNT}</option>
+					</select>&nbsp;&nbsp;&nbsp;
+					<select name="category_sort_by" style="width: 140px;">
+						<option value="ASC" {if $smarty.const.CONF_SORT_CATEGORY_BY == "ASC"}selected="selected"{/if}>{$smarty.const.ADMIN_SORT_ASC}</option>
+						<option value="DESC" {if $smarty.const.CONF_SORT_CATEGORY_BY == "DESC"}selected="selected"{/if}>{$smarty.const.ADMIN_SORT_DESC}</option>
+					</select>
+				</td>
+			</tr>
+			<tr class="alternate">
+				<td>{$smarty.const.ADMIN_SORT_PRODUCT}:</td>
+				<td>
+					<select name="product_sort"  style="width: 140px;">
+						<option value="productID" {if $smarty.const.CONF_SORT_PRODUCT == "productID"}selected="selected"{/if}>{$smarty.const.ADMIN_SORT_BY_PRODUCT}</option>
+						<option value="name" {if $smarty.const.CONF_SORT_PRODUCT == "name"}selected="selected"{/if}>{$smarty.const.ADMIN_SORT_BY_NAME}</option>
+						<option value="Price" {if $smarty.const.CONF_SORT_PRODUCT == "Price"}selected="selected"{/if}>{$smarty.const.ADMIN_SORT_BY_PRICE}</option>
+						<option value="product_code" {if $smarty.const.CONF_SORT_PRODUCT == "product_code"}selected="selected"{/if}>{$smarty.const.ADMIN_SORT_BY_CODE}</option>
+						<option value="in_stock" {if $smarty.const.CONF_SORT_PRODUCT == "in_stock"}selected="selected"{/if}>{$smarty.const.ADMIN_SORT_BY_INSTOCK}</option>
+						<option value="items_sold" {if $smarty.const.CONF_SORT_PRODUCT == "items_sold"}selected="selected"{/if}>{$smarty.const.ADMIN_SORT_BY_SOLD}</option>
+						<option value="customer_votes" {if $smarty.const.CONF_SORT_PRODUCT == "customer_votes"}selected="selected"{/if}>{$smarty.const.ADMIN_SORT_BY_VOTES}</option>
+					</select>&nbsp;&nbsp;&nbsp;
+					<select name="product_sort_by" style="width: 140px;">
+						<option value="ASC" {if $smarty.const.CONF_SORT_PRODUCT_BY == "ASC"}selected="selected"{/if}>{$smarty.const.ADMIN_SORT_ASC}</option>
+						<option value="DESC" {if $smarty.const.CONF_SORT_PRODUCT_BY == "DESC"}selected="selected"{/if}>{$smarty.const.ADMIN_SORT_DESC}</option>
+					</select>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<p><input type="submit" name="submit" class="button-primary" value="{$smarty.const.SAVE_BUTTON}" /></p>
+</form>

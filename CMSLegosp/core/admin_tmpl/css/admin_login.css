@@ -1,0 +1,102 @@
+
+/*********************************************************************************
+*                                                                                *
+*   shop-script Legosp - legosp.net                                              *
+*   Skype: legoedition                                                           *
+*   Email: legoedition@gmail.com                                                 *
+*   Лицензионное соглашение: https://legosp.net/info/litsenzionnoe_soglashenie/  *
+*   Copyright (c) 2010-2019  All rights reserved.                                *
+*                                                                                *
+*********************************************************************************/
+ 
+@charset "windows-1251";
+/* CSS Login */
+* {margin:0; padding:0;}
+html, body {height: 100%; min-height: 100%}
+.clr {clear:both;}
+
+/* =CSS3 */
+.radius {-moz-border-radius:10px; -webkit-border-radius:10px; -khtml-border-radius:10px; border-radius:10px;}
+.shadow {-moz-box-shadow:0 0 14px #cccccc; -webkit-box-shadow:0 0 14px #cccccc; -khtml-box-shadow:0 0 14px #cccccc; box-shadow:0 0 14px #cccccc;}
+
+body {background:#F9F9F9; font:12px/17px Arial; color:#1f1f1f;}
+a {color:#5F93C7;}
+a:hover {color:#D93660;}
+
+body, #loginbox {position: relative; margin:0 auto; height:100%;}
+#loginbox * td  {height: 100%; text-align: center; vertical-align: middle}
+        
+div.r2 {width: 458px;/* background: url(../images/login/r2.png) repeat-y; */margin:0 auto 15px;background: #ffffff;border-radius: 5px;}
+div.r3 {/* background: url(../images/login/r3.png) bottom left no-repeat; */}
+div.r1 {/* background: url(../images/login/r1.png) top left no-repeat; */padding: 23px 26px 23px 26px;text-align:left;font-size:;}
+div.r4 {background: url(../images/login/px.gif) no-repeat; background: none; padding: 0; width: auto !important; width: 100%;}
+
+.logo {margin-bottom:20px;}
+
+.left {float:left;  width:50%; height: 140px; text-align:center;}
+.right {float:left; width:48%;}
+
+.copy {font-size:11px;}
+/* =Forms
+-------------------------------------------------------------- */
+label.desc {font-weight: bold; display:block}
+
+input[type=text], input[type=password],
+input.text, input.title, textarea, select {border-top: 1px solid #979797;border-right: 1px solid #d7d7d7;border-bottom:1px solid #d7d7d7;border-left: 1px solid #979797; background:#fff url('../images/login/fieldbg.gif') repeat-x left top; font-family:Arial, Helvetica, sans-serif; font-size:13px;}
+input[type=text]:focus, input[type=password]:focus,
+input.text:focus, input.title:focus,
+textarea:focus, select:focus {border-color:#5F93C7;}
+select {cursor:pointer; padding:2px;}
+
+input.medium, select.medium{width:50%;}
+input.large, select.large, textarea.textarea{width:96%;}
+textarea.small{height:5.5em;}
+textarea.medium{height:10em;}
+textarea.large{height:20em;}
+
+input[type=text], input[type=password], input.text, input.title, textarea, select {margin:0.3em 0;}
+input[type=submit] {cursor:pointer;}
+
+input.text,
+input.title   {padding:3px 5px;outline: none;border: solid 1px #333333;}
+input.title   {font-size:1.5em;}
+textarea      {padding:5px;}
+
+form.inline {line-height:3;}
+form.inline p {margin-bottom:0;}
+
+.alert, 
+.notice,
+.success, 
+.info { padding: 0.2em; margin-bottom: 1em; border: 2px solid #ddd; }
+
+.alert { background: #fbe3e4; color: #8a1f11; border-color: #fbc2c4; }
+.notice     { background: #fff6bf; color: #514721; border-color: #ffd324; }
+.success    { background: #e6efc2; color: #264409; border-color: #c6d880; }
+.info           { background: #d5edf8; color: #205791; border-color: #92cae4; }
+.alert a { color: #8a1f11; }
+.notice a   { color: #514721; }
+.success a  { color: #264409; }
+.info a         { color: #205791; }
+.error {color:#F00; font-size:12px; font-weight:normal;}
+a.button {cursor: pointer;}
+.button  {display: inline-block; text-decoration:none; color:#1f1f1f;}
+.button:hover {color:#1f1f1f;}
+/*.button span {display:block; background: url("../images/login/button_r.png") no-repeat scroll right; padding:8px 10px 7px 0;}*/
+.button.button_login {
+    /* background: url("../images/login/enter_button.png") no-repeat scroll 0 1px transparent; */
+    padding-left: 0;
+    border: none;
+    width: 194px;
+    height: 27px;
+    cursor:pointer;
+    background: #2e2e2ead;
+    border: solid 1px #0d0e0f52;
+    border-radius: 2px;
+    outline: none;
+    color: white;
+    margin-top: 5px;
+}
+.left img{
+    max-width: 132px;
+}

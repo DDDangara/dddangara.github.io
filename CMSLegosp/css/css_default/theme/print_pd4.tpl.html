@@ -1,0 +1,197 @@
+
+{*********************************************************************************
+*                                                                                *
+*   shop-script Legosp - legosp.net                                              *
+*   Skype: legoedition                                                           *
+*   Email: legoedition@gmail.com                                                 *
+*   Лицензионное соглашение: https://legosp.net/info/litsenzionnoe_soglashenie/  *
+*   Copyright (c) 2010-2019  All rights reserved.                                *
+*                                                                                *
+*********************************************************************************}
+ 
+<html lang=ru>
+<head>
+<title>Форма ПД-4</title>
+<meta http-equiv='Content-Type' content='text/html; charset={$smarty.const.DEFAULT_CHARSET}'>
+
+<style>
+ body {font-family: sans-serif;font-size: 8pt;background-color: white;}
+ table {	font-family: sans-serif;font-size: 8pt;}
+ ramka {border-top: black 1px dotted;border-bottom: black 1px dotted;border-left: black 1px dotted;border-right: black 1px dotted;}
+ linev {border-left: black 2px solid;}
+ lineh {border-bottom: black 2px solid;}
+ linevh {border-bottom: black 2px solid;border-left: black 2px solid;}
+ t10b {font-weight: bold;font-size: 10pt;font-family: 'Times New Roman', serif;}
+ h8b {font-weight: bold;font-size: 8pt;font-family: Arial, sans-serif;border-bottom: black 1px solid;text-align: center;}
+ line_b		{BORDER-BOTTOM: black 1px solid; FONT-SIZE: 7pt; FONT-WEIGHT: bold}
+ line_t		{BORDER-TOP: black 1px solid; FONT-SIZE: 7pt; FONT-WEIGHT: bold}
+ line_r {border-right: black 1px solid;font-weight: bold;}
+ line_l		{BORDER-LEFT: black 1px solid; FONT-SIZE: 7pt; FONT-WEIGHT: bold}
+ line_lbt {border-left: black 1px solid;border-bottom: black 1px solid;border-top: black 1px solid;font-weight: bold;}
+ line_lbtr {border-left: black 1px solid;border-bottom: black 1px solid;border-top: black 1px solid;border-right: black 1px solid;font-weight: bold;}
+ t6n		{FONT-SIZE: 6.5pt; FONT-FAMILY: 'Times New Roman', serif}
+ t7n		{FONT-SIZE: 7.5pt; FONT-FAMILY: 'Times New Roman', serif}
+ t8n		{FONT-SIZE: 8.5pt; FONT-FAMILY: 'Times New Roman', serif}
+ spc		{FONT-SIZE: 1pt}
+
+</style>
+</head>
+<body onload="print(); return false;">
+
+
+    <table border=0 cellspacing=0 cellpadding=0 align=center>
+      <tr>
+       <td>
+         <table class=ramka border=0 cellspacing=0 cellpadding=0 align=center>
+           <tr>
+             <td class=lineh align=center width=188 height=245>
+             <table border=0 cellpadding=0 cellspacing=0>
+                <tr><td height=100 class=t10b valign=top align=center>И з в е щ е н и е</td></tr>
+                <tr><td height=100 class=t10b valign=bottom align=center>Кассир</td></tr>
+             </table>
+            </td>
+            <td width=16 class=linevh height=245>&nbsp;</td>
+            <td class=lineh height=245>
+             <table width=477 border=0 cellpadding=0 cellspacing=0 align=center style='height: 245px'>
+              <tr>
+              <td height=40>
+                <table width='100%' align=center cellspacing=0 border=0 cellpadding=0>
+                 <tr>
+                  <td><img src='http://{$smarty.const.CONF_SHOP_URL}/core/printforms/sblogo.gif' width=120 height=26 alt='Sberbank logo'></td>
+                  <td class=t6n align=right valign=middle><i>Форма № ПД-4</i></td>
+                 </tr>
+                 </table>
+              </td>
+              </tr>
+              <tr>
+               <td class=h8b valign=bottom align=center>{$smarty.const.COMPANY_NAME}</td>
+              </tr>
+              <tr>
+                <td height=10 class=t6n valign=top align=center>(наименование получателя платежа)</td>
+              </tr>
+              <tr>
+               <td>
+                <table border=0 cellspacing=0 width='100%' cellpadding=0>
+                 <tr>
+                   <td width='30%' valign=bottom>
+                     <table class=line_r border=0 cellspacing=0 width='100%' cellpadding=0>
+                       <tr>
+                         {assign var="innpol" value=$smarty.const.COMPANY_INN}    
+                        <td height=10 class=line_lbt width='10%' align=center>{$innpol[0]}</td>
+                        <td height=10 class=line_lbt width='10%' align=center>{$innpol[1]}"</td>
+                        <td height=10 class=line_lbt width='10%' align=center>{$innpol[2]}</td>
+                        <td height=10 class=line_lbt width='10%' align=center>{$innpol[3]}</td>
+                        <td height=10 class=line_lbt width='10%' align=center>{$innpol[4]}</td>
+                        <td height=10 class=line_lbt width='10%' align=center>{$innpol[5]}</td>
+                        <td height=10 class=line_lbt width='10%' align=center>{$innpol[6]}</td>
+                        <td height=10 class=line_lbt width='10%' align=center>{$innpol[7]}</td>
+                        <td height=10 class=line_lbt width='10%' align=center>{$innpol[8]}</td>
+                        <td height=10 class=line_lbt width='10%' align=center>{$innpol[9]}</td>
+                       </tr>
+                      </table>
+                    </td>
+                    <td width='10%' valign=bottom>&nbsp;</td>
+                    <td width='60%' valign=bottom>
+                    {assign var="$nsch" value=$smarty.const.COMPANY_RS}  
+                    <table class=line_r border=0 cellspacing=0 cellpadding=0 width='100%'><tr>
+                       <td height=10 class=line_lbt width='5%' align=center>{$nsch[0]}</td>
+		       <td height=10 class=line_lbt width='5%' align=center>{$nsch[1]}</td>
+		       <td height=10 class=line_lbt width='5%' align=center>{$nsch[2]}</td>
+		       <td height=10 class=line_lbt width='5%' align=center>{$nsch[3]}</td>
+		       <td height=10 class=line_lbt width='5%' align=center>{$nsch[4]}</td>
+                       <td height=10 class=line_lbt width='5%' align=center>{$nsch[5]}</td>
+                       <td height=10 class=line_lbt width='5%' align=center>{$nsch[6]}</td>
+                       <td height=10 class=line_lbt width='5%' align=center>{$nsch[7]}</td>
+                       <td height=10 class=line_lbt width='5%' align=center>{$nsch[8]}</td>
+                       <td height=10 class=line_lbt width='5%' align=center>{$nsch[9]}</td>
+                       <td height=10 class=line_lbt width='5%' align=center>{$nsch[10]}</td>
+                       <td height=10 class=line_lbt width='5%' align=center>{$nsch[11]}</td>
+                       <td height=10 class=line_lbt width='5%' align=center>{$nsch[12]}</td>
+                       <td height=10 class=line_lbt width='5%' align=center>{$nsch[13]}</td>
+                       <td height=10 class=line_lbt width='5%' align=center>{$nsch[14]}</td>
+                       <td height=10 class=line_lbt width='5%' align=center>{$nsch[15]}</td>
+                       <td height=10 class=line_lbt width='5%' align=center>{$nsch[16]}</td>
+                       <td height=10 class=line_lbt width='5%' align=center>{$nsch[17]}</td>
+                       <td height=10 class=line_lbt width='5%' align=center>{$nsch[18]}</td>
+                       <td height=10 class=line_lbt width='5%' align=center>{$nsch[19]}</td>
+                     </tr>
+                   </table>
+                   </td>
+                </tr> 
+
+<tr>
+<td valign=top class=t6n align=center>(ИНН получателя платежа)</td>
+<td valign=top class=t6n>&nbsp;</td>
+<td valign=top class=t6n align=center>(номер счета получателя платежа)</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td>
+<table border=0 cellspacing=0 cellpadding=0 width='100%'>
+<tr>
+<td width=10 class=t8n valign=bottom>в</td>
+<td class=h8b align=center valign=bottom>{$smarty.const.COMPANY_BANK}</td>
+<td width=40 class=t8n align=right valign=bottom>БИК&nbsp;</td>
+<td width='27%' valign=bottom>
+{assign var="bik" value=$smarty.const.COMPANY_BANK_BIK}  
+<table class=line_r border=0 cellspacing=0 width='100%' cellpadding=0><tr>
+<td height=10 class=line_lbt width='10%' align=center>{$bik[0]}</td>
+<td height=10 class=line_lbt width='10%' align=center>{$bik[1]}</td>
+<td height=10 class=line_lbt width='10%' align=center>{$bik[2]}</td>
+<td height=10 class=line_lbt width='10%' align=center>{$bik[3]}</td>
+<td height=10 class=line_lbt width='10%' align=center>{$bik[4]}</td>
+<td height=10 class=line_lbt width='10%' align=center>{$bik[5]}</td>
+<td height=10 class=line_lbt width='10%' align=center>{$bik[6]}</td>
+<td height=10 class=line_lbt width='10%' align=center>{$bik[7]}</td>
+<td height=10 class=line_lbt width='10%' align=center>{$bik[8]}</td>
+</tr></table>
+</td>
+</tr>
+<tr>
+<td>&nbsp;</td>
+<td valign=top class=t6n align=center>(наименование банка получателя платежа)</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</table>
+
+
+</td>
+</tr>
+<tr>
+<td>
+<table border=0 cellspacing=0 cellpadding=0 width='100%'>
+<tr>
+<td class=t7n valign=bottom>Номер&nbsp;кор./сч.&nbsp;банка&nbsp;получателя&nbsp;платежа</td>
+<td width='60%' valign=bottom>
+{assign var="bik" value=$smarty.const.COMPANY_BANK_KOR}  
+<table class=line_r border=0 cellspacing=0 cellpadding=0 width='100%'><tr>
+<td height=10 class=line_lbt width='5%' align=center>{$korsch[0]}</td>
+<td height=10 class=line_lbt width='5%' align=center>{$korsch[1]}/td>
+<td height=10 class=line_lbt width='5%' align=center>{$korsch[2]}/td>
+<td height=10 class=line_lbt width='5%' align=center>{$korsch[3]}/td>
+<td height=10 class=line_lbt width='5%' align=center>{$korsch[4]}/td>
+<td height=10 class=line_lbt width='5%' align=center>{$korsch[5]}/td>
+<td height=10 class=line_lbt width='5%' align=center>{$korsch[6]}/td>
+<td height=10 class=line_lbt width='5%' align=center>{$korsch[7]}/td>
+<td height=10 class=line_lbt width='5%' align=center>{$korsch[8]}/td>
+<td height=10 class=line_lbt width='5%' align=center>{$korsch[9]}/td>
+<td height=10 class=line_lbt width='5%' align=center>{$korsch[10]}/td>
+<td height=10 class=line_lbt width='5%' align=center>{$korsch[11]}/td>
+<td height=10 class=line_lbt width='5%' align=center>{$korsch[12]}/td>
+<td height=10 class=line_lbt width='5%' align=center>{$korsch[13]}/td>
+<td height=10 class=line_lbt width='5%' align=center>{$korsch[14]}/td>
+<td height=10 class=line_lbt width='5%' align=center>{$korsch[15]}/td>
+<td height=10 class=line_lbt width='5%' align=center>{$korsch[16]}/td>
+<td height=10 class=line_lbt width='5%' align=center>{$korsch[17]}/td>
+<td height=10 class=line_lbt width='5%' align=center>{$korsch[18]}/td>
+<td height=10 class=line_lbt width='5%' align=center>{$korsch[19]}/td></tr></table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td>

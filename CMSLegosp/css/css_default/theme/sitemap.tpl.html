@@ -1,0 +1,51 @@
+
+{*********************************************************************************
+*                                                                                *
+*   shop-script Legosp - legosp.net                                              *
+*   Skype: legoedition                                                           *
+*   Email: legoedition@gmail.com                                                 *
+*   Лицензионное соглашение: https://legosp.net/info/litsenzionnoe_soglashenie/  *
+*   Copyright (c) 2010-2019  All rights reserved.                                *
+*                                                                                *
+*********************************************************************************}
+ 
+<div class="box">
+  <h1 class="page-title">{$smarty.const.ADMIN_SITE_MAP}</h1>
+
+
+    <div class="row">
+        <div class="col-sm-6">
+            {assign var="start" value=1}
+            {assign var="old" value=0}
+            {assign var="ja" value=0}
+            {section name=i loop=$sitemap_categorys}
+                {if $smarty.section.i.first}<ul>{/if}
+                {if $sitemap_categorys[i].level==$old}</li> {elseif $sitemap_categorys[i].level>$old} <ul> {/if}
+                {if $sitemap_categorys[i].level<$old && $old>1}</li>{/if}
+                {if $sitemap_categorys[i].level<$old} </ul> {/if}
+                <li {if $sitemap_categorys[i].level==0} class="root_c" {/if}><a href="./{$sitemap_categorys[i].hurl}" {if $categoryID == $sitemap_categorys[i].categoryID} class="selected" {/if}>{$sitemap_categorys[i].name}</a>
+            {assign var="old" value= $sitemap_categorys[i].level}
+            {if $smarty.section.i.last}</li></ul></li></ul>{/if}
+            {/section}
+        </div>
+        <div class="col-sm-6">
+            <div id="information">
+                <h3>{$smarty.const.ADMIN_INFORMATION}</h3>
+                <ul>
+                <li><a href="./{if $smarty.const.CONF_CHPU}about/{else}index.php?aux_page=aux1{/if}">{$smarty.const.ADMIN_ABOUT_PAGE}</a></li>
+                <li><a href="./{if $smarty.const.CONF_CHPU}grafik/{else}index.php?aux_page=aux1{/if}">{$smarty.const.ADMIN_TIMES}</a></li>
+                <li><a href="./{if $smarty.const.CONF_CHPU}contact/{else}index.php?contact{/if}">{$smarty.const.STRING_CONTACT_INFORMATION}</a></li>
+                <li><a href="./{if $smarty.const.CONF_CHPU}adress/{else}index.php?aux_page=aux1{/if}">{$smarty.const.STRING_ADRESS_INFORMATION}</a></li>
+                        <li><a href="./{if $smarty.const.CONF_CHPU}price.xls{else}core/core_xls.php{/if}">Скачать прайс в формате MS Excel</a></li>
+                <li><a href="./{if $smarty.const.CONF_CHPU}service/{else}index.php?aux_page=aux1{/if}">{$smarty.const.ADMIN_SHIPPING_PAGE}</a></li>
+                <li><a href="./info/dostavka/">Доставка и оплата</a></li>
+                </ul>
+              </div>
+        </div>
+    </div>
+
+
+
+
+
+</div>
